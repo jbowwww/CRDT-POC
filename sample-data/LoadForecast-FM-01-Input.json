@@ -1,0 +1,3468 @@
+{
+	"data": {
+		"readingTypeId": "energy-forecastOperationalDemand-expected",
+		"forecastCreatedAsAt": "2022-09-08T08:00:00+08:00",
+		"forecastData": [
+			{
+				"forecastForDateTime": "2022-09-08T08:00:00+08:00",
+				"value": 2245.922
+			},
+			{
+				"forecastForDateTime": "2022-09-08T08:05:00+08:00",
+				"value": 2223.463
+			},
+			{
+				"forecastForDateTime": "2022-09-08T08:10:00+08:00",
+				"value": 2201.228
+			},
+			{
+				"forecastForDateTime": "2022-09-08T08:15:00+08:00",
+				"value": 2168.21
+			},
+			{
+				"forecastForDateTime": "2022-09-08T08:20:00+08:00",
+				"value": 2124.846
+			},
+			{
+				"forecastForDateTime": "2022-09-08T08:25:00+08:00",
+				"value": 2061.1
+			},
+			{
+				"forecastForDateTime": "2022-09-08T08:30:00+08:00",
+				"value": 2091.333
+			},
+			{
+				"forecastForDateTime": "2022-09-08T08:35:00+08:00",
+				"value": 2070.42
+			},
+			{
+				"forecastForDateTime": "2022-09-08T08:40:00+08:00",
+				"value": 2049.715
+			},
+			{
+				"forecastForDateTime": "2022-09-08T08:45:00+08:00",
+				"value": 2018.97
+			},
+			{
+				"forecastForDateTime": "2022-09-08T08:50:00+08:00",
+				"value": 1978.59
+			},
+			{
+				"forecastForDateTime": "2022-09-08T08:55:00+08:00",
+				"value": 1899.447
+			},
+			{
+				"forecastForDateTime": "2022-09-08T09:00:00+08:00",
+				"value": 1888.708
+			},
+			{
+				"forecastForDateTime": "2022-09-08T09:05:00+08:00",
+				"value": 1869.821
+			},
+			{
+				"forecastForDateTime": "2022-09-08T09:10:00+08:00",
+				"value": 1851.123
+			},
+			{
+				"forecastForDateTime": "2022-09-08T09:15:00+08:00",
+				"value": 1823.356
+			},
+			{
+				"forecastForDateTime": "2022-09-08T09:20:00+08:00",
+				"value": 1786.889
+			},
+			{
+				"forecastForDateTime": "2022-09-08T09:25:00+08:00",
+				"value": 1715.413
+			},
+			{
+				"forecastForDateTime": "2022-09-08T09:30:00+08:00",
+				"value": 1735.511
+			},
+			{
+				"forecastForDateTime": "2022-09-08T09:35:00+08:00",
+				"value": 1718.156
+			},
+			{
+				"forecastForDateTime": "2022-09-08T09:40:00+08:00",
+				"value": 1700.974
+			},
+			{
+				"forecastForDateTime": "2022-09-08T09:45:00+08:00",
+				"value": 1675.46
+			},
+			{
+				"forecastForDateTime": "2022-09-08T09:50:00+08:00",
+				"value": 1641.951
+			},
+			{
+				"forecastForDateTime": "2022-09-08T09:55:00+08:00",
+				"value": 1691.209
+			},
+			{
+				"forecastForDateTime": "2022-09-08T10:00:00+08:00",
+				"value": 1704.042
+			},
+			{
+				"forecastForDateTime": "2022-09-08T10:05:00+08:00",
+				"value": 1687.002
+			},
+			{
+				"forecastForDateTime": "2022-09-08T10:10:00+08:00",
+				"value": 1670.132
+			},
+			{
+				"forecastForDateTime": "2022-09-08T10:15:00+08:00",
+				"value": 1645.08
+			},
+			{
+				"forecastForDateTime": "2022-09-08T10:20:00+08:00",
+				"value": 1612.178
+			},
+			{
+				"forecastForDateTime": "2022-09-08T10:25:00+08:00",
+				"value": 1660.543
+			},
+			{
+				"forecastForDateTime": "2022-09-08T10:30:00+08:00",
+				"value": 1686.895
+			},
+			{
+				"forecastForDateTime": "2022-09-08T10:35:00+08:00",
+				"value": 1670.026
+			},
+			{
+				"forecastForDateTime": "2022-09-08T10:40:00+08:00",
+				"value": 1653.326
+			},
+			{
+				"forecastForDateTime": "2022-09-08T10:45:00+08:00",
+				"value": 1628.526
+			},
+			{
+				"forecastForDateTime": "2022-09-08T10:50:00+08:00",
+				"value": 1595.955
+			},
+			{
+				"forecastForDateTime": "2022-09-08T10:55:00+08:00",
+				"value": 1643.834
+			},
+			{
+				"forecastForDateTime": "2022-09-08T11:00:00+08:00",
+				"value": 1680.23
+			},
+			{
+				"forecastForDateTime": "2022-09-08T11:05:00+08:00",
+				"value": 1663.428
+			},
+			{
+				"forecastForDateTime": "2022-09-08T11:10:00+08:00",
+				"value": 1646.793
+			},
+			{
+				"forecastForDateTime": "2022-09-08T11:15:00+08:00",
+				"value": 1622.092
+			},
+			{
+				"forecastForDateTime": "2022-09-08T11:20:00+08:00",
+				"value": 1589.65
+			},
+			{
+				"forecastForDateTime": "2022-09-08T11:25:00+08:00",
+				"value": 1637.339
+			},
+			{
+				"forecastForDateTime": "2022-09-08T11:30:00+08:00",
+				"value": 1673.567
+			},
+			{
+				"forecastForDateTime": "2022-09-08T11:35:00+08:00",
+				"value": 1656.831
+			},
+			{
+				"forecastForDateTime": "2022-09-08T11:40:00+08:00",
+				"value": 1640.263
+			},
+			{
+				"forecastForDateTime": "2022-09-08T11:45:00+08:00",
+				"value": 1615.659
+			},
+			{
+				"forecastForDateTime": "2022-09-08T11:50:00+08:00",
+				"value": 1583.346
+			},
+			{
+				"forecastForDateTime": "2022-09-08T11:55:00+08:00",
+				"value": 1630.846
+			},
+			{
+				"forecastForDateTime": "2022-09-08T12:00:00+08:00",
+				"value": 1603.252
+			},
+			{
+				"forecastForDateTime": "2022-09-08T12:05:00+08:00",
+				"value": 1587.219
+			},
+			{
+				"forecastForDateTime": "2022-09-08T12:10:00+08:00",
+				"value": 1571.347
+			},
+			{
+				"forecastForDateTime": "2022-09-08T12:15:00+08:00",
+				"value": 1547.777
+			},
+			{
+				"forecastForDateTime": "2022-09-08T12:20:00+08:00",
+				"value": 1516.822
+			},
+			{
+				"forecastForDateTime": "2022-09-08T12:25:00+08:00",
+				"value": 1562.326
+			},
+			{
+				"forecastForDateTime": "2022-09-08T12:30:00+08:00",
+				"value": 1541.67
+			},
+			{
+				"forecastForDateTime": "2022-09-08T12:35:00+08:00",
+				"value": 1526.253
+			},
+			{
+				"forecastForDateTime": "2022-09-08T12:40:00+08:00",
+				"value": 1510.991
+			},
+			{
+				"forecastForDateTime": "2022-09-08T12:45:00+08:00",
+				"value": 1488.326
+			},
+			{
+				"forecastForDateTime": "2022-09-08T12:50:00+08:00",
+				"value": 1458.559
+			},
+			{
+				"forecastForDateTime": "2022-09-08T12:55:00+08:00",
+				"value": 1502.316
+			},
+			{
+				"forecastForDateTime": "2022-09-08T13:00:00+08:00",
+				"value": 1495.358
+			},
+			{
+				"forecastForDateTime": "2022-09-08T13:05:00+08:00",
+				"value": 1480.404
+			},
+			{
+				"forecastForDateTime": "2022-09-08T13:10:00+08:00",
+				"value": 1465.6
+			},
+			{
+				"forecastForDateTime": "2022-09-08T13:15:00+08:00",
+				"value": 1443.616
+			},
+			{
+				"forecastForDateTime": "2022-09-08T13:20:00+08:00",
+				"value": 1414.744
+			},
+			{
+				"forecastForDateTime": "2022-09-08T13:25:00+08:00",
+				"value": 1457.186
+			},
+			{
+				"forecastForDateTime": "2022-09-08T13:30:00+08:00",
+				"value": 1466.109
+			},
+			{
+				"forecastForDateTime": "2022-09-08T13:35:00+08:00",
+				"value": 1451.448
+			},
+			{
+				"forecastForDateTime": "2022-09-08T13:40:00+08:00",
+				"value": 1436.933
+			},
+			{
+				"forecastForDateTime": "2022-09-08T13:45:00+08:00",
+				"value": 1415.379
+			},
+			{
+				"forecastForDateTime": "2022-09-08T13:50:00+08:00",
+				"value": 1387.072
+			},
+			{
+				"forecastForDateTime": "2022-09-08T13:55:00+08:00",
+				"value": 1428.684
+			},
+			{
+				"forecastForDateTime": "2022-09-08T14:00:00+08:00",
+				"value": 1467.995
+			},
+			{
+				"forecastForDateTime": "2022-09-08T14:05:00+08:00",
+				"value": 1453.315
+			},
+			{
+				"forecastForDateTime": "2022-09-08T14:10:00+08:00",
+				"value": 1438.782
+			},
+			{
+				"forecastForDateTime": "2022-09-08T14:15:00+08:00",
+				"value": 1417.2
+			},
+			{
+				"forecastForDateTime": "2022-09-08T14:20:00+08:00",
+				"value": 1388.856
+			},
+			{
+				"forecastForDateTime": "2022-09-08T14:25:00+08:00",
+				"value": 1430.522
+			},
+			{
+				"forecastForDateTime": "2022-09-08T14:30:00+08:00",
+				"value": 1497.247
+			},
+			{
+				"forecastForDateTime": "2022-09-08T14:35:00+08:00",
+				"value": 1482.275
+			},
+			{
+				"forecastForDateTime": "2022-09-08T14:40:00+08:00",
+				"value": 1467.452
+			},
+			{
+				"forecastForDateTime": "2022-09-08T14:45:00+08:00",
+				"value": 1445.44
+			},
+			{
+				"forecastForDateTime": "2022-09-08T14:50:00+08:00",
+				"value": 1416.531
+			},
+			{
+				"forecastForDateTime": "2022-09-08T14:55:00+08:00",
+				"value": 1459.027
+			},
+			{
+				"forecastForDateTime": "2022-09-08T15:00:00+08:00",
+				"value": 1584.286
+			},
+			{
+				"forecastForDateTime": "2022-09-08T15:05:00+08:00",
+				"value": 1568.443
+			},
+			{
+				"forecastForDateTime": "2022-09-08T15:10:00+08:00",
+				"value": 1591.97
+			},
+			{
+				"forecastForDateTime": "2022-09-08T15:15:00+08:00",
+				"value": 1599.93
+			},
+			{
+				"forecastForDateTime": "2022-09-08T15:20:00+08:00",
+				"value": 1631.928
+			},
+			{
+				"forecastForDateTime": "2022-09-08T15:25:00+08:00",
+				"value": 1680.886
+			},
+			{
+				"forecastForDateTime": "2022-09-08T15:30:00+08:00",
+				"value": 1723.109
+			},
+			{
+				"forecastForDateTime": "2022-09-08T15:35:00+08:00",
+				"value": 1705.878
+			},
+			{
+				"forecastForDateTime": "2022-09-08T15:40:00+08:00",
+				"value": 1731.466
+			},
+			{
+				"forecastForDateTime": "2022-09-08T15:45:00+08:00",
+				"value": 1740.123
+			},
+			{
+				"forecastForDateTime": "2022-09-08T15:50:00+08:00",
+				"value": 1774.926
+			},
+			{
+				"forecastForDateTime": "2022-09-08T15:55:00+08:00",
+				"value": 1828.174
+			},
+			{
+				"forecastForDateTime": "2022-09-08T16:00:00+08:00",
+				"value": 1917.546
+			},
+			{
+				"forecastForDateTime": "2022-09-08T16:05:00+08:00",
+				"value": 1898.371
+			},
+			{
+				"forecastForDateTime": "2022-09-08T16:10:00+08:00",
+				"value": 1926.846
+			},
+			{
+				"forecastForDateTime": "2022-09-08T16:15:00+08:00",
+				"value": 1936.48
+			},
+			{
+				"forecastForDateTime": "2022-09-08T16:20:00+08:00",
+				"value": 1975.21
+			},
+			{
+				"forecastForDateTime": "2022-09-08T16:25:00+08:00",
+				"value": 2034.466
+			},
+			{
+				"forecastForDateTime": "2022-09-08T16:30:00+08:00",
+				"value": 2095.209
+			},
+			{
+				"forecastForDateTime": "2022-09-08T16:35:00+08:00",
+				"value": 2074.257
+			},
+			{
+				"forecastForDateTime": "2022-09-08T16:40:00+08:00",
+				"value": 2105.371
+			},
+			{
+				"forecastForDateTime": "2022-09-08T16:45:00+08:00",
+				"value": 2115.898
+			},
+			{
+				"forecastForDateTime": "2022-09-08T16:50:00+08:00",
+				"value": 2158.216
+			},
+			{
+				"forecastForDateTime": "2022-09-08T16:55:00+08:00",
+				"value": 2222.962
+			},
+			{
+				"forecastForDateTime": "2022-09-08T17:00:00+08:00",
+				"value": 2238.12
+			},
+			{
+				"forecastForDateTime": "2022-09-08T17:05:00+08:00",
+				"value": 2215.739
+			},
+			{
+				"forecastForDateTime": "2022-09-08T17:10:00+08:00",
+				"value": 2248.975
+			},
+			{
+				"forecastForDateTime": "2022-09-08T17:15:00+08:00",
+				"value": 2260.22
+			},
+			{
+				"forecastForDateTime": "2022-09-08T17:20:00+08:00",
+				"value": 2305.424
+			},
+			{
+				"forecastForDateTime": "2022-09-08T17:25:00+08:00",
+				"value": 2374.587
+			},
+			{
+				"forecastForDateTime": "2022-09-08T17:30:00+08:00",
+				"value": 2379.933
+			},
+			{
+				"forecastForDateTime": "2022-09-08T17:35:00+08:00",
+				"value": 2356.134
+			},
+			{
+				"forecastForDateTime": "2022-09-08T17:40:00+08:00",
+				"value": 2391.476
+			},
+			{
+				"forecastForDateTime": "2022-09-08T17:45:00+08:00",
+				"value": 2403.433
+			},
+			{
+				"forecastForDateTime": "2022-09-08T17:50:00+08:00",
+				"value": 2451.502
+			},
+			{
+				"forecastForDateTime": "2022-09-08T17:55:00+08:00",
+				"value": 2525.047
+			},
+			{
+				"forecastForDateTime": "2022-09-08T18:00:00+08:00",
+				"value": 2509.763
+			},
+			{
+				"forecastForDateTime": "2022-09-08T18:05:00+08:00",
+				"value": 2484.665
+			},
+			{
+				"forecastForDateTime": "2022-09-08T18:10:00+08:00",
+				"value": 2521.935
+			},
+			{
+				"forecastForDateTime": "2022-09-08T18:15:00+08:00",
+				"value": 2534.545
+			},
+			{
+				"forecastForDateTime": "2022-09-08T18:20:00+08:00",
+				"value": 2585.236
+			},
+			{
+				"forecastForDateTime": "2022-09-08T18:25:00+08:00",
+				"value": 2662.793
+			},
+			{
+				"forecastForDateTime": "2022-09-08T18:30:00+08:00",
+				"value": 2574.939
+			},
+			{
+				"forecastForDateTime": "2022-09-08T18:35:00+08:00",
+				"value": 2549.19
+			},
+			{
+				"forecastForDateTime": "2022-09-08T18:40:00+08:00",
+				"value": 2510.952
+			},
+			{
+				"forecastForDateTime": "2022-09-08T18:45:00+08:00",
+				"value": 2523.507
+			},
+			{
+				"forecastForDateTime": "2022-09-08T18:50:00+08:00",
+				"value": 2510.889
+			},
+			{
+				"forecastForDateTime": "2022-09-08T18:55:00+08:00",
+				"value": 2586.216
+			},
+			{
+				"forecastForDateTime": "2022-09-08T19:00:00+08:00",
+				"value": 2539.367
+			},
+			{
+				"forecastForDateTime": "2022-09-08T19:05:00+08:00",
+				"value": 2534.288
+			},
+			{
+				"forecastForDateTime": "2022-09-08T19:10:00+08:00",
+				"value": 2524.151
+			},
+			{
+				"forecastForDateTime": "2022-09-08T19:15:00+08:00",
+				"value": 2511.53
+			},
+			{
+				"forecastForDateTime": "2022-09-08T19:20:00+08:00",
+				"value": 2498.973
+			},
+			{
+				"forecastForDateTime": "2022-09-08T19:25:00+08:00",
+				"value": 2488.977
+			},
+			{
+				"forecastForDateTime": "2022-09-08T19:30:00+08:00",
+				"value": 2475.27
+			},
+			{
+				"forecastForDateTime": "2022-09-08T19:35:00+08:00",
+				"value": 2470.319
+			},
+			{
+				"forecastForDateTime": "2022-09-08T19:40:00+08:00",
+				"value": 2460.438
+			},
+			{
+				"forecastForDateTime": "2022-09-08T19:45:00+08:00",
+				"value": 2448.136
+			},
+			{
+				"forecastForDateTime": "2022-09-08T19:50:00+08:00",
+				"value": 2435.895
+			},
+			{
+				"forecastForDateTime": "2022-09-08T19:55:00+08:00",
+				"value": 2426.152
+			},
+			{
+				"forecastForDateTime": "2022-09-08T20:00:00+08:00",
+				"value": 2423.132
+			},
+			{
+				"forecastForDateTime": "2022-09-08T20:05:00+08:00",
+				"value": 2418.286
+			},
+			{
+				"forecastForDateTime": "2022-09-08T20:10:00+08:00",
+				"value": 2408.613
+			},
+			{
+				"forecastForDateTime": "2022-09-08T20:15:00+08:00",
+				"value": 2396.57
+			},
+			{
+				"forecastForDateTime": "2022-09-08T20:20:00+08:00",
+				"value": 2384.587
+			},
+			{
+				"forecastForDateTime": "2022-09-08T20:25:00+08:00",
+				"value": 2375.048
+			},
+			{
+				"forecastForDateTime": "2022-09-08T20:30:00+08:00",
+				"value": 2364.243
+			},
+			{
+				"forecastForDateTime": "2022-09-08T20:35:00+08:00",
+				"value": 2359.515
+			},
+			{
+				"forecastForDateTime": "2022-09-08T20:40:00+08:00",
+				"value": 2350.076
+			},
+			{
+				"forecastForDateTime": "2022-09-08T20:45:00+08:00",
+				"value": 2338.326
+			},
+			{
+				"forecastForDateTime": "2022-09-08T20:50:00+08:00",
+				"value": 2326.634
+			},
+			{
+				"forecastForDateTime": "2022-09-08T20:55:00+08:00",
+				"value": 2317.328
+			},
+			{
+				"forecastForDateTime": "2022-09-08T21:00:00+08:00",
+				"value": 2292.789
+			},
+			{
+				"forecastForDateTime": "2022-09-08T21:05:00+08:00",
+				"value": 2288.203
+			},
+			{
+				"forecastForDateTime": "2022-09-08T21:10:00+08:00",
+				"value": 2279.051
+			},
+			{
+				"forecastForDateTime": "2022-09-08T21:15:00+08:00",
+				"value": 2267.655
+			},
+			{
+				"forecastForDateTime": "2022-09-08T21:20:00+08:00",
+				"value": 2256.317
+			},
+			{
+				"forecastForDateTime": "2022-09-08T21:25:00+08:00",
+				"value": 2247.292
+			},
+			{
+				"forecastForDateTime": "2022-09-08T21:30:00+08:00",
+				"value": 2210.832
+			},
+			{
+				"forecastForDateTime": "2022-09-08T21:35:00+08:00",
+				"value": 2206.41
+			},
+			{
+				"forecastForDateTime": "2022-09-08T21:40:00+08:00",
+				"value": 2197.585
+			},
+			{
+				"forecastForDateTime": "2022-09-08T21:45:00+08:00",
+				"value": 2186.597
+			},
+			{
+				"forecastForDateTime": "2022-09-08T21:50:00+08:00",
+				"value": 2175.664
+			},
+			{
+				"forecastForDateTime": "2022-09-08T21:55:00+08:00",
+				"value": 2166.961
+			},
+			{
+				"forecastForDateTime": "2022-09-08T22:00:00+08:00",
+				"value": 2123.334
+			},
+			{
+				"forecastForDateTime": "2022-09-08T22:05:00+08:00",
+				"value": 2119.087
+			},
+			{
+				"forecastForDateTime": "2022-09-08T22:10:00+08:00",
+				"value": 2110.611
+			},
+			{
+				"forecastForDateTime": "2022-09-08T22:15:00+08:00",
+				"value": 2100.058
+			},
+			{
+				"forecastForDateTime": "2022-09-08T22:20:00+08:00",
+				"value": 2089.558
+			},
+			{
+				"forecastForDateTime": "2022-09-08T22:25:00+08:00",
+				"value": 2081.199
+			},
+			{
+				"forecastForDateTime": "2022-09-08T22:30:00+08:00",
+				"value": 2032.293
+			},
+			{
+				"forecastForDateTime": "2022-09-08T22:35:00+08:00",
+				"value": 2028.228
+			},
+			{
+				"forecastForDateTime": "2022-09-08T22:40:00+08:00",
+				"value": 2020.116
+			},
+			{
+				"forecastForDateTime": "2022-09-08T22:45:00+08:00",
+				"value": 2010.015
+			},
+			{
+				"forecastForDateTime": "2022-09-08T22:50:00+08:00",
+				"value": 1999.965
+			},
+			{
+				"forecastForDateTime": "2022-09-08T22:55:00+08:00",
+				"value": 1991.965
+			},
+			{
+				"forecastForDateTime": "2022-09-08T23:00:00+08:00",
+				"value": 1957.017
+			},
+			{
+				"forecastForDateTime": "2022-09-08T23:05:00+08:00",
+				"value": 1953.103
+			},
+			{
+				"forecastForDateTime": "2022-09-08T23:10:00+08:00",
+				"value": 1943.337
+			},
+			{
+				"forecastForDateTime": "2022-09-08T23:15:00+08:00",
+				"value": 1933.621
+			},
+			{
+				"forecastForDateTime": "2022-09-08T23:20:00+08:00",
+				"value": 1914.285
+			},
+			{
+				"forecastForDateTime": "2022-09-08T23:25:00+08:00",
+				"value": 1895.142
+			},
+			{
+				"forecastForDateTime": "2022-09-08T23:30:00+08:00",
+				"value": 1899.278
+			},
+			{
+				"forecastForDateTime": "2022-09-08T23:35:00+08:00",
+				"value": 1895.479
+			},
+			{
+				"forecastForDateTime": "2022-09-08T23:40:00+08:00",
+				"value": 1886.002
+			},
+			{
+				"forecastForDateTime": "2022-09-08T23:45:00+08:00",
+				"value": 1876.572
+			},
+			{
+				"forecastForDateTime": "2022-09-08T23:50:00+08:00",
+				"value": 1857.806
+			},
+			{
+				"forecastForDateTime": "2022-09-08T23:55:00+08:00",
+				"value": 1839.228
+			},
+			{
+				"forecastForDateTime": "2022-09-09T00:00:00+08:00",
+				"value": 1855.108
+			},
+			{
+				"forecastForDateTime": "2022-09-09T00:05:00+08:00",
+				"value": 1851.398
+			},
+			{
+				"forecastForDateTime": "2022-09-09T00:10:00+08:00",
+				"value": 1842.141
+			},
+			{
+				"forecastForDateTime": "2022-09-09T00:15:00+08:00",
+				"value": 1832.93
+			},
+			{
+				"forecastForDateTime": "2022-09-09T00:20:00+08:00",
+				"value": 1814.601
+			},
+			{
+				"forecastForDateTime": "2022-09-09T00:25:00+08:00",
+				"value": 1796.455
+			},
+			{
+				"forecastForDateTime": "2022-09-09T00:30:00+08:00",
+				"value": 1818.685
+			},
+			{
+				"forecastForDateTime": "2022-09-09T00:35:00+08:00",
+				"value": 1815.048
+			},
+			{
+				"forecastForDateTime": "2022-09-09T00:40:00+08:00",
+				"value": 1805.972
+			},
+			{
+				"forecastForDateTime": "2022-09-09T00:45:00+08:00",
+				"value": 1796.943
+			},
+			{
+				"forecastForDateTime": "2022-09-09T00:50:00+08:00",
+				"value": 1778.973
+			},
+			{
+				"forecastForDateTime": "2022-09-09T00:55:00+08:00",
+				"value": 1761.183
+			},
+			{
+				"forecastForDateTime": "2022-09-09T01:00:00+08:00",
+				"value": 1788.057
+			},
+			{
+				"forecastForDateTime": "2022-09-09T01:05:00+08:00",
+				"value": 1784.481
+			},
+			{
+				"forecastForDateTime": "2022-09-09T01:10:00+08:00",
+				"value": 1775.558
+			},
+			{
+				"forecastForDateTime": "2022-09-09T01:15:00+08:00",
+				"value": 1766.681
+			},
+			{
+				"forecastForDateTime": "2022-09-09T01:20:00+08:00",
+				"value": 1749.014
+			},
+			{
+				"forecastForDateTime": "2022-09-09T01:25:00+08:00",
+				"value": 1731.524
+			},
+			{
+				"forecastForDateTime": "2022-09-09T01:30:00+08:00",
+				"value": 1766.068
+			},
+			{
+				"forecastForDateTime": "2022-09-09T01:35:00+08:00",
+				"value": 1762.536
+			},
+			{
+				"forecastForDateTime": "2022-09-09T01:40:00+08:00",
+				"value": 1753.723
+			},
+			{
+				"forecastForDateTime": "2022-09-09T01:45:00+08:00",
+				"value": 1744.955
+			},
+			{
+				"forecastForDateTime": "2022-09-09T01:50:00+08:00",
+				"value": 1727.505
+			},
+			{
+				"forecastForDateTime": "2022-09-09T01:55:00+08:00",
+				"value": 1710.23
+			},
+			{
+				"forecastForDateTime": "2022-09-09T02:00:00+08:00",
+				"value": 1750.785
+			},
+			{
+				"forecastForDateTime": "2022-09-09T02:05:00+08:00",
+				"value": 1747.283
+			},
+			{
+				"forecastForDateTime": "2022-09-09T02:10:00+08:00",
+				"value": 1738.547
+			},
+			{
+				"forecastForDateTime": "2022-09-09T02:15:00+08:00",
+				"value": 1729.854
+			},
+			{
+				"forecastForDateTime": "2022-09-09T02:20:00+08:00",
+				"value": 1712.556
+			},
+			{
+				"forecastForDateTime": "2022-09-09T02:25:00+08:00",
+				"value": 1695.43
+			},
+			{
+				"forecastForDateTime": "2022-09-09T02:30:00+08:00",
+				"value": 1743.147
+			},
+			{
+				"forecastForDateTime": "2022-09-09T02:35:00+08:00",
+				"value": 1739.661
+			},
+			{
+				"forecastForDateTime": "2022-09-09T02:40:00+08:00",
+				"value": 1730.962
+			},
+			{
+				"forecastForDateTime": "2022-09-09T02:45:00+08:00",
+				"value": 1722.308
+			},
+			{
+				"forecastForDateTime": "2022-09-09T02:50:00+08:00",
+				"value": 1720.585
+			},
+			{
+				"forecastForDateTime": "2022-09-09T02:55:00+08:00",
+				"value": 1703.379
+			},
+			{
+				"forecastForDateTime": "2022-09-09T03:00:00+08:00",
+				"value": 1732.648
+			},
+			{
+				"forecastForDateTime": "2022-09-09T03:05:00+08:00",
+				"value": 1729.183
+			},
+			{
+				"forecastForDateTime": "2022-09-09T03:10:00+08:00",
+				"value": 1720.537
+			},
+			{
+				"forecastForDateTime": "2022-09-09T03:15:00+08:00",
+				"value": 1711.934
+			},
+			{
+				"forecastForDateTime": "2022-09-09T03:20:00+08:00",
+				"value": 1710.222
+			},
+			{
+				"forecastForDateTime": "2022-09-09T03:25:00+08:00",
+				"value": 1727.324
+			},
+			{
+				"forecastForDateTime": "2022-09-09T03:30:00+08:00",
+				"value": 1726.924
+			},
+			{
+				"forecastForDateTime": "2022-09-09T03:35:00+08:00",
+				"value": 1723.47
+			},
+			{
+				"forecastForDateTime": "2022-09-09T03:40:00+08:00",
+				"value": 1714.853
+			},
+			{
+				"forecastForDateTime": "2022-09-09T03:45:00+08:00",
+				"value": 1706.279
+			},
+			{
+				"forecastForDateTime": "2022-09-09T03:50:00+08:00",
+				"value": 1704.572
+			},
+			{
+				"forecastForDateTime": "2022-09-09T03:55:00+08:00",
+				"value": 1721.618
+			},
+			{
+				"forecastForDateTime": "2022-09-09T04:00:00+08:00",
+				"value": 1731.694
+			},
+			{
+				"forecastForDateTime": "2022-09-09T04:05:00+08:00",
+				"value": 1728.231
+			},
+			{
+				"forecastForDateTime": "2022-09-09T04:10:00+08:00",
+				"value": 1719.589
+			},
+			{
+				"forecastForDateTime": "2022-09-09T04:15:00+08:00",
+				"value": 1710.992
+			},
+			{
+				"forecastForDateTime": "2022-09-09T04:20:00+08:00",
+				"value": 1709.281
+			},
+			{
+				"forecastForDateTime": "2022-09-09T04:25:00+08:00",
+				"value": 1726.373
+			},
+			{
+				"forecastForDateTime": "2022-09-09T04:30:00+08:00",
+				"value": 1750.785
+			},
+			{
+				"forecastForDateTime": "2022-09-09T04:35:00+08:00",
+				"value": 1747.283
+			},
+			{
+				"forecastForDateTime": "2022-09-09T04:40:00+08:00",
+				"value": 1738.547
+			},
+			{
+				"forecastForDateTime": "2022-09-09T04:45:00+08:00",
+				"value": 1729.854
+			},
+			{
+				"forecastForDateTime": "2022-09-09T04:50:00+08:00",
+				"value": 1728.124
+			},
+			{
+				"forecastForDateTime": "2022-09-09T04:55:00+08:00",
+				"value": 1745.406
+			},
+			{
+				"forecastForDateTime": "2022-09-09T05:00:00+08:00",
+				"value": 1776.582
+			},
+			{
+				"forecastForDateTime": "2022-09-09T05:05:00+08:00",
+				"value": 1773.029
+			},
+			{
+				"forecastForDateTime": "2022-09-09T05:10:00+08:00",
+				"value": 1764.164
+			},
+			{
+				"forecastForDateTime": "2022-09-09T05:15:00+08:00",
+				"value": 1772.985
+			},
+			{
+				"forecastForDateTime": "2022-09-09T05:20:00+08:00",
+				"value": 1771.212
+			},
+			{
+				"forecastForDateTime": "2022-09-09T05:25:00+08:00",
+				"value": 1780.068
+			},
+			{
+				"forecastForDateTime": "2022-09-09T05:30:00+08:00",
+				"value": 1819.643
+			},
+			{
+				"forecastForDateTime": "2022-09-09T05:35:00+08:00",
+				"value": 1816.004
+			},
+			{
+				"forecastForDateTime": "2022-09-09T05:40:00+08:00",
+				"value": 1825.084
+			},
+			{
+				"forecastForDateTime": "2022-09-09T05:45:00+08:00",
+				"value": 1843.335
+			},
+			{
+				"forecastForDateTime": "2022-09-09T05:50:00+08:00",
+				"value": 1861.768
+			},
+			{
+				"forecastForDateTime": "2022-09-09T05:55:00+08:00",
+				"value": 1880.386
+			},
+			{
+				"forecastForDateTime": "2022-09-09T06:00:00+08:00",
+				"value": 1876.222
+			},
+			{
+				"forecastForDateTime": "2022-09-09T06:05:00+08:00",
+				"value": 1872.47
+			},
+			{
+				"forecastForDateTime": "2022-09-09T06:10:00+08:00",
+				"value": 1881.832
+			},
+			{
+				"forecastForDateTime": "2022-09-09T06:15:00+08:00",
+				"value": 1900.65
+			},
+			{
+				"forecastForDateTime": "2022-09-09T06:20:00+08:00",
+				"value": 1919.657
+			},
+			{
+				"forecastForDateTime": "2022-09-09T06:25:00+08:00",
+				"value": 1938.853
+			},
+			{
+				"forecastForDateTime": "2022-09-09T06:30:00+08:00",
+				"value": 1922.356
+			},
+			{
+				"forecastForDateTime": "2022-09-09T06:35:00+08:00",
+				"value": 1918.511
+			},
+			{
+				"forecastForDateTime": "2022-09-09T06:40:00+08:00",
+				"value": 1928.104
+			},
+			{
+				"forecastForDateTime": "2022-09-09T06:45:00+08:00",
+				"value": 1937.744
+			},
+			{
+				"forecastForDateTime": "2022-09-09T06:50:00+08:00",
+				"value": 1939.682
+			},
+			{
+				"forecastForDateTime": "2022-09-09T06:55:00+08:00",
+				"value": 1941.622
+			},
+			{
+				"forecastForDateTime": "2022-09-09T07:00:00+08:00",
+				"value": 1953.163
+			},
+			{
+				"forecastForDateTime": "2022-09-09T07:05:00+08:00",
+				"value": 1949.257
+			},
+			{
+				"forecastForDateTime": "2022-09-09T07:10:00+08:00",
+				"value": 1959.003
+			},
+			{
+				"forecastForDateTime": "2022-09-09T07:15:00+08:00",
+				"value": 1968.798
+			},
+			{
+				"forecastForDateTime": "2022-09-09T07:20:00+08:00",
+				"value": 1970.767
+			},
+			{
+				"forecastForDateTime": "2022-09-09T07:25:00+08:00",
+				"value": 1972.738
+			},
+			{
+				"forecastForDateTime": "2022-09-09T07:30:00+08:00",
+				"value": 1975.331
+			},
+			{
+				"forecastForDateTime": "2022-09-09T07:35:00+08:00",
+				"value": 1995.084
+			},
+			{
+				"forecastForDateTime": "2022-09-09T07:40:00+08:00",
+				"value": 2034.986
+			},
+			{
+				"forecastForDateTime": "2022-09-09T07:45:00+08:00",
+				"value": 2096.036
+			},
+			{
+				"forecastForDateTime": "2022-09-09T07:50:00+08:00",
+				"value": 2179.877
+			},
+			{
+				"forecastForDateTime": "2022-09-09T07:55:00+08:00",
+				"value": 2201.676
+			},
+			{
+				"forecastForDateTime": "2022-09-09T08:00:00+08:00",
+				"value": 2245.922
+			},
+			{
+				"forecastForDateTime": "2022-09-09T08:05:00+08:00",
+				"value": 2223.463
+			},
+			{
+				"forecastForDateTime": "2022-09-09T08:10:00+08:00",
+				"value": 2201.228
+			},
+			{
+				"forecastForDateTime": "2022-09-09T08:15:00+08:00",
+				"value": 2168.21
+			},
+			{
+				"forecastForDateTime": "2022-09-09T08:20:00+08:00",
+				"value": 2124.846
+			},
+			{
+				"forecastForDateTime": "2022-09-09T08:25:00+08:00",
+				"value": 2061.1
+			},
+			{
+				"forecastForDateTime": "2022-09-09T08:30:00+08:00",
+				"value": 2091.333
+			},
+			{
+				"forecastForDateTime": "2022-09-09T08:35:00+08:00",
+				"value": 2070.42
+			},
+			{
+				"forecastForDateTime": "2022-09-09T08:40:00+08:00",
+				"value": 2049.715
+			},
+			{
+				"forecastForDateTime": "2022-09-09T08:45:00+08:00",
+				"value": 2018.97
+			},
+			{
+				"forecastForDateTime": "2022-09-09T08:50:00+08:00",
+				"value": 1978.59
+			},
+			{
+				"forecastForDateTime": "2022-09-09T08:55:00+08:00",
+				"value": 1899.447
+			},
+			{
+				"forecastForDateTime": "2022-09-09T09:00:00+08:00",
+				"value": 1888.708
+			},
+			{
+				"forecastForDateTime": "2022-09-09T09:05:00+08:00",
+				"value": 1869.821
+			},
+			{
+				"forecastForDateTime": "2022-09-09T09:10:00+08:00",
+				"value": 1851.123
+			},
+			{
+				"forecastForDateTime": "2022-09-09T09:15:00+08:00",
+				"value": 1823.356
+			},
+			{
+				"forecastForDateTime": "2022-09-09T09:20:00+08:00",
+				"value": 1786.889
+			},
+			{
+				"forecastForDateTime": "2022-09-09T09:25:00+08:00",
+				"value": 1715.413
+			},
+			{
+				"forecastForDateTime": "2022-09-09T09:30:00+08:00",
+				"value": 1735.511
+			},
+			{
+				"forecastForDateTime": "2022-09-09T09:35:00+08:00",
+				"value": 1718.156
+			},
+			{
+				"forecastForDateTime": "2022-09-09T09:40:00+08:00",
+				"value": 1700.974
+			},
+			{
+				"forecastForDateTime": "2022-09-09T09:45:00+08:00",
+				"value": 1675.46
+			},
+			{
+				"forecastForDateTime": "2022-09-09T09:50:00+08:00",
+				"value": 1641.951
+			},
+			{
+				"forecastForDateTime": "2022-09-09T09:55:00+08:00",
+				"value": 1691.209
+			},
+			{
+				"forecastForDateTime": "2022-09-09T10:00:00+08:00",
+				"value": 1704.042
+			},
+			{
+				"forecastForDateTime": "2022-09-09T10:05:00+08:00",
+				"value": 1687.002
+			},
+			{
+				"forecastForDateTime": "2022-09-09T10:10:00+08:00",
+				"value": 1670.132
+			},
+			{
+				"forecastForDateTime": "2022-09-09T10:15:00+08:00",
+				"value": 1645.08
+			},
+			{
+				"forecastForDateTime": "2022-09-09T10:20:00+08:00",
+				"value": 1612.178
+			},
+			{
+				"forecastForDateTime": "2022-09-09T10:25:00+08:00",
+				"value": 1660.543
+			},
+			{
+				"forecastForDateTime": "2022-09-09T10:30:00+08:00",
+				"value": 1686.895
+			},
+			{
+				"forecastForDateTime": "2022-09-09T10:35:00+08:00",
+				"value": 1670.026
+			},
+			{
+				"forecastForDateTime": "2022-09-09T10:40:00+08:00",
+				"value": 1653.326
+			},
+			{
+				"forecastForDateTime": "2022-09-09T10:45:00+08:00",
+				"value": 1628.526
+			},
+			{
+				"forecastForDateTime": "2022-09-09T10:50:00+08:00",
+				"value": 1595.955
+			},
+			{
+				"forecastForDateTime": "2022-09-09T10:55:00+08:00",
+				"value": 1643.834
+			},
+			{
+				"forecastForDateTime": "2022-09-09T11:00:00+08:00",
+				"value": 1680.23
+			},
+			{
+				"forecastForDateTime": "2022-09-09T11:05:00+08:00",
+				"value": 1663.428
+			},
+			{
+				"forecastForDateTime": "2022-09-09T11:10:00+08:00",
+				"value": 1646.793
+			},
+			{
+				"forecastForDateTime": "2022-09-09T11:15:00+08:00",
+				"value": 1622.092
+			},
+			{
+				"forecastForDateTime": "2022-09-09T11:20:00+08:00",
+				"value": 1589.65
+			},
+			{
+				"forecastForDateTime": "2022-09-09T11:25:00+08:00",
+				"value": 1637.339
+			},
+			{
+				"forecastForDateTime": "2022-09-09T11:30:00+08:00",
+				"value": 1673.567
+			},
+			{
+				"forecastForDateTime": "2022-09-09T11:35:00+08:00",
+				"value": 1656.831
+			},
+			{
+				"forecastForDateTime": "2022-09-09T11:40:00+08:00",
+				"value": 1640.263
+			},
+			{
+				"forecastForDateTime": "2022-09-09T11:45:00+08:00",
+				"value": 1615.659
+			},
+			{
+				"forecastForDateTime": "2022-09-09T11:50:00+08:00",
+				"value": 1583.346
+			},
+			{
+				"forecastForDateTime": "2022-09-09T11:55:00+08:00",
+				"value": 1630.846
+			},
+			{
+				"forecastForDateTime": "2022-09-09T12:00:00+08:00",
+				"value": 1603.252
+			},
+			{
+				"forecastForDateTime": "2022-09-09T12:05:00+08:00",
+				"value": 1587.219
+			},
+			{
+				"forecastForDateTime": "2022-09-09T12:10:00+08:00",
+				"value": 1571.347
+			},
+			{
+				"forecastForDateTime": "2022-09-09T12:15:00+08:00",
+				"value": 1547.777
+			},
+			{
+				"forecastForDateTime": "2022-09-09T12:20:00+08:00",
+				"value": 1516.822
+			},
+			{
+				"forecastForDateTime": "2022-09-09T12:25:00+08:00",
+				"value": 1562.326
+			},
+			{
+				"forecastForDateTime": "2022-09-09T12:30:00+08:00",
+				"value": 1541.67
+			},
+			{
+				"forecastForDateTime": "2022-09-09T12:35:00+08:00",
+				"value": 1526.253
+			},
+			{
+				"forecastForDateTime": "2022-09-09T12:40:00+08:00",
+				"value": 1510.991
+			},
+			{
+				"forecastForDateTime": "2022-09-09T12:45:00+08:00",
+				"value": 1488.326
+			},
+			{
+				"forecastForDateTime": "2022-09-09T12:50:00+08:00",
+				"value": 1458.559
+			},
+			{
+				"forecastForDateTime": "2022-09-09T12:55:00+08:00",
+				"value": 1502.316
+			},
+			{
+				"forecastForDateTime": "2022-09-09T13:00:00+08:00",
+				"value": 1495.358
+			},
+			{
+				"forecastForDateTime": "2022-09-09T13:05:00+08:00",
+				"value": 1480.404
+			},
+			{
+				"forecastForDateTime": "2022-09-09T13:10:00+08:00",
+				"value": 1465.6
+			},
+			{
+				"forecastForDateTime": "2022-09-09T13:15:00+08:00",
+				"value": 1443.616
+			},
+			{
+				"forecastForDateTime": "2022-09-09T13:20:00+08:00",
+				"value": 1414.744
+			},
+			{
+				"forecastForDateTime": "2022-09-09T13:25:00+08:00",
+				"value": 1457.186
+			},
+			{
+				"forecastForDateTime": "2022-09-09T13:30:00+08:00",
+				"value": 1466.109
+			},
+			{
+				"forecastForDateTime": "2022-09-09T13:35:00+08:00",
+				"value": 1451.448
+			},
+			{
+				"forecastForDateTime": "2022-09-09T13:40:00+08:00",
+				"value": 1436.933
+			},
+			{
+				"forecastForDateTime": "2022-09-09T13:45:00+08:00",
+				"value": 1415.379
+			},
+			{
+				"forecastForDateTime": "2022-09-09T13:50:00+08:00",
+				"value": 1387.072
+			},
+			{
+				"forecastForDateTime": "2022-09-09T13:55:00+08:00",
+				"value": 1428.684
+			},
+			{
+				"forecastForDateTime": "2022-09-09T14:00:00+08:00",
+				"value": 1467.995
+			},
+			{
+				"forecastForDateTime": "2022-09-09T14:05:00+08:00",
+				"value": 1453.315
+			},
+			{
+				"forecastForDateTime": "2022-09-09T14:10:00+08:00",
+				"value": 1438.782
+			},
+			{
+				"forecastForDateTime": "2022-09-09T14:15:00+08:00",
+				"value": 1417.2
+			},
+			{
+				"forecastForDateTime": "2022-09-09T14:20:00+08:00",
+				"value": 1388.856
+			},
+			{
+				"forecastForDateTime": "2022-09-09T14:25:00+08:00",
+				"value": 1430.522
+			},
+			{
+				"forecastForDateTime": "2022-09-09T14:30:00+08:00",
+				"value": 1497.247
+			},
+			{
+				"forecastForDateTime": "2022-09-09T14:35:00+08:00",
+				"value": 1482.275
+			},
+			{
+				"forecastForDateTime": "2022-09-09T14:40:00+08:00",
+				"value": 1467.452
+			},
+			{
+				"forecastForDateTime": "2022-09-09T14:45:00+08:00",
+				"value": 1445.44
+			},
+			{
+				"forecastForDateTime": "2022-09-09T14:50:00+08:00",
+				"value": 1416.531
+			},
+			{
+				"forecastForDateTime": "2022-09-09T14:55:00+08:00",
+				"value": 1459.027
+			},
+			{
+				"forecastForDateTime": "2022-09-09T15:00:00+08:00",
+				"value": 1584.286
+			},
+			{
+				"forecastForDateTime": "2022-09-09T15:05:00+08:00",
+				"value": 1568.443
+			},
+			{
+				"forecastForDateTime": "2022-09-09T15:10:00+08:00",
+				"value": 1591.97
+			},
+			{
+				"forecastForDateTime": "2022-09-09T15:15:00+08:00",
+				"value": 1599.93
+			},
+			{
+				"forecastForDateTime": "2022-09-09T15:20:00+08:00",
+				"value": 1631.928
+			},
+			{
+				"forecastForDateTime": "2022-09-09T15:25:00+08:00",
+				"value": 1680.886
+			},
+			{
+				"forecastForDateTime": "2022-09-09T15:30:00+08:00",
+				"value": 1723.109
+			},
+			{
+				"forecastForDateTime": "2022-09-09T15:35:00+08:00",
+				"value": 1705.878
+			},
+			{
+				"forecastForDateTime": "2022-09-09T15:40:00+08:00",
+				"value": 1731.466
+			},
+			{
+				"forecastForDateTime": "2022-09-09T15:45:00+08:00",
+				"value": 1740.123
+			},
+			{
+				"forecastForDateTime": "2022-09-09T15:50:00+08:00",
+				"value": 1774.926
+			},
+			{
+				"forecastForDateTime": "2022-09-09T15:55:00+08:00",
+				"value": 1828.174
+			},
+			{
+				"forecastForDateTime": "2022-09-09T16:00:00+08:00",
+				"value": 1917.546
+			},
+			{
+				"forecastForDateTime": "2022-09-09T16:05:00+08:00",
+				"value": 1898.371
+			},
+			{
+				"forecastForDateTime": "2022-09-09T16:10:00+08:00",
+				"value": 1926.846
+			},
+			{
+				"forecastForDateTime": "2022-09-09T16:15:00+08:00",
+				"value": 1936.48
+			},
+			{
+				"forecastForDateTime": "2022-09-09T16:20:00+08:00",
+				"value": 1975.21
+			},
+			{
+				"forecastForDateTime": "2022-09-09T16:25:00+08:00",
+				"value": 2034.466
+			},
+			{
+				"forecastForDateTime": "2022-09-09T16:30:00+08:00",
+				"value": 2095.209
+			},
+			{
+				"forecastForDateTime": "2022-09-09T16:35:00+08:00",
+				"value": 2074.257
+			},
+			{
+				"forecastForDateTime": "2022-09-09T16:40:00+08:00",
+				"value": 2105.371
+			},
+			{
+				"forecastForDateTime": "2022-09-09T16:45:00+08:00",
+				"value": 2115.898
+			},
+			{
+				"forecastForDateTime": "2022-09-09T16:50:00+08:00",
+				"value": 2158.216
+			},
+			{
+				"forecastForDateTime": "2022-09-09T16:55:00+08:00",
+				"value": 2222.962
+			},
+			{
+				"forecastForDateTime": "2022-09-09T17:00:00+08:00",
+				"value": 2238.12
+			},
+			{
+				"forecastForDateTime": "2022-09-09T17:05:00+08:00",
+				"value": 2215.739
+			},
+			{
+				"forecastForDateTime": "2022-09-09T17:10:00+08:00",
+				"value": 2248.975
+			},
+			{
+				"forecastForDateTime": "2022-09-09T17:15:00+08:00",
+				"value": 2260.22
+			},
+			{
+				"forecastForDateTime": "2022-09-09T17:20:00+08:00",
+				"value": 2305.424
+			},
+			{
+				"forecastForDateTime": "2022-09-09T17:25:00+08:00",
+				"value": 2374.587
+			},
+			{
+				"forecastForDateTime": "2022-09-09T17:30:00+08:00",
+				"value": 2379.933
+			},
+			{
+				"forecastForDateTime": "2022-09-09T17:35:00+08:00",
+				"value": 2356.134
+			},
+			{
+				"forecastForDateTime": "2022-09-09T17:40:00+08:00",
+				"value": 2391.476
+			},
+			{
+				"forecastForDateTime": "2022-09-09T17:45:00+08:00",
+				"value": 2403.433
+			},
+			{
+				"forecastForDateTime": "2022-09-09T17:50:00+08:00",
+				"value": 2451.502
+			},
+			{
+				"forecastForDateTime": "2022-09-09T17:55:00+08:00",
+				"value": 2525.047
+			},
+			{
+				"forecastForDateTime": "2022-09-09T18:00:00+08:00",
+				"value": 2509.763
+			},
+			{
+				"forecastForDateTime": "2022-09-09T18:05:00+08:00",
+				"value": 2484.665
+			},
+			{
+				"forecastForDateTime": "2022-09-09T18:10:00+08:00",
+				"value": 2521.935
+			},
+			{
+				"forecastForDateTime": "2022-09-09T18:15:00+08:00",
+				"value": 2534.545
+			},
+			{
+				"forecastForDateTime": "2022-09-09T18:20:00+08:00",
+				"value": 2585.236
+			},
+			{
+				"forecastForDateTime": "2022-09-09T18:25:00+08:00",
+				"value": 2662.793
+			},
+			{
+				"forecastForDateTime": "2022-09-09T18:30:00+08:00",
+				"value": 2574.939
+			},
+			{
+				"forecastForDateTime": "2022-09-09T18:35:00+08:00",
+				"value": 2549.19
+			},
+			{
+				"forecastForDateTime": "2022-09-09T18:40:00+08:00",
+				"value": 2510.952
+			},
+			{
+				"forecastForDateTime": "2022-09-09T18:45:00+08:00",
+				"value": 2523.507
+			},
+			{
+				"forecastForDateTime": "2022-09-09T18:50:00+08:00",
+				"value": 2510.889
+			},
+			{
+				"forecastForDateTime": "2022-09-09T18:55:00+08:00",
+				"value": 2586.216
+			},
+			{
+				"forecastForDateTime": "2022-09-09T19:00:00+08:00",
+				"value": 2539.367
+			},
+			{
+				"forecastForDateTime": "2022-09-09T19:05:00+08:00",
+				"value": 2534.288
+			},
+			{
+				"forecastForDateTime": "2022-09-09T19:10:00+08:00",
+				"value": 2524.151
+			},
+			{
+				"forecastForDateTime": "2022-09-09T19:15:00+08:00",
+				"value": 2511.53
+			},
+			{
+				"forecastForDateTime": "2022-09-09T19:20:00+08:00",
+				"value": 2498.973
+			},
+			{
+				"forecastForDateTime": "2022-09-09T19:25:00+08:00",
+				"value": 2488.977
+			},
+			{
+				"forecastForDateTime": "2022-09-09T19:30:00+08:00",
+				"value": 2475.27
+			},
+			{
+				"forecastForDateTime": "2022-09-09T19:35:00+08:00",
+				"value": 2470.319
+			},
+			{
+				"forecastForDateTime": "2022-09-09T19:40:00+08:00",
+				"value": 2460.438
+			},
+			{
+				"forecastForDateTime": "2022-09-09T19:45:00+08:00",
+				"value": 2448.136
+			},
+			{
+				"forecastForDateTime": "2022-09-09T19:50:00+08:00",
+				"value": 2435.895
+			},
+			{
+				"forecastForDateTime": "2022-09-09T19:55:00+08:00",
+				"value": 2426.152
+			},
+			{
+				"forecastForDateTime": "2022-09-09T20:00:00+08:00",
+				"value": 2423.132
+			},
+			{
+				"forecastForDateTime": "2022-09-09T20:05:00+08:00",
+				"value": 2418.286
+			},
+			{
+				"forecastForDateTime": "2022-09-09T20:10:00+08:00",
+				"value": 2408.613
+			},
+			{
+				"forecastForDateTime": "2022-09-09T20:15:00+08:00",
+				"value": 2396.57
+			},
+			{
+				"forecastForDateTime": "2022-09-09T20:20:00+08:00",
+				"value": 2384.587
+			},
+			{
+				"forecastForDateTime": "2022-09-09T20:25:00+08:00",
+				"value": 2375.048
+			},
+			{
+				"forecastForDateTime": "2022-09-09T20:30:00+08:00",
+				"value": 2364.243
+			},
+			{
+				"forecastForDateTime": "2022-09-09T20:35:00+08:00",
+				"value": 2359.515
+			},
+			{
+				"forecastForDateTime": "2022-09-09T20:40:00+08:00",
+				"value": 2350.076
+			},
+			{
+				"forecastForDateTime": "2022-09-09T20:45:00+08:00",
+				"value": 2338.326
+			},
+			{
+				"forecastForDateTime": "2022-09-09T20:50:00+08:00",
+				"value": 2326.634
+			},
+			{
+				"forecastForDateTime": "2022-09-09T20:55:00+08:00",
+				"value": 2317.328
+			},
+			{
+				"forecastForDateTime": "2022-09-09T21:00:00+08:00",
+				"value": 2292.789
+			},
+			{
+				"forecastForDateTime": "2022-09-09T21:05:00+08:00",
+				"value": 2288.203
+			},
+			{
+				"forecastForDateTime": "2022-09-09T21:10:00+08:00",
+				"value": 2279.051
+			},
+			{
+				"forecastForDateTime": "2022-09-09T21:15:00+08:00",
+				"value": 2267.655
+			},
+			{
+				"forecastForDateTime": "2022-09-09T21:20:00+08:00",
+				"value": 2256.317
+			},
+			{
+				"forecastForDateTime": "2022-09-09T21:25:00+08:00",
+				"value": 2247.292
+			},
+			{
+				"forecastForDateTime": "2022-09-09T21:30:00+08:00",
+				"value": 2210.832
+			},
+			{
+				"forecastForDateTime": "2022-09-09T21:35:00+08:00",
+				"value": 2206.41
+			},
+			{
+				"forecastForDateTime": "2022-09-09T21:40:00+08:00",
+				"value": 2197.585
+			},
+			{
+				"forecastForDateTime": "2022-09-09T21:45:00+08:00",
+				"value": 2186.597
+			},
+			{
+				"forecastForDateTime": "2022-09-09T21:50:00+08:00",
+				"value": 2175.664
+			},
+			{
+				"forecastForDateTime": "2022-09-09T21:55:00+08:00",
+				"value": 2166.961
+			},
+			{
+				"forecastForDateTime": "2022-09-09T22:00:00+08:00",
+				"value": 2123.334
+			},
+			{
+				"forecastForDateTime": "2022-09-09T22:05:00+08:00",
+				"value": 2119.087
+			},
+			{
+				"forecastForDateTime": "2022-09-09T22:10:00+08:00",
+				"value": 2110.611
+			},
+			{
+				"forecastForDateTime": "2022-09-09T22:15:00+08:00",
+				"value": 2100.058
+			},
+			{
+				"forecastForDateTime": "2022-09-09T22:20:00+08:00",
+				"value": 2089.558
+			},
+			{
+				"forecastForDateTime": "2022-09-09T22:25:00+08:00",
+				"value": 2081.199
+			},
+			{
+				"forecastForDateTime": "2022-09-09T22:30:00+08:00",
+				"value": 2032.293
+			},
+			{
+				"forecastForDateTime": "2022-09-09T22:35:00+08:00",
+				"value": 2028.228
+			},
+			{
+				"forecastForDateTime": "2022-09-09T22:40:00+08:00",
+				"value": 2020.116
+			},
+			{
+				"forecastForDateTime": "2022-09-09T22:45:00+08:00",
+				"value": 2010.015
+			},
+			{
+				"forecastForDateTime": "2022-09-09T22:50:00+08:00",
+				"value": 1999.965
+			},
+			{
+				"forecastForDateTime": "2022-09-09T22:55:00+08:00",
+				"value": 1991.965
+			},
+			{
+				"forecastForDateTime": "2022-09-09T23:00:00+08:00",
+				"value": 1957.017
+			},
+			{
+				"forecastForDateTime": "2022-09-09T23:05:00+08:00",
+				"value": 1953.103
+			},
+			{
+				"forecastForDateTime": "2022-09-09T23:10:00+08:00",
+				"value": 1943.337
+			},
+			{
+				"forecastForDateTime": "2022-09-09T23:15:00+08:00",
+				"value": 1933.621
+			},
+			{
+				"forecastForDateTime": "2022-09-09T23:20:00+08:00",
+				"value": 1914.285
+			},
+			{
+				"forecastForDateTime": "2022-09-09T23:25:00+08:00",
+				"value": 1895.142
+			},
+			{
+				"forecastForDateTime": "2022-09-09T23:30:00+08:00",
+				"value": 1899.278
+			},
+			{
+				"forecastForDateTime": "2022-09-09T23:35:00+08:00",
+				"value": 1895.479
+			},
+			{
+				"forecastForDateTime": "2022-09-09T23:40:00+08:00",
+				"value": 1886.002
+			},
+			{
+				"forecastForDateTime": "2022-09-09T23:45:00+08:00",
+				"value": 1876.572
+			},
+			{
+				"forecastForDateTime": "2022-09-09T23:50:00+08:00",
+				"value": 1857.806
+			},
+			{
+				"forecastForDateTime": "2022-09-09T23:55:00+08:00",
+				"value": 1839.228
+			},
+			{
+				"forecastForDateTime": "2022-09-10T00:00:00+08:00",
+				"value": 1855.108
+			},
+			{
+				"forecastForDateTime": "2022-09-10T00:05:00+08:00",
+				"value": 1851.398
+			},
+			{
+				"forecastForDateTime": "2022-09-10T00:10:00+08:00",
+				"value": 1842.141
+			},
+			{
+				"forecastForDateTime": "2022-09-10T00:15:00+08:00",
+				"value": 1832.93
+			},
+			{
+				"forecastForDateTime": "2022-09-10T00:20:00+08:00",
+				"value": 1814.601
+			},
+			{
+				"forecastForDateTime": "2022-09-10T00:25:00+08:00",
+				"value": 1796.455
+			},
+			{
+				"forecastForDateTime": "2022-09-10T00:30:00+08:00",
+				"value": 1818.685
+			},
+			{
+				"forecastForDateTime": "2022-09-10T00:35:00+08:00",
+				"value": 1815.048
+			},
+			{
+				"forecastForDateTime": "2022-09-10T00:40:00+08:00",
+				"value": 1805.972
+			},
+			{
+				"forecastForDateTime": "2022-09-10T00:45:00+08:00",
+				"value": 1796.943
+			},
+			{
+				"forecastForDateTime": "2022-09-10T00:50:00+08:00",
+				"value": 1778.973
+			},
+			{
+				"forecastForDateTime": "2022-09-10T00:55:00+08:00",
+				"value": 1761.183
+			},
+			{
+				"forecastForDateTime": "2022-09-10T01:00:00+08:00",
+				"value": 1788.057
+			},
+			{
+				"forecastForDateTime": "2022-09-10T01:05:00+08:00",
+				"value": 1784.481
+			},
+			{
+				"forecastForDateTime": "2022-09-10T01:10:00+08:00",
+				"value": 1775.558
+			},
+			{
+				"forecastForDateTime": "2022-09-10T01:15:00+08:00",
+				"value": 1766.681
+			},
+			{
+				"forecastForDateTime": "2022-09-10T01:20:00+08:00",
+				"value": 1749.014
+			},
+			{
+				"forecastForDateTime": "2022-09-10T01:25:00+08:00",
+				"value": 1731.524
+			},
+			{
+				"forecastForDateTime": "2022-09-10T01:30:00+08:00",
+				"value": 1766.068
+			},
+			{
+				"forecastForDateTime": "2022-09-10T01:35:00+08:00",
+				"value": 1762.536
+			},
+			{
+				"forecastForDateTime": "2022-09-10T01:40:00+08:00",
+				"value": 1753.723
+			},
+			{
+				"forecastForDateTime": "2022-09-10T01:45:00+08:00",
+				"value": 1744.955
+			},
+			{
+				"forecastForDateTime": "2022-09-10T01:50:00+08:00",
+				"value": 1727.505
+			},
+			{
+				"forecastForDateTime": "2022-09-10T01:55:00+08:00",
+				"value": 1710.23
+			},
+			{
+				"forecastForDateTime": "2022-09-10T02:00:00+08:00",
+				"value": 1750.785
+			},
+			{
+				"forecastForDateTime": "2022-09-10T02:05:00+08:00",
+				"value": 1747.283
+			},
+			{
+				"forecastForDateTime": "2022-09-10T02:10:00+08:00",
+				"value": 1738.547
+			},
+			{
+				"forecastForDateTime": "2022-09-10T02:15:00+08:00",
+				"value": 1729.854
+			},
+			{
+				"forecastForDateTime": "2022-09-10T02:20:00+08:00",
+				"value": 1712.556
+			},
+			{
+				"forecastForDateTime": "2022-09-10T02:25:00+08:00",
+				"value": 1695.43
+			},
+			{
+				"forecastForDateTime": "2022-09-10T02:30:00+08:00",
+				"value": 1743.147
+			},
+			{
+				"forecastForDateTime": "2022-09-10T02:35:00+08:00",
+				"value": 1739.661
+			},
+			{
+				"forecastForDateTime": "2022-09-10T02:40:00+08:00",
+				"value": 1730.962
+			},
+			{
+				"forecastForDateTime": "2022-09-10T02:45:00+08:00",
+				"value": 1722.308
+			},
+			{
+				"forecastForDateTime": "2022-09-10T02:50:00+08:00",
+				"value": 1720.585
+			},
+			{
+				"forecastForDateTime": "2022-09-10T02:55:00+08:00",
+				"value": 1703.379
+			},
+			{
+				"forecastForDateTime": "2022-09-10T03:00:00+08:00",
+				"value": 1732.648
+			},
+			{
+				"forecastForDateTime": "2022-09-10T03:05:00+08:00",
+				"value": 1729.183
+			},
+			{
+				"forecastForDateTime": "2022-09-10T03:10:00+08:00",
+				"value": 1720.537
+			},
+			{
+				"forecastForDateTime": "2022-09-10T03:15:00+08:00",
+				"value": 1711.934
+			},
+			{
+				"forecastForDateTime": "2022-09-10T03:20:00+08:00",
+				"value": 1710.222
+			},
+			{
+				"forecastForDateTime": "2022-09-10T03:25:00+08:00",
+				"value": 1727.324
+			},
+			{
+				"forecastForDateTime": "2022-09-10T03:30:00+08:00",
+				"value": 1726.924
+			},
+			{
+				"forecastForDateTime": "2022-09-10T03:35:00+08:00",
+				"value": 1723.47
+			},
+			{
+				"forecastForDateTime": "2022-09-10T03:40:00+08:00",
+				"value": 1714.853
+			},
+			{
+				"forecastForDateTime": "2022-09-10T03:45:00+08:00",
+				"value": 1706.279
+			},
+			{
+				"forecastForDateTime": "2022-09-10T03:50:00+08:00",
+				"value": 1704.572
+			},
+			{
+				"forecastForDateTime": "2022-09-10T03:55:00+08:00",
+				"value": 1721.618
+			},
+			{
+				"forecastForDateTime": "2022-09-10T04:00:00+08:00",
+				"value": 1731.694
+			},
+			{
+				"forecastForDateTime": "2022-09-10T04:05:00+08:00",
+				"value": 1728.231
+			},
+			{
+				"forecastForDateTime": "2022-09-10T04:10:00+08:00",
+				"value": 1719.589
+			},
+			{
+				"forecastForDateTime": "2022-09-10T04:15:00+08:00",
+				"value": 1710.992
+			},
+			{
+				"forecastForDateTime": "2022-09-10T04:20:00+08:00",
+				"value": 1709.281
+			},
+			{
+				"forecastForDateTime": "2022-09-10T04:25:00+08:00",
+				"value": 1726.373
+			},
+			{
+				"forecastForDateTime": "2022-09-10T04:30:00+08:00",
+				"value": 1750.785
+			},
+			{
+				"forecastForDateTime": "2022-09-10T04:35:00+08:00",
+				"value": 1747.283
+			},
+			{
+				"forecastForDateTime": "2022-09-10T04:40:00+08:00",
+				"value": 1738.547
+			},
+			{
+				"forecastForDateTime": "2022-09-10T04:45:00+08:00",
+				"value": 1729.854
+			},
+			{
+				"forecastForDateTime": "2022-09-10T04:50:00+08:00",
+				"value": 1728.124
+			},
+			{
+				"forecastForDateTime": "2022-09-10T04:55:00+08:00",
+				"value": 1745.406
+			},
+			{
+				"forecastForDateTime": "2022-09-10T05:00:00+08:00",
+				"value": 1776.582
+			},
+			{
+				"forecastForDateTime": "2022-09-10T05:05:00+08:00",
+				"value": 1773.029
+			},
+			{
+				"forecastForDateTime": "2022-09-10T05:10:00+08:00",
+				"value": 1764.164
+			},
+			{
+				"forecastForDateTime": "2022-09-10T05:15:00+08:00",
+				"value": 1772.985
+			},
+			{
+				"forecastForDateTime": "2022-09-10T05:20:00+08:00",
+				"value": 1771.212
+			},
+			{
+				"forecastForDateTime": "2022-09-10T05:25:00+08:00",
+				"value": 1780.068
+			},
+			{
+				"forecastForDateTime": "2022-09-10T05:30:00+08:00",
+				"value": 1819.643
+			},
+			{
+				"forecastForDateTime": "2022-09-10T05:35:00+08:00",
+				"value": 1816.004
+			},
+			{
+				"forecastForDateTime": "2022-09-10T05:40:00+08:00",
+				"value": 1825.084
+			},
+			{
+				"forecastForDateTime": "2022-09-10T05:45:00+08:00",
+				"value": 1843.335
+			},
+			{
+				"forecastForDateTime": "2022-09-10T05:50:00+08:00",
+				"value": 1861.768
+			},
+			{
+				"forecastForDateTime": "2022-09-10T05:55:00+08:00",
+				"value": 1880.386
+			},
+			{
+				"forecastForDateTime": "2022-09-10T06:00:00+08:00",
+				"value": 1876.222
+			},
+			{
+				"forecastForDateTime": "2022-09-10T06:05:00+08:00",
+				"value": 1872.47
+			},
+			{
+				"forecastForDateTime": "2022-09-10T06:10:00+08:00",
+				"value": 1881.832
+			},
+			{
+				"forecastForDateTime": "2022-09-10T06:15:00+08:00",
+				"value": 1900.65
+			},
+			{
+				"forecastForDateTime": "2022-09-10T06:20:00+08:00",
+				"value": 1919.657
+			},
+			{
+				"forecastForDateTime": "2022-09-10T06:25:00+08:00",
+				"value": 1938.853
+			},
+			{
+				"forecastForDateTime": "2022-09-10T06:30:00+08:00",
+				"value": 1922.356
+			},
+			{
+				"forecastForDateTime": "2022-09-10T06:35:00+08:00",
+				"value": 1918.511
+			},
+			{
+				"forecastForDateTime": "2022-09-10T06:40:00+08:00",
+				"value": 1928.104
+			},
+			{
+				"forecastForDateTime": "2022-09-10T06:45:00+08:00",
+				"value": 1937.744
+			},
+			{
+				"forecastForDateTime": "2022-09-10T06:50:00+08:00",
+				"value": 1939.682
+			},
+			{
+				"forecastForDateTime": "2022-09-10T06:55:00+08:00",
+				"value": 1941.622
+			},
+			{
+				"forecastForDateTime": "2022-09-10T07:00:00+08:00",
+				"value": 1953.163
+			},
+			{
+				"forecastForDateTime": "2022-09-10T07:05:00+08:00",
+				"value": 1949.257
+			},
+			{
+				"forecastForDateTime": "2022-09-10T07:10:00+08:00",
+				"value": 1959.003
+			},
+			{
+				"forecastForDateTime": "2022-09-10T07:15:00+08:00",
+				"value": 1968.798
+			},
+			{
+				"forecastForDateTime": "2022-09-10T07:20:00+08:00",
+				"value": 1970.767
+			},
+			{
+				"forecastForDateTime": "2022-09-10T07:25:00+08:00",
+				"value": 1972.738
+			},
+			{
+				"forecastForDateTime": "2022-09-10T07:30:00+08:00",
+				"value": 1975.331
+			},
+			{
+				"forecastForDateTime": "2022-09-10T07:35:00+08:00",
+				"value": 1995.084
+			},
+			{
+				"forecastForDateTime": "2022-09-10T07:40:00+08:00",
+				"value": 2034.986
+			},
+			{
+				"forecastForDateTime": "2022-09-10T07:45:00+08:00",
+				"value": 2096.036
+			},
+			{
+				"forecastForDateTime": "2022-09-10T07:50:00+08:00",
+				"value": 2179.877
+			},
+			{
+				"forecastForDateTime": "2022-09-10T07:55:00+08:00",
+				"value": 2201.676
+			},
+			{
+				"forecastForDateTime": "2022-09-10T08:00:00+08:00",
+				"value": 2245.922
+			},
+			{
+				"forecastForDateTime": "2022-09-10T08:05:00+08:00",
+				"value": 2223.463
+			},
+			{
+				"forecastForDateTime": "2022-09-10T08:10:00+08:00",
+				"value": 2201.228
+			},
+			{
+				"forecastForDateTime": "2022-09-10T08:15:00+08:00",
+				"value": 2168.21
+			},
+			{
+				"forecastForDateTime": "2022-09-10T08:20:00+08:00",
+				"value": 2124.846
+			},
+			{
+				"forecastForDateTime": "2022-09-10T08:25:00+08:00",
+				"value": 2061.1
+			},
+			{
+				"forecastForDateTime": "2022-09-10T08:30:00+08:00",
+				"value": 2091.333
+			},
+			{
+				"forecastForDateTime": "2022-09-10T08:35:00+08:00",
+				"value": 2070.42
+			},
+			{
+				"forecastForDateTime": "2022-09-10T08:40:00+08:00",
+				"value": 2049.715
+			},
+			{
+				"forecastForDateTime": "2022-09-10T08:45:00+08:00",
+				"value": 2018.97
+			},
+			{
+				"forecastForDateTime": "2022-09-10T08:50:00+08:00",
+				"value": 1978.59
+			},
+			{
+				"forecastForDateTime": "2022-09-10T08:55:00+08:00",
+				"value": 1899.447
+			},
+			{
+				"forecastForDateTime": "2022-09-10T09:00:00+08:00",
+				"value": 1888.708
+			},
+			{
+				"forecastForDateTime": "2022-09-10T09:05:00+08:00",
+				"value": 1869.821
+			},
+			{
+				"forecastForDateTime": "2022-09-10T09:10:00+08:00",
+				"value": 1851.123
+			},
+			{
+				"forecastForDateTime": "2022-09-10T09:15:00+08:00",
+				"value": 1823.356
+			},
+			{
+				"forecastForDateTime": "2022-09-10T09:20:00+08:00",
+				"value": 1786.889
+			},
+			{
+				"forecastForDateTime": "2022-09-10T09:25:00+08:00",
+				"value": 1715.413
+			},
+			{
+				"forecastForDateTime": "2022-09-10T09:30:00+08:00",
+				"value": 1735.511
+			},
+			{
+				"forecastForDateTime": "2022-09-10T09:35:00+08:00",
+				"value": 1718.156
+			},
+			{
+				"forecastForDateTime": "2022-09-10T09:40:00+08:00",
+				"value": 1700.974
+			},
+			{
+				"forecastForDateTime": "2022-09-10T09:45:00+08:00",
+				"value": 1675.46
+			},
+			{
+				"forecastForDateTime": "2022-09-10T09:50:00+08:00",
+				"value": 1641.951
+			},
+			{
+				"forecastForDateTime": "2022-09-10T09:55:00+08:00",
+				"value": 1691.209
+			},
+			{
+				"forecastForDateTime": "2022-09-10T10:00:00+08:00",
+				"value": 1704.042
+			},
+			{
+				"forecastForDateTime": "2022-09-10T10:05:00+08:00",
+				"value": 1687.002
+			},
+			{
+				"forecastForDateTime": "2022-09-10T10:10:00+08:00",
+				"value": 1670.132
+			},
+			{
+				"forecastForDateTime": "2022-09-10T10:15:00+08:00",
+				"value": 1645.08
+			},
+			{
+				"forecastForDateTime": "2022-09-10T10:20:00+08:00",
+				"value": 1612.178
+			},
+			{
+				"forecastForDateTime": "2022-09-10T10:25:00+08:00",
+				"value": 1660.543
+			},
+			{
+				"forecastForDateTime": "2022-09-10T10:30:00+08:00",
+				"value": 1686.895
+			},
+			{
+				"forecastForDateTime": "2022-09-10T10:35:00+08:00",
+				"value": 1670.026
+			},
+			{
+				"forecastForDateTime": "2022-09-10T10:40:00+08:00",
+				"value": 1653.326
+			},
+			{
+				"forecastForDateTime": "2022-09-10T10:45:00+08:00",
+				"value": 1628.526
+			},
+			{
+				"forecastForDateTime": "2022-09-10T10:50:00+08:00",
+				"value": 1595.955
+			},
+			{
+				"forecastForDateTime": "2022-09-10T10:55:00+08:00",
+				"value": 1643.834
+			},
+			{
+				"forecastForDateTime": "2022-09-10T11:00:00+08:00",
+				"value": 1680.23
+			},
+			{
+				"forecastForDateTime": "2022-09-10T11:05:00+08:00",
+				"value": 1663.428
+			},
+			{
+				"forecastForDateTime": "2022-09-10T11:10:00+08:00",
+				"value": 1646.793
+			},
+			{
+				"forecastForDateTime": "2022-09-10T11:15:00+08:00",
+				"value": 1622.092
+			},
+			{
+				"forecastForDateTime": "2022-09-10T11:20:00+08:00",
+				"value": 1589.65
+			},
+			{
+				"forecastForDateTime": "2022-09-10T11:25:00+08:00",
+				"value": 1637.339
+			},
+			{
+				"forecastForDateTime": "2022-09-10T11:30:00+08:00",
+				"value": 1673.567
+			},
+			{
+				"forecastForDateTime": "2022-09-10T11:35:00+08:00",
+				"value": 1656.831
+			},
+			{
+				"forecastForDateTime": "2022-09-10T11:40:00+08:00",
+				"value": 1640.263
+			},
+			{
+				"forecastForDateTime": "2022-09-10T11:45:00+08:00",
+				"value": 1615.659
+			},
+			{
+				"forecastForDateTime": "2022-09-10T11:50:00+08:00",
+				"value": 1583.346
+			},
+			{
+				"forecastForDateTime": "2022-09-10T11:55:00+08:00",
+				"value": 1630.846
+			},
+			{
+				"forecastForDateTime": "2022-09-10T12:00:00+08:00",
+				"value": 1603.252
+			},
+			{
+				"forecastForDateTime": "2022-09-10T12:05:00+08:00",
+				"value": 1587.219
+			},
+			{
+				"forecastForDateTime": "2022-09-10T12:10:00+08:00",
+				"value": 1571.347
+			},
+			{
+				"forecastForDateTime": "2022-09-10T12:15:00+08:00",
+				"value": 1547.777
+			},
+			{
+				"forecastForDateTime": "2022-09-10T12:20:00+08:00",
+				"value": 1516.822
+			},
+			{
+				"forecastForDateTime": "2022-09-10T12:25:00+08:00",
+				"value": 1562.326
+			},
+			{
+				"forecastForDateTime": "2022-09-10T12:30:00+08:00",
+				"value": 1541.67
+			},
+			{
+				"forecastForDateTime": "2022-09-10T12:35:00+08:00",
+				"value": 1526.253
+			},
+			{
+				"forecastForDateTime": "2022-09-10T12:40:00+08:00",
+				"value": 1510.991
+			},
+			{
+				"forecastForDateTime": "2022-09-10T12:45:00+08:00",
+				"value": 1488.326
+			},
+			{
+				"forecastForDateTime": "2022-09-10T12:50:00+08:00",
+				"value": 1458.559
+			},
+			{
+				"forecastForDateTime": "2022-09-10T12:55:00+08:00",
+				"value": 1502.316
+			},
+			{
+				"forecastForDateTime": "2022-09-10T13:00:00+08:00",
+				"value": 1495.358
+			},
+			{
+				"forecastForDateTime": "2022-09-10T13:05:00+08:00",
+				"value": 1480.404
+			},
+			{
+				"forecastForDateTime": "2022-09-10T13:10:00+08:00",
+				"value": 1465.6
+			},
+			{
+				"forecastForDateTime": "2022-09-10T13:15:00+08:00",
+				"value": 1443.616
+			},
+			{
+				"forecastForDateTime": "2022-09-10T13:20:00+08:00",
+				"value": 1414.744
+			},
+			{
+				"forecastForDateTime": "2022-09-10T13:25:00+08:00",
+				"value": 1457.186
+			},
+			{
+				"forecastForDateTime": "2022-09-10T13:30:00+08:00",
+				"value": 1466.109
+			},
+			{
+				"forecastForDateTime": "2022-09-10T13:35:00+08:00",
+				"value": 1451.448
+			},
+			{
+				"forecastForDateTime": "2022-09-10T13:40:00+08:00",
+				"value": 1436.933
+			},
+			{
+				"forecastForDateTime": "2022-09-10T13:45:00+08:00",
+				"value": 1415.379
+			},
+			{
+				"forecastForDateTime": "2022-09-10T13:50:00+08:00",
+				"value": 1387.072
+			},
+			{
+				"forecastForDateTime": "2022-09-10T13:55:00+08:00",
+				"value": 1428.684
+			},
+			{
+				"forecastForDateTime": "2022-09-10T14:00:00+08:00",
+				"value": 1467.995
+			},
+			{
+				"forecastForDateTime": "2022-09-10T14:05:00+08:00",
+				"value": 1453.315
+			},
+			{
+				"forecastForDateTime": "2022-09-10T14:10:00+08:00",
+				"value": 1438.782
+			},
+			{
+				"forecastForDateTime": "2022-09-10T14:15:00+08:00",
+				"value": 1417.2
+			},
+			{
+				"forecastForDateTime": "2022-09-10T14:20:00+08:00",
+				"value": 1388.856
+			},
+			{
+				"forecastForDateTime": "2022-09-10T14:25:00+08:00",
+				"value": 1430.522
+			},
+			{
+				"forecastForDateTime": "2022-09-10T14:30:00+08:00",
+				"value": 1497.247
+			},
+			{
+				"forecastForDateTime": "2022-09-10T14:35:00+08:00",
+				"value": 1482.275
+			},
+			{
+				"forecastForDateTime": "2022-09-10T14:40:00+08:00",
+				"value": 1467.452
+			},
+			{
+				"forecastForDateTime": "2022-09-10T14:45:00+08:00",
+				"value": 1445.44
+			},
+			{
+				"forecastForDateTime": "2022-09-10T14:50:00+08:00",
+				"value": 1416.531
+			},
+			{
+				"forecastForDateTime": "2022-09-10T14:55:00+08:00",
+				"value": 1459.027
+			},
+			{
+				"forecastForDateTime": "2022-09-10T15:00:00+08:00",
+				"value": 1584.286
+			},
+			{
+				"forecastForDateTime": "2022-09-10T15:05:00+08:00",
+				"value": 1568.443
+			},
+			{
+				"forecastForDateTime": "2022-09-10T15:10:00+08:00",
+				"value": 1591.97
+			},
+			{
+				"forecastForDateTime": "2022-09-10T15:15:00+08:00",
+				"value": 1599.93
+			},
+			{
+				"forecastForDateTime": "2022-09-10T15:20:00+08:00",
+				"value": 1631.928
+			},
+			{
+				"forecastForDateTime": "2022-09-10T15:25:00+08:00",
+				"value": 1680.886
+			},
+			{
+				"forecastForDateTime": "2022-09-10T15:30:00+08:00",
+				"value": 1723.109
+			},
+			{
+				"forecastForDateTime": "2022-09-10T15:35:00+08:00",
+				"value": 1705.878
+			},
+			{
+				"forecastForDateTime": "2022-09-10T15:40:00+08:00",
+				"value": 1731.466
+			},
+			{
+				"forecastForDateTime": "2022-09-10T15:45:00+08:00",
+				"value": 1740.123
+			},
+			{
+				"forecastForDateTime": "2022-09-10T15:50:00+08:00",
+				"value": 1774.926
+			},
+			{
+				"forecastForDateTime": "2022-09-10T15:55:00+08:00",
+				"value": 1828.174
+			},
+			{
+				"forecastForDateTime": "2022-09-10T16:00:00+08:00",
+				"value": 1917.546
+			},
+			{
+				"forecastForDateTime": "2022-09-10T16:05:00+08:00",
+				"value": 1898.371
+			},
+			{
+				"forecastForDateTime": "2022-09-10T16:10:00+08:00",
+				"value": 1926.846
+			},
+			{
+				"forecastForDateTime": "2022-09-10T16:15:00+08:00",
+				"value": 1936.48
+			},
+			{
+				"forecastForDateTime": "2022-09-10T16:20:00+08:00",
+				"value": 1975.21
+			},
+			{
+				"forecastForDateTime": "2022-09-10T16:25:00+08:00",
+				"value": 2034.466
+			},
+			{
+				"forecastForDateTime": "2022-09-10T16:30:00+08:00",
+				"value": 2095.209
+			},
+			{
+				"forecastForDateTime": "2022-09-10T16:35:00+08:00",
+				"value": 2074.257
+			},
+			{
+				"forecastForDateTime": "2022-09-10T16:40:00+08:00",
+				"value": 2105.371
+			},
+			{
+				"forecastForDateTime": "2022-09-10T16:45:00+08:00",
+				"value": 2115.898
+			},
+			{
+				"forecastForDateTime": "2022-09-10T16:50:00+08:00",
+				"value": 2158.216
+			},
+			{
+				"forecastForDateTime": "2022-09-10T16:55:00+08:00",
+				"value": 2222.962
+			},
+			{
+				"forecastForDateTime": "2022-09-10T17:00:00+08:00",
+				"value": 2238.12
+			},
+			{
+				"forecastForDateTime": "2022-09-10T17:05:00+08:00",
+				"value": 2215.739
+			},
+			{
+				"forecastForDateTime": "2022-09-10T17:10:00+08:00",
+				"value": 2248.975
+			},
+			{
+				"forecastForDateTime": "2022-09-10T17:15:00+08:00",
+				"value": 2260.22
+			},
+			{
+				"forecastForDateTime": "2022-09-10T17:20:00+08:00",
+				"value": 2305.424
+			},
+			{
+				"forecastForDateTime": "2022-09-10T17:25:00+08:00",
+				"value": 2374.587
+			},
+			{
+				"forecastForDateTime": "2022-09-10T17:30:00+08:00",
+				"value": 2379.933
+			},
+			{
+				"forecastForDateTime": "2022-09-10T17:35:00+08:00",
+				"value": 2356.134
+			},
+			{
+				"forecastForDateTime": "2022-09-10T17:40:00+08:00",
+				"value": 2391.476
+			},
+			{
+				"forecastForDateTime": "2022-09-10T17:45:00+08:00",
+				"value": 2403.433
+			},
+			{
+				"forecastForDateTime": "2022-09-10T17:50:00+08:00",
+				"value": 2451.502
+			},
+			{
+				"forecastForDateTime": "2022-09-10T17:55:00+08:00",
+				"value": 2525.047
+			},
+			{
+				"forecastForDateTime": "2022-09-10T18:00:00+08:00",
+				"value": 2509.763
+			},
+			{
+				"forecastForDateTime": "2022-09-10T18:05:00+08:00",
+				"value": 2484.665
+			},
+			{
+				"forecastForDateTime": "2022-09-10T18:10:00+08:00",
+				"value": 2521.935
+			},
+			{
+				"forecastForDateTime": "2022-09-10T18:15:00+08:00",
+				"value": 2534.545
+			},
+			{
+				"forecastForDateTime": "2022-09-10T18:20:00+08:00",
+				"value": 2585.236
+			},
+			{
+				"forecastForDateTime": "2022-09-10T18:25:00+08:00",
+				"value": 2662.793
+			},
+			{
+				"forecastForDateTime": "2022-09-10T18:30:00+08:00",
+				"value": 2574.939
+			},
+			{
+				"forecastForDateTime": "2022-09-10T18:35:00+08:00",
+				"value": 2549.19
+			},
+			{
+				"forecastForDateTime": "2022-09-10T18:40:00+08:00",
+				"value": 2510.952
+			},
+			{
+				"forecastForDateTime": "2022-09-10T18:45:00+08:00",
+				"value": 2523.507
+			},
+			{
+				"forecastForDateTime": "2022-09-10T18:50:00+08:00",
+				"value": 2510.889
+			},
+			{
+				"forecastForDateTime": "2022-09-10T18:55:00+08:00",
+				"value": 2586.216
+			},
+			{
+				"forecastForDateTime": "2022-09-10T19:00:00+08:00",
+				"value": 2539.367
+			},
+			{
+				"forecastForDateTime": "2022-09-10T19:05:00+08:00",
+				"value": 2534.288
+			},
+			{
+				"forecastForDateTime": "2022-09-10T19:10:00+08:00",
+				"value": 2524.151
+			},
+			{
+				"forecastForDateTime": "2022-09-10T19:15:00+08:00",
+				"value": 2511.53
+			},
+			{
+				"forecastForDateTime": "2022-09-10T19:20:00+08:00",
+				"value": 2498.973
+			},
+			{
+				"forecastForDateTime": "2022-09-10T19:25:00+08:00",
+				"value": 2488.977
+			},
+			{
+				"forecastForDateTime": "2022-09-10T19:30:00+08:00",
+				"value": 2475.27
+			},
+			{
+				"forecastForDateTime": "2022-09-10T19:35:00+08:00",
+				"value": 2470.319
+			},
+			{
+				"forecastForDateTime": "2022-09-10T19:40:00+08:00",
+				"value": 2460.438
+			},
+			{
+				"forecastForDateTime": "2022-09-10T19:45:00+08:00",
+				"value": 2448.136
+			},
+			{
+				"forecastForDateTime": "2022-09-10T19:50:00+08:00",
+				"value": 2435.895
+			},
+			{
+				"forecastForDateTime": "2022-09-10T19:55:00+08:00",
+				"value": 2426.152
+			},
+			{
+				"forecastForDateTime": "2022-09-10T20:00:00+08:00",
+				"value": 2423.132
+			},
+			{
+				"forecastForDateTime": "2022-09-10T20:05:00+08:00",
+				"value": 2418.286
+			},
+			{
+				"forecastForDateTime": "2022-09-10T20:10:00+08:00",
+				"value": 2408.613
+			},
+			{
+				"forecastForDateTime": "2022-09-10T20:15:00+08:00",
+				"value": 2396.57
+			},
+			{
+				"forecastForDateTime": "2022-09-10T20:20:00+08:00",
+				"value": 2384.587
+			},
+			{
+				"forecastForDateTime": "2022-09-10T20:25:00+08:00",
+				"value": 2375.048
+			},
+			{
+				"forecastForDateTime": "2022-09-10T20:30:00+08:00",
+				"value": 2364.243
+			},
+			{
+				"forecastForDateTime": "2022-09-10T20:35:00+08:00",
+				"value": 2359.515
+			},
+			{
+				"forecastForDateTime": "2022-09-10T20:40:00+08:00",
+				"value": 2350.076
+			},
+			{
+				"forecastForDateTime": "2022-09-10T20:45:00+08:00",
+				"value": 2338.326
+			},
+			{
+				"forecastForDateTime": "2022-09-10T20:50:00+08:00",
+				"value": 2326.634
+			},
+			{
+				"forecastForDateTime": "2022-09-10T20:55:00+08:00",
+				"value": 2317.328
+			},
+			{
+				"forecastForDateTime": "2022-09-10T21:00:00+08:00",
+				"value": 2292.789
+			},
+			{
+				"forecastForDateTime": "2022-09-10T21:05:00+08:00",
+				"value": 2288.203
+			},
+			{
+				"forecastForDateTime": "2022-09-10T21:10:00+08:00",
+				"value": 2279.051
+			},
+			{
+				"forecastForDateTime": "2022-09-10T21:15:00+08:00",
+				"value": 2267.655
+			},
+			{
+				"forecastForDateTime": "2022-09-10T21:20:00+08:00",
+				"value": 2256.317
+			},
+			{
+				"forecastForDateTime": "2022-09-10T21:25:00+08:00",
+				"value": 2247.292
+			},
+			{
+				"forecastForDateTime": "2022-09-10T21:30:00+08:00",
+				"value": 2210.832
+			},
+			{
+				"forecastForDateTime": "2022-09-10T21:35:00+08:00",
+				"value": 2206.41
+			},
+			{
+				"forecastForDateTime": "2022-09-10T21:40:00+08:00",
+				"value": 2197.585
+			},
+			{
+				"forecastForDateTime": "2022-09-10T21:45:00+08:00",
+				"value": 2186.597
+			},
+			{
+				"forecastForDateTime": "2022-09-10T21:50:00+08:00",
+				"value": 2175.664
+			},
+			{
+				"forecastForDateTime": "2022-09-10T21:55:00+08:00",
+				"value": 2166.961
+			},
+			{
+				"forecastForDateTime": "2022-09-10T22:00:00+08:00",
+				"value": 2123.334
+			},
+			{
+				"forecastForDateTime": "2022-09-10T22:05:00+08:00",
+				"value": 2119.087
+			},
+			{
+				"forecastForDateTime": "2022-09-10T22:10:00+08:00",
+				"value": 2110.611
+			},
+			{
+				"forecastForDateTime": "2022-09-10T22:15:00+08:00",
+				"value": 2100.058
+			},
+			{
+				"forecastForDateTime": "2022-09-10T22:20:00+08:00",
+				"value": 2089.558
+			},
+			{
+				"forecastForDateTime": "2022-09-10T22:25:00+08:00",
+				"value": 2081.199
+			},
+			{
+				"forecastForDateTime": "2022-09-10T22:30:00+08:00",
+				"value": 2032.293
+			},
+			{
+				"forecastForDateTime": "2022-09-10T22:35:00+08:00",
+				"value": 2028.228
+			},
+			{
+				"forecastForDateTime": "2022-09-10T22:40:00+08:00",
+				"value": 2020.116
+			},
+			{
+				"forecastForDateTime": "2022-09-10T22:45:00+08:00",
+				"value": 2010.015
+			},
+			{
+				"forecastForDateTime": "2022-09-10T22:50:00+08:00",
+				"value": 1999.965
+			},
+			{
+				"forecastForDateTime": "2022-09-10T22:55:00+08:00",
+				"value": 1991.965
+			},
+			{
+				"forecastForDateTime": "2022-09-10T23:00:00+08:00",
+				"value": 1957.017
+			},
+			{
+				"forecastForDateTime": "2022-09-10T23:05:00+08:00",
+				"value": 1953.103
+			},
+			{
+				"forecastForDateTime": "2022-09-10T23:10:00+08:00",
+				"value": 1943.337
+			},
+			{
+				"forecastForDateTime": "2022-09-10T23:15:00+08:00",
+				"value": 1933.621
+			},
+			{
+				"forecastForDateTime": "2022-09-10T23:20:00+08:00",
+				"value": 1914.285
+			},
+			{
+				"forecastForDateTime": "2022-09-10T23:25:00+08:00",
+				"value": 1895.142
+			},
+			{
+				"forecastForDateTime": "2022-09-10T23:30:00+08:00",
+				"value": 1899.278
+			},
+			{
+				"forecastForDateTime": "2022-09-10T23:35:00+08:00",
+				"value": 1895.479
+			},
+			{
+				"forecastForDateTime": "2022-09-10T23:40:00+08:00",
+				"value": 1886.002
+			},
+			{
+				"forecastForDateTime": "2022-09-10T23:45:00+08:00",
+				"value": 1876.572
+			},
+			{
+				"forecastForDateTime": "2022-09-10T23:50:00+08:00",
+				"value": 1857.806
+			},
+			{
+				"forecastForDateTime": "2022-09-10T23:55:00+08:00",
+				"value": 1839.228
+			},
+			{
+				"forecastForDateTime": "2022-09-11T00:00:00+08:00",
+				"value": 1855.108
+			},
+			{
+				"forecastForDateTime": "2022-09-11T00:05:00+08:00",
+				"value": 1851.398
+			},
+			{
+				"forecastForDateTime": "2022-09-11T00:10:00+08:00",
+				"value": 1842.141
+			},
+			{
+				"forecastForDateTime": "2022-09-11T00:15:00+08:00",
+				"value": 1832.93
+			},
+			{
+				"forecastForDateTime": "2022-09-11T00:20:00+08:00",
+				"value": 1814.601
+			},
+			{
+				"forecastForDateTime": "2022-09-11T00:25:00+08:00",
+				"value": 1796.455
+			},
+			{
+				"forecastForDateTime": "2022-09-11T00:30:00+08:00",
+				"value": 1818.685
+			},
+			{
+				"forecastForDateTime": "2022-09-11T00:35:00+08:00",
+				"value": 1815.048
+			},
+			{
+				"forecastForDateTime": "2022-09-11T00:40:00+08:00",
+				"value": 1805.972
+			},
+			{
+				"forecastForDateTime": "2022-09-11T00:45:00+08:00",
+				"value": 1796.943
+			},
+			{
+				"forecastForDateTime": "2022-09-11T00:50:00+08:00",
+				"value": 1778.973
+			},
+			{
+				"forecastForDateTime": "2022-09-11T00:55:00+08:00",
+				"value": 1761.183
+			},
+			{
+				"forecastForDateTime": "2022-09-11T01:00:00+08:00",
+				"value": 1788.057
+			},
+			{
+				"forecastForDateTime": "2022-09-11T01:05:00+08:00",
+				"value": 1784.481
+			},
+			{
+				"forecastForDateTime": "2022-09-11T01:10:00+08:00",
+				"value": 1775.558
+			},
+			{
+				"forecastForDateTime": "2022-09-11T01:15:00+08:00",
+				"value": 1766.681
+			},
+			{
+				"forecastForDateTime": "2022-09-11T01:20:00+08:00",
+				"value": 1749.014
+			},
+			{
+				"forecastForDateTime": "2022-09-11T01:25:00+08:00",
+				"value": 1731.524
+			},
+			{
+				"forecastForDateTime": "2022-09-11T01:30:00+08:00",
+				"value": 1766.068
+			},
+			{
+				"forecastForDateTime": "2022-09-11T01:35:00+08:00",
+				"value": 1762.536
+			},
+			{
+				"forecastForDateTime": "2022-09-11T01:40:00+08:00",
+				"value": 1753.723
+			},
+			{
+				"forecastForDateTime": "2022-09-11T01:45:00+08:00",
+				"value": 1744.955
+			},
+			{
+				"forecastForDateTime": "2022-09-11T01:50:00+08:00",
+				"value": 1727.505
+			},
+			{
+				"forecastForDateTime": "2022-09-11T01:55:00+08:00",
+				"value": 1710.23
+			},
+			{
+				"forecastForDateTime": "2022-09-11T02:00:00+08:00",
+				"value": 1750.785
+			},
+			{
+				"forecastForDateTime": "2022-09-11T02:05:00+08:00",
+				"value": 1747.283
+			},
+			{
+				"forecastForDateTime": "2022-09-11T02:10:00+08:00",
+				"value": 1738.547
+			},
+			{
+				"forecastForDateTime": "2022-09-11T02:15:00+08:00",
+				"value": 1729.854
+			},
+			{
+				"forecastForDateTime": "2022-09-11T02:20:00+08:00",
+				"value": 1712.556
+			},
+			{
+				"forecastForDateTime": "2022-09-11T02:25:00+08:00",
+				"value": 1695.43
+			},
+			{
+				"forecastForDateTime": "2022-09-11T02:30:00+08:00",
+				"value": 1743.147
+			},
+			{
+				"forecastForDateTime": "2022-09-11T02:35:00+08:00",
+				"value": 1739.661
+			},
+			{
+				"forecastForDateTime": "2022-09-11T02:40:00+08:00",
+				"value": 1730.962
+			},
+			{
+				"forecastForDateTime": "2022-09-11T02:45:00+08:00",
+				"value": 1722.308
+			},
+			{
+				"forecastForDateTime": "2022-09-11T02:50:00+08:00",
+				"value": 1720.585
+			},
+			{
+				"forecastForDateTime": "2022-09-11T02:55:00+08:00",
+				"value": 1703.379
+			},
+			{
+				"forecastForDateTime": "2022-09-11T03:00:00+08:00",
+				"value": 1732.648
+			},
+			{
+				"forecastForDateTime": "2022-09-11T03:05:00+08:00",
+				"value": 1729.183
+			},
+			{
+				"forecastForDateTime": "2022-09-11T03:10:00+08:00",
+				"value": 1720.537
+			},
+			{
+				"forecastForDateTime": "2022-09-11T03:15:00+08:00",
+				"value": 1711.934
+			},
+			{
+				"forecastForDateTime": "2022-09-11T03:20:00+08:00",
+				"value": 1710.222
+			},
+			{
+				"forecastForDateTime": "2022-09-11T03:25:00+08:00",
+				"value": 1727.324
+			},
+			{
+				"forecastForDateTime": "2022-09-11T03:30:00+08:00",
+				"value": 1726.924
+			},
+			{
+				"forecastForDateTime": "2022-09-11T03:35:00+08:00",
+				"value": 1723.47
+			},
+			{
+				"forecastForDateTime": "2022-09-11T03:40:00+08:00",
+				"value": 1714.853
+			},
+			{
+				"forecastForDateTime": "2022-09-11T03:45:00+08:00",
+				"value": 1706.279
+			},
+			{
+				"forecastForDateTime": "2022-09-11T03:50:00+08:00",
+				"value": 1704.572
+			},
+			{
+				"forecastForDateTime": "2022-09-11T03:55:00+08:00",
+				"value": 1721.618
+			},
+			{
+				"forecastForDateTime": "2022-09-11T04:00:00+08:00",
+				"value": 1731.694
+			},
+			{
+				"forecastForDateTime": "2022-09-11T04:05:00+08:00",
+				"value": 1728.231
+			},
+			{
+				"forecastForDateTime": "2022-09-11T04:10:00+08:00",
+				"value": 1719.589
+			},
+			{
+				"forecastForDateTime": "2022-09-11T04:15:00+08:00",
+				"value": 1710.992
+			},
+			{
+				"forecastForDateTime": "2022-09-11T04:20:00+08:00",
+				"value": 1709.281
+			},
+			{
+				"forecastForDateTime": "2022-09-11T04:25:00+08:00",
+				"value": 1726.373
+			},
+			{
+				"forecastForDateTime": "2022-09-11T04:30:00+08:00",
+				"value": 1750.785
+			},
+			{
+				"forecastForDateTime": "2022-09-11T04:35:00+08:00",
+				"value": 1747.283
+			},
+			{
+				"forecastForDateTime": "2022-09-11T04:40:00+08:00",
+				"value": 1738.547
+			},
+			{
+				"forecastForDateTime": "2022-09-11T04:45:00+08:00",
+				"value": 1729.854
+			},
+			{
+				"forecastForDateTime": "2022-09-11T04:50:00+08:00",
+				"value": 1728.124
+			},
+			{
+				"forecastForDateTime": "2022-09-11T04:55:00+08:00",
+				"value": 1745.406
+			},
+			{
+				"forecastForDateTime": "2022-09-11T05:00:00+08:00",
+				"value": 1776.582
+			},
+			{
+				"forecastForDateTime": "2022-09-11T05:05:00+08:00",
+				"value": 1773.029
+			},
+			{
+				"forecastForDateTime": "2022-09-11T05:10:00+08:00",
+				"value": 1764.164
+			},
+			{
+				"forecastForDateTime": "2022-09-11T05:15:00+08:00",
+				"value": 1772.985
+			},
+			{
+				"forecastForDateTime": "2022-09-11T05:20:00+08:00",
+				"value": 1771.212
+			},
+			{
+				"forecastForDateTime": "2022-09-11T05:25:00+08:00",
+				"value": 1780.068
+			},
+			{
+				"forecastForDateTime": "2022-09-11T05:30:00+08:00",
+				"value": 1819.643
+			},
+			{
+				"forecastForDateTime": "2022-09-11T05:35:00+08:00",
+				"value": 1816.004
+			},
+			{
+				"forecastForDateTime": "2022-09-11T05:40:00+08:00",
+				"value": 1825.084
+			},
+			{
+				"forecastForDateTime": "2022-09-11T05:45:00+08:00",
+				"value": 1843.335
+			},
+			{
+				"forecastForDateTime": "2022-09-11T05:50:00+08:00",
+				"value": 1861.768
+			},
+			{
+				"forecastForDateTime": "2022-09-11T05:55:00+08:00",
+				"value": 1880.386
+			},
+			{
+				"forecastForDateTime": "2022-09-11T06:00:00+08:00",
+				"value": 1876.222
+			},
+			{
+				"forecastForDateTime": "2022-09-11T06:05:00+08:00",
+				"value": 1872.47
+			},
+			{
+				"forecastForDateTime": "2022-09-11T06:10:00+08:00",
+				"value": 1881.832
+			},
+			{
+				"forecastForDateTime": "2022-09-11T06:15:00+08:00",
+				"value": 1900.65
+			},
+			{
+				"forecastForDateTime": "2022-09-11T06:20:00+08:00",
+				"value": 1919.657
+			},
+			{
+				"forecastForDateTime": "2022-09-11T06:25:00+08:00",
+				"value": 1938.853
+			},
+			{
+				"forecastForDateTime": "2022-09-11T06:30:00+08:00",
+				"value": 1922.356
+			},
+			{
+				"forecastForDateTime": "2022-09-11T06:35:00+08:00",
+				"value": 1918.511
+			},
+			{
+				"forecastForDateTime": "2022-09-11T06:40:00+08:00",
+				"value": 1928.104
+			},
+			{
+				"forecastForDateTime": "2022-09-11T06:45:00+08:00",
+				"value": 1937.744
+			},
+			{
+				"forecastForDateTime": "2022-09-11T06:50:00+08:00",
+				"value": 1939.682
+			},
+			{
+				"forecastForDateTime": "2022-09-11T06:55:00+08:00",
+				"value": 1941.622
+			},
+			{
+				"forecastForDateTime": "2022-09-11T07:00:00+08:00",
+				"value": 1953.163
+			},
+			{
+				"forecastForDateTime": "2022-09-11T07:05:00+08:00",
+				"value": 1949.257
+			},
+			{
+				"forecastForDateTime": "2022-09-11T07:10:00+08:00",
+				"value": 1959.003
+			},
+			{
+				"forecastForDateTime": "2022-09-11T07:15:00+08:00",
+				"value": 1968.798
+			},
+			{
+				"forecastForDateTime": "2022-09-11T07:20:00+08:00",
+				"value": 1970.767
+			},
+			{
+				"forecastForDateTime": "2022-09-11T07:25:00+08:00",
+				"value": 1972.738
+			},
+			{
+				"forecastForDateTime": "2022-09-11T07:30:00+08:00",
+				"value": 1975.331
+			},
+			{
+				"forecastForDateTime": "2022-09-11T07:35:00+08:00",
+				"value": 1995.084
+			},
+			{
+				"forecastForDateTime": "2022-09-11T07:40:00+08:00",
+				"value": 2034.986
+			},
+			{
+				"forecastForDateTime": "2022-09-11T07:45:00+08:00",
+				"value": 2096.036
+			},
+			{
+				"forecastForDateTime": "2022-09-11T07:50:00+08:00",
+				"value": 2179.877
+			},
+			{
+				"forecastForDateTime": "2022-09-11T07:55:00+08:00",
+				"value": 2201.676
+			},
+			{
+				"forecastForDateTime": "2022-09-11T08:00:00+08:00",
+				"value": 2245.922
+			}
+		]
+	}
+}
