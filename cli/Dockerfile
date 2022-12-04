@@ -4,6 +4,7 @@ WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY *.csproj .
+COPY ycs ./ycs
 RUN dotnet restore --use-current-runtime
 
 # copy and publish app and libraries
