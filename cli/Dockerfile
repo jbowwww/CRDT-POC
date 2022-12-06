@@ -3,16 +3,14 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY *.csproj .
-COPY ycs ./ycs
-RUN dotnet restore --use-current-runtime
+COPY . .
+RUN dotnet restore --use-current-runtime "./cli.csproj"
 
 # copy and publish app and libraries
-COPY . .
-RUN dotnet publish -c Release -o /app --use-current-runtime --self-contained false --no-restore
+RUN dotnet publish -c Release -o /app --use-current-runtime --self-contained --runtime linux-64 --no-restore
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime:7.0
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["dotnet", "dotnetapp.dll"]
+ENTRYPOINT ["cli.exe"]

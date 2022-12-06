@@ -1,13 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 
   <ItemGroup>
-    <ProjectReference Include=".\ycs\src\Ycs\Ycs.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1" />
+    <Reference Include=".\ycs\Ycs.dll" />
   </ItemGroup>
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
+    <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
   </PropertyGroup>
 
 </Project>
