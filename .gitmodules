@@ -1,3 +1,0 @@
-[submodule "cli/ycs"]
-	path = cli/ycs
-	url = ./cli/ycs
