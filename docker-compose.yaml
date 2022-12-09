@@ -2,7 +2,3 @@ version: "3.1"
 services:
   cli:
     build: cli
-    volumes:
-      - "./app:/app"
-  # ports:
-  # - 80:80
