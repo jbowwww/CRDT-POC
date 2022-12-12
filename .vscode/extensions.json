@@ -1,0 +1,22 @@
+{
+    "recommendations": [
+        "doggy8088.netcore-extension-pack",
+        "formulahendry.dotnet-test-explorer",
+        "formulahendry.dotnet",
+        "fudge.auto-using",
+        "ms-dotnettools.csharp",
+        "kreativ-software.csharpextensions",
+        "adrianwilczynski.namespace",
+        "ms-azuretools.vscode-docker",
+        "formulahendry.docker-explorer",
+        "formulahendry.docker-extension-pack",
+        "editorconfig.editorconfig",
+        "gogson.explorer-terminal-commands",
+        "felipecaputo.git-project-manager",
+        "tintoy.msbuild-project-tools",
+        "patcx.vscode-nuget-gallery",
+        "doggy8088.quicktype-refresh",
+        "spmeesseman.vscode-taskexplorer",
+        "redhat.vscode-yaml"
+    ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "cli",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "dotnet publish -c Debug -o ./app --self-contained true --use-current-runtime ./cli/cli/cli.csproj",
+    "build:debug": "dotnet publish -c Debug -o ./app --self-contained true --use-current-runtime ./cli/cli/cli.csproj",
+    "build:release": "dotnet publish -c Release -o ./app --self-contained true --use-current-runtime ./cli/cli/cli.csproj",
+    "run": "./app/cli"
+  },
+  "author": "",
+  "license": "ISC"
+}
