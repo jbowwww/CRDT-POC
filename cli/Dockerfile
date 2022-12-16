@@ -13,14 +13,14 @@ RUN dotnet restore --use-current-runtime "./cli/cli.csproj"
 COPY . .
 
 # copy and publish app and libraries - TODO: change /app (here and below) to ./app and test - then doesn't matter if running docker build on system that probably can't write to /app
-RUN dotnet publish -c Release -o /app --self-contained true --use-current-runtime --no-restore "./cli/cli.csproj"
+RUN dotnet publish -c Release -o ./app --self-contained true --use-current-runtime --no-restore "./cli/cli.csproj"
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime:7.0
 WORKDIR /app
 
 # copy dotnet build result /app 
-COPY --from=build /app .
+COPY --from=build ./app .
 
 # the executable built in the build container from our source in this build context
 ENTRYPOINT [ "/app/cli" ]
