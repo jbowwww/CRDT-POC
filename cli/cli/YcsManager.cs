@@ -91,7 +91,7 @@ namespace Ycs
                             Data = encodedUpdate
                         };
 
-                        YcsHubAccessor.Instance.YcsHub.Clients.Client(clientId)
+                        YcsHubAccessor.Instance?.YcsHub?.Clients.Client(clientId)
                             .SendAsync(YjsCommandType.Update.ToString(), JsonSerializer.Serialize(msg))
                             .ContinueWith((t) => { /* Ignore SendAsync() exceptions. */ });
                     }
