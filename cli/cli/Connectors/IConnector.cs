@@ -1,16 +1,33 @@
+using System;
+using System.Collections.Concurrent;
 using System.IO;
 namespace Aemo.Connectors;
 
+public interface IConnector<TConnection> : IConnector
+  where TConnection : IConnection, new()
+{
+  new ConnectionDictionary<TConnection> Connections { get; }
+}
+
 public interface IConnector
 {
-    bool IsConnected { get; }
-    
-    Stream? TxStream { get; }
+  ConnectionDictionary<IConnection> Connections { get; }
 
-    Stream? RxStream { get; }
-    
-    bool Connect();
+  string ConnectionId { get; }
 
-    void Send(byte[] data, object? transactionOrigin = null);
-    // YDocRoot ConnectedDocument { get; init; }
+  bool IsConnected { get; }
+
+  ConnectedDocument Document { get; }
+
+  void Connect();
+
+  void Disconnect();
+
+  void Receive(string connectionId, byte[] data);
+
+  void Send(string connectionId, byte[] data);
+
+  void Broadcast(byte[] data);
+
+  void Broadcast(Action<Stream> streamAction);
 }
