@@ -4,22 +4,31 @@
 		{
 			"type": "npm",
 			"script": "build",
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
+			"group": "build",
 			"options": {
 				"env": {}
 			},
 			"problemMatcher": [],
-			"label": "dotnet: build"
+			"label": "dotnet: build",
+			"detail": "npm run build:debug"
 		},
 		{
 			"type": "npm",
 			"script": "run",
 			"problemMatcher": [],
 			"label": "npm: run",
-			"detail": "./app/cli"
+			"detail": "./app/cli 127.0.0.1:2222 127.0.0.1:2221"
+		},
+		{
+			"type": "npm",
+			"script": "build:debug",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"label": "npm: build:debug",
+			"detail": "reset; echo \"==========\nBuilding solution: Debug ...\n==========\n\" ; /bin/bash -vc \"dotnet publish -c Debug -o ./app --self-contained true --use-current-runtime ./cli/cli/cli.csproj\""
 		}
 	]
 }
