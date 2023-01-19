@@ -1,32 +1,38 @@
 using System;
-using System.Collections;
-
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Reflection;
 using System.Threading.Tasks;
 using Ycs;
 
 namespace Aemo.Connectors;
 
-public static class ByteArray
+public enum ConnectorStatus
 {
-  public static string ToString(byte[] bytes) => string.Join(" ", bytes.Select((b, i) => b.ToString("{00:X}")));
-}
+  Init = 0,
+  Connecting,
+  Connected,
+  Partitioned,
+  Error,
+  Disconnecting,
+  Disconnected
+};
 
-public abstract class ConnectorBase<TConnection, TConnectorOptions> : IConnector<TConnection>, IConnector
-  where TConnection : IConnection, new()
-  where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
+public abstract class ConnectorBase<TConnection, TConnectorOptions> : IConnector<TConnection, TConnectorOptions>, IConnector
+  where TConnection : ConnectionBase, IConnection, new()
+  where TConnectorOptions : IConnectorOptions<TConnectorOptions>, new()
 {
   public virtual TConnectorOptions Options { get; init; } = new();
 
   public virtual string ConnectionId { get; } = null!;
 
-  public virtual bool IsConnected { get; protected set; }
+  public ConnectorStatus Status { get; set; }
 
-  public virtual ConnectedDocument Document { get; init; }
+  public virtual bool IsInit => Status == ConnectorStatus.Init;
+  public virtual bool IsConnected => Status == ConnectorStatus.Connected;
+
+  public virtual ConnectedDocument Document { get; protected set; } = null!;
 
   /// <summary>
   /// Use this for now, for simple client/server POC test. Worry about mapping using <see cref="Connections"/> later.
@@ -35,15 +41,22 @@ public abstract class ConnectorBase<TConnection, TConnectorOptions> : IConnector
 
   public ConnectionDictionary<TConnection> Connections { get; } = new();
 
-  ConnectionDictionary<IConnection> IConnector.Connections => (ConnectionDictionary<IConnection>)Connections.Cast<KeyValuePair<string, IConnection>>();
+  // ConnectionDictionary<IConnection> IConnector.Connections => (ConnectionDictionary<IConnection>)Connections;//.Cast<KeyValuePair<string, IConnection>>();
 
-  public ConnectorBase(ConnectedDocument document, TConnectorOptions options)
+  internal ConnectorBase() { }
+
+  public ConnectorBase(ConnectedDocument document, TConnectorOptions? options = default)
   {
-    Document = document;
-    options.CopyTo(Options);
+    Init(document, options);
   }
 
-  public abstract void Connect();
+  public void Init(ConnectedDocument rootDocument, IConnectorOptions<TConnectorOptions>? connectorOptions = default)
+  {
+    Document = rootDocument;
+    connectorOptions?.CopyTo(Options);
+  }
+
+  public abstract Task Connect();
 
   public abstract void Disconnect();
 
@@ -66,12 +79,12 @@ public abstract class ConnectorBase<TConnection, TConnectorOptions> : IConnector
 
   public void Send(string connectionId, byte[] data)
   {
-    Console.WriteLine($"Send(): IsConnected={IsConnected} Connections.Count={Connections.Count} Options={this}\n\tconnectionId={connectionId}\n\tdata={ByteArray.ToString(data)}");
+    Console.WriteLine($"Send(): IsConnected={IsConnected} Connections.Count={Connections.Count} Options={this}\n\tconnectionId={connectionId}\n\tdata={SyncProtocol.EncodeBytes(data)}");
     if (Connections.TryGetValue(connectionId, out TConnection? connection))
     {
       if (IsConnected)
       {
-        SyncProtocol.WriteUpdate(Connections[connectionId].Stream, data);
+        SyncProtocol.WriteUpdate(connection.Stream, data);
       }
     }
     else
@@ -83,7 +96,7 @@ public abstract class ConnectorBase<TConnection, TConnectorOptions> : IConnector
 
   public void Broadcast(byte[] data)
   {
-    Console.WriteLine($"Broadcast(): IsConnected={IsConnected} Connections.Count={Connections.Count} Options={this}\n\tdata={ByteArray.ToString(data)}");
+    Console.WriteLine($"Broadcast(): IsConnected={IsConnected} Connections.Count={Connections.Count} Options={this}\n\tdata={SyncProtocol.EncodeBytes(data)}");
     if (IsConnected)
     {
       Connections.AsParallel().ForAll<TConnection>(
@@ -94,16 +107,8 @@ public abstract class ConnectorBase<TConnection, TConnectorOptions> : IConnector
 
   public void Broadcast(Action<Stream> streamAction)
   {
-    Console.WriteLine($"Broadcast(): streamAction={streamAction.Method.GetMethodBody()}");
-    using (var stream = new MemoryStream())
-    {
-      streamAction(stream);
-      var data = stream.ToArray();
-      Broadcast(data);
-      Console.WriteLine($"Broadcast(): End");
-    }
+    Console.WriteLine($"Broadcast(): streamAction={SyncProtocol.EncodeBytes(streamAction.Method?.GetMethodBody()?.GetILAsByteArray()!)}");
+    Connections.AsParallel().ForAll<TConnection>(
+      connection => streamAction.Invoke((connection.Stream)));
   }
-
-  protected static string EncodeBytes(byte[] arr) => Convert.ToBase64String(arr);
-  protected static byte[] DecodeString(string str) => Convert.FromBase64String(str);
 }

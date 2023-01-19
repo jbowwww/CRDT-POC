@@ -32,7 +32,7 @@ public class ConnectedDocument : YDoc
       : base(options)
   {
     options ??= new Options();
-    Name = name;
+    Name = $"Document #{ClientId}"; // name;
     // make this new doc a top level child of global root doc - use Name
     // Not necessary apparenty. The main thing I had been missing was in the UpdateV2
     // handler on docs, need to sender.EncodeStateAsUpdateV2() (see update handler below)
@@ -40,8 +40,12 @@ public class ConnectedDocument : YDoc
     // within a single process.
     // TODO: Move adding the UpdateV2 handler to here. May need to consider destination doc(s)
     //YcsManager.Instance.YDoc?.GetMap().Set(Name, this);
-    if (options.Connector != null)
-      Connect(options.Connector);
+
+    // if (options.Connector != null)
+    //   Connect((options.Connector);
+
+    AddUpdateHandler(HandleDocumentUpdate);
+
   }
 
   // Convenience property uses the Name key of the YDoc
@@ -61,22 +65,24 @@ public class ConnectedDocument : YDoc
     }
   }
 
-  public ConnectedDocument Connect<TConnector, TConnection, TConnectorOptions>
+  public async Task<ConnectedDocument> Connect<TConnector, TConnection, TConnectorOptions>
   (Action<TConnectorOptions> optionsConfiguration = null!)
     // where TConnector : IConnector<TConnection, TConnectorOptions>, 
     // where TConnector : ConnectorBase<TConnector, TConnectorOptions>, new()
     where TConnector : ConnectorBase<TConnection, TConnectorOptions>, new()
-    where TConnection : IConnection, new()
+    where TConnection : ConnectionBase, IConnection, new()
     where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
   {
     TConnectorOptions options = new();
     optionsConfiguration?.Invoke(options);
-    TConnector connector = new TConnector(/* options */);
-    var connectedDocument = Connect(connector);
+    var connector = options.CreateConnector<TConnector, TConnection>(this);
+    var connectedDocument = await Connect(connector);
     return connectedDocument;
   }
 
-  public ConnectedDocument Connect(IConnector? connector = null)
+  public async Task<ConnectedDocument> Connect<TConnection, TConnectorOptions>(IConnector<TConnection, TConnectorOptions>? connector = null)
+    where TConnection : ConnectionBase, new()
+    where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
   {
     Console.WriteLine($"ConnectedDocument.Connect(): connector={connector} Connector={connector}");
     if (Connector != null && Connector != connector)
@@ -84,20 +90,25 @@ public class ConnectedDocument : YDoc
       Disconnect();
     }
     Connector = connector;
-    if (Connector != null)
+    if (Connector != null/*  && Connector.IsConnected */)
     {
+      await Connector.Connect(); // if already connected, simply returns
       Console.WriteLine($"ConnectedDocument.Connect(): Broadcast WriteSyncStep1 for doc={this}");
       Connector?.Broadcast(stream => SyncProtocol.WriteSyncStep1(stream, this));
-      foreach (var connection in Connector?.Connections)
+      _ = Task.Run(() =>
       {
-        Console.WriteLine($"ConnectedDocument.Connect(): ReadSyncMessage for connection={connection.ConnectionId}");
-        var messageType = SyncProtocol.ReadSyncMessage(
-          connection.Stream,
-          connection.Stream,
-          this, this);
-        Console.WriteLine($"ConnectedDocument.Connect(): ReadSyncMessage for connection={connection.ConnectionId} returned {messageType}");
+        foreach (var connection in connector?.Connections!)  // why is ! necessary
+        {
+          Console.WriteLine($"ConnectedDocument.Connect(): ReadSyncMessage for connection={connection.ConnectionId}");
+          var messageType = SyncProtocol.ReadSyncMessage(
+            connection.Stream,
+            connection.Stream,
+            this, this);
+          Console.WriteLine($"ConnectedDocument.Connect(): ReadSyncMessage for connection={connection.ConnectionId} returned {messageType}");
 
-      }
+        }
+
+      });
     }
     return this;
   }
@@ -117,6 +128,24 @@ public class ConnectedDocument : YDoc
   public void AddUpdateHandler(EventHandler<(byte[] data, object origin, Transaction transaction)> eventHandler)
   {
     UpdateV2 += eventHandler;
+  }
+
+  public void HandleDocumentUpdate(object? sender, (byte[] data, object origin, Transaction transaction) e)
+  {
+    Console.WriteLine($"TcpConnector.HandleDocumentUpdate(): sender={sender} e.data={e.data} origin={e.origin} transaction={e.transaction} Connector?.Status={Connector?.Status}");
+    if (e.data == null || e.data.Length == 0)
+    {
+      return;
+    }
+
+    if (Connector != null && Connector.IsConnected)
+    {
+      Connector.Broadcast(connection =>
+      {
+        Console.WriteLine($"TcpConnector.HandleDocumentUpdate().Broadcast: connection={connection} this={this} e.origin={e.origin} e,data={SyncProtocol.EncodeBytes(e.data)}");
+        SyncProtocol.WriteUpdate(connection, EncodeStateAsUpdateV2()); // TODO: Or encode state vector/update using state vector , and broadcast that ??
+      });
+    }
   }
 
   public void AddUpdateDocumentHandler(YDoc destinationDocument)

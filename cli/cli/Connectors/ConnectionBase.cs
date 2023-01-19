@@ -9,6 +9,5 @@ public abstract class ConnectionBase : IConnection
   public virtual string ConnectionId { get; init; } = string.Empty;
   public virtual Socket Socket { get; init; } = null!;
   public virtual NetworkStream Stream { get; init; } = null!;
-  public override string ToString()
-   => $"[{GetType().FullName} ConnectionId={this.ConnectionId} Socket={Socket} TxStream={Stream}]";
+  public override string ToString() => $"[{GetType().FullName} ConnectionId={this.ConnectionId}]"; // Socket={Socket} TxStream={Stream}]";
 }
