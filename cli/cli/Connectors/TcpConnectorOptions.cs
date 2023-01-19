@@ -67,7 +67,7 @@ public class TcpConnectorOptions : ConnectorOptions<TcpConnectorOptions>
     }
   }
 
-  public override TcpConnectorOptions CopyTo(ConnectorOptions<TcpConnectorOptions> options)
+  public override TcpConnectorOptions CopyTo(IConnectorOptions<TcpConnectorOptions> options)
   {
     var tcpOptions = ((TcpConnectorOptions)options);
     tcpOptions.AutoConnect = AutoConnect;

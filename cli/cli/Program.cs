@@ -38,53 +38,37 @@ namespace Aemo
       // var mgr = YcsManager.Instance;
 
       var doc1 = new ConnectedDocument("Document #1"/*, new YDocOptions() {}*/);
+
+      Console.WriteLine($"PRECON doc1={doc1}"); //\nConnector={connector}\n
+      await doc1.Connect<TcpConnector, TcpConnection, TcpConnectorOptions>(options => options.Parse(args));
       //var doc2 = new ConnectedDocument("Document #2");
+      Console.WriteLine($"POSTCON doc1={doc1}");
 
-      Console.WriteLine($"PRECON doc1={doc1}");
-
-      var connector = new TcpConnector(doc1, new TcpConnectorOptions(args));
-      connector.Connect();
-
-      var isPrimaryNode = connector.ConnectionId.EndsWith("1");
-
-      Console.WriteLine($"POSTCON doc1={doc1}\nConnector={connector}\n");
-
-      // YcsManager.Instance.HandleClientConnected(doc1.Guid); 
-      // YcsManager.Instance.HandleClientConnected(doc2.Guid); 
-
-      // mgr?.EnqueueAndProcessMessagesAsync(doc1.Guid, 0, new MessageToProcess() { Command = YjsCommandType.GetMissing, });
-      // mgr?.EnqueueAndProcessMessagesAsync(doc2.Guid, 0, new MessageToProcess() { Command = YjsCommandType.GetMissing, });
-
-      // Console.WriteLine($"doc1={doc1}\ndoc2={doc2}");//globalRoot={GlobalRoot}");
-
-      // doc1.UpdateV2 += CreateDocUpdateHandler(doc2, nameof(doc1));
-      // doc2.UpdateV2 += CreateDocUpdateHandler(doc1, nameof(doc2));
-
-      // Console.WriteLine($"doc1={doc1}\ndoc2={doc2}");
-
+      var isPrimaryNode = doc1.Connector.ConnectionId.EndsWith("1");
       if (isPrimaryNode)
       {
         await Task.Delay(500);
       }
-
       doc1.Set("prop1", isPrimaryNode ? "stringValue1" : "stringValue2");
       // doc2.Set("prop2", "stringValue2");
+      Console.WriteLine($"POSTVAR doc1={doc1}");
 
-      Console.WriteLine($"POSTVAR doc1={doc1}\nConnector={connector}\n");
-
-      if (isPrimaryNode)
+      if (!isPrimaryNode)
       {
-        var timer = new Timer(2000);
+        var timer = new Timer(4000) { AutoReset = false };
         timer.Elapsed += (object? sender, ElapsedEventArgs e) =>
         {
+          Console.WriteLine($"PRETIMER doc1={doc1}");
           doc1.Set("propTimer", "timerValue");
-          Console.WriteLine($"POSTTIMER doc1={doc1}\nConnector={connector}\n");
+          doc1.Set("prop1", "prop1timered");
+          Console.WriteLine($"POSTTIMER doc1={doc1}");
         };
         timer.Start();
       }
 
-      Process.GetCurrentProcess().WaitForExit();
-      Console.WriteLine($"POSTEXIT doc1={doc1}\nConnector={connector}\n");
+      Console.WriteLine($"PREEXIT doc1={doc1}");
+      Console.ReadKey();
+      Console.WriteLine($"POSTEXIT doc1={doc1}");
     }
   }
 }
