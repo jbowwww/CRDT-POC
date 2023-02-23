@@ -4,7 +4,7 @@ using Aemo.Connectors;
 namespace Aemo;
 
 public interface IConnectorOptions<T>
-   where T : IConnectorOptions<T>, new()
+   where T : ConnectorOptions<T>, new()
 {
   void Parse(string[] args);
 
@@ -12,5 +12,5 @@ public interface IConnectorOptions<T>
 
   TConnector CreateConnector<TConnector, TConnection>(ConnectedDocument document)
     where TConnector : ConnectorBase<TConnection, T>, new()
-    where TConnection : ConnectionBase, IConnection, new();
+    where TConnection : ConnectionBase;
 }

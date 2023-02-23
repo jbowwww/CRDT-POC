@@ -1,74 +1,51 @@
 using System;
-using System.Diagnostics;
-using System.IO;
-using System.IO.Pipelines;
-using System.Net.NetworkInformation;
-using System.Reflection.Metadata;
-using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using Aemo;
 using Aemo.Connectors;
-using Ycs;
-using Ycs.Hubs;
-using Ycs.Middleware;
 
-namespace Aemo
+namespace cli
 {
   public static class CrdtPoc
   {
-    // probably not needed
-    // private static YDoc? GlobalRoot;
-
-    private static EventHandler<(byte[], object, Transaction)> CreateDocUpdateHandler(YDoc destDoc, string srcName = "AnonymousDoc") =>
-        (object? sender, (byte[] data, object origin, Transaction transaction) eventArgs) =>
-        {
-          Console.WriteLine($"{srcName}.UpdateHandler():\n\tsender={sender}\n\tdata=byte[{eventArgs.data.Length}] " +
-              $"{{{Encoding.ASCII.GetString(eventArgs.data)}}}\n\t" +
-              $"transaction.origin={eventArgs.transaction.Origin}\n\tdestDoc={destDoc}");//\n\tGlobalRoot={GlobalRoot}");
-          var stateUpdateV2 = (sender as YDoc)?.EncodeStateAsUpdateV2(eventArgs.data);
-          // var stateVector = (sender as YDoc)?.EncodeStateVectorV2();
-          destDoc.ApplyUpdateV2(eventArgs.data, eventArgs.transaction.Origin, false);
-          Console.WriteLine($"{srcName}.UpdateHandler(): destDoc={destDoc}");//\n\tGlobalRoot={GlobalRoot}");
-        };
-
+    // Run instructions: Seen to be working, run 2 instances of this CLI program:
+    // - "reset ; ./app/cli 127.0.0.1:2222 127.0.0.1:2221"
+    // - "reset ; ./app/cli 127.0.0.1:2221 127.0.0.1:2222"
+    //TODO: Remove Console.WriteLine's pasted repeatedly, add a doc1.Update handler to do it and count #updates(local/not?)
     public static async Task Main(string[] args)
     {
-      // GlobalRoot = YcsManager.Instance.YDoc;
-      // var hub = YcsHubAccessor.Instance.YcsHub;
-      // var mgr = YcsManager.Instance;
-
-      var doc1 = new ConnectedDocument("Document #1"/*, new YDocOptions() {}*/);
-
-      Console.WriteLine($"PRECON doc1={doc1}"); //\nConnector={connector}\n
-      await doc1.Connect<TcpConnector, TcpConnection, TcpConnectorOptions>(options => options.Parse(args));
-      //var doc2 = new ConnectedDocument("Document #2");
-      Console.WriteLine($"POSTCON doc1={doc1}");
-
-      var isPrimaryNode = doc1.Connector.ConnectionId.EndsWith("1");
+      var doc1 = new ConnectedDocument(/*, new YDocOptions() {}*/) { Name = "Document #1" };
+      _ = await doc1.Connect<TcpConnector, TcpConnection, TcpConnectorOptions>(options => options.Parse(args)); // TODO: Change return value to IConnector if need to continue using doc1.Connector.* e.g. .ConnectionId. Saves getting out of doc1.
+      bool isPrimaryNode = doc1?.Connector?.ConnectionId.EndsWith("1") ?? throw new InvalidOperationException($"doc1(={doc1}) or doc1.Connector(={doc1?.Connector}) is null");
+      Console.WriteLine($"INIT isPrimaryNode={isPrimaryNode} doc1={doc1}: {doc1.ValuesToString()}");
       if (isPrimaryNode)
       {
         await Task.Delay(500);
       }
+
+      // TODO: Try doc.Transact()
       doc1.Set("prop1", isPrimaryNode ? "stringValue1" : "stringValue2");
-      // doc2.Set("prop2", "stringValue2");
-      Console.WriteLine($"POSTVAR doc1={doc1}");
+      doc1.Set(isPrimaryNode ? "prop2-1" : "prop2-2", isPrimaryNode ? "stringValue1" : "stringValue2");
+      doc1.Set("prop3-1", isPrimaryNode ? "stringValue1" : "stringValue2");
+      doc1.Set("prop3-2", isPrimaryNode ? "stringValue1" : "stringValue2");
+      doc1.Set(isPrimaryNode ? "prop4-1" : "prop4-2", isPrimaryNode ? "stringValue1" : "stringValue2");
+      doc1.Set(isPrimaryNode ? "prop4-2" : "prop4-1", isPrimaryNode ? "stringValue1" : "stringValue2");
+      Console.WriteLine($"SET doc1={doc1}: {doc1.ValuesToString()}");
 
       if (!isPrimaryNode)
       {
         var timer = new Timer(4000) { AutoReset = false };
-        timer.Elapsed += (object? sender, ElapsedEventArgs e) =>
+        timer.Elapsed += (sender, e) =>
         {
-          Console.WriteLine($"PRETIMER doc1={doc1}");
           doc1.Set("propTimer", "timerValue");
           doc1.Set("prop1", "prop1timered");
-          Console.WriteLine($"POSTTIMER doc1={doc1}");
+          Console.WriteLine($"TIMER doc1={doc1}: {doc1.ValuesToString()}");
         };
         timer.Start();
       }
 
-      Console.WriteLine($"PREEXIT doc1={doc1}");
-      Console.ReadKey();
-      Console.WriteLine($"POSTEXIT doc1={doc1}");
+      _ = Console.ReadKey();
+      Console.WriteLine($"POSTEXIT doc1={doc1}: {doc1.ValuesToString()}");
     }
   }
 }

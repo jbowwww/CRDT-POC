@@ -1,11 +1,10 @@
 using System;
-using System.Threading.Tasks;
 using Aemo.Connectors;
 
 namespace Aemo;
 
 public abstract class ConnectorOptions<T> : IConnectorOptions<T>
-  where T : IConnectorOptions<T>, new()
+  where T : ConnectorOptions<T>, new()
 {
   public string RootDocumentName { get; init; } = "ConnectedDocument";
 
@@ -36,16 +35,13 @@ public abstract class ConnectorOptions<T> : IConnectorOptions<T>
 
   public abstract T CopyTo(IConnectorOptions<T> options);
 
-  public TConnector CreateConnector<TConnector, TConnection>(ConnectedDocument document = null)
+  public TConnector CreateConnector<TConnector, TConnection>(ConnectedDocument? document = null)
     where TConnector : ConnectorBase<TConnection, T>, new()
-    where TConnection : ConnectionBase, IConnection, new()
+    where TConnection : ConnectionBase
   {
     var rootDocumentName = RootDocumentName ?? "Document";
-    var rootDocument = document ?? new ConnectedDocument(
-      rootDocumentName,
-      new ConnectedDocument.Options() { Name = rootDocumentName });
-    var connector = new TConnector();
-    connector.Init(rootDocument, this);
+    var rootDocument = document ?? new ConnectedDocument() { Name = rootDocumentName };
+    var connector = new TConnector() { Document = rootDocument, Options = (T)this };
     return connector;
   }
 }

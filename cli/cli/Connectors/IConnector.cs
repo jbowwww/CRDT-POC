@@ -1,28 +1,22 @@
 using System;
-using System.Collections.Concurrent;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Net.Sockets;
 using System.Threading.Tasks;
+using cli.Connectors;
 
 namespace Aemo.Connectors;
 
 public interface IConnector<TConnection, TConnectorOptions> : IConnector
-  where TConnection : ConnectionBase, IConnection, new()
-  where TConnectorOptions : IConnectorOptions<TConnectorOptions>, new()
+  where TConnection : IConnection
+  where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
 {
   TConnectorOptions Options { get; init; }
-
-  ConnectionDictionary<TConnection> Connections { get; }
-
-  internal void Init(ConnectedDocument rootDocument, IConnectorOptions<TConnectorOptions>? connectorOptions = default);
 }
 
-public interface IConnector
+public interface IConnector : IDisposable
 {
   string ConnectionId { get; }
+  ConnectionDictionary<IConnection> Connections { get; }
 
-  ConnectorStatus Status { get; protected set; }
+  ConnectionStatus Status { get; protected set; }
 
   bool IsConnected { get; }
 
@@ -38,5 +32,5 @@ public interface IConnector
 
   void Broadcast(byte[] data);
 
-  void Broadcast(Action<Stream> streamAction);
+  void Broadcast(Action<IConnection> streamAction);
 }

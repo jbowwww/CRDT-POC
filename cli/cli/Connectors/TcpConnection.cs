@@ -1,19 +1,14 @@
 using System;
-using System.IO;
 using System.Net.Sockets;
 
 namespace Aemo.Connectors;
 
-public class TcpConnection : ConnectionBase
+public sealed class TcpConnection : ConnectionBase, IDisposable
 {
-  public static TcpConnection FromSocket(Socket socket, TcpConnector connector)
+  public TcpConnection(TcpConnector connector, Socket socket)
   {
-    return new TcpConnection()
-    {
-      Connector = connector,
-      ConnectionId = socket.RemoteEndPoint?.ToString() ?? throw new InvalidOperationException($"receivingSocket.RemoteEndPoint null"),
-      Socket = socket,
-      Stream = new NetworkStream(socket, true)
-    };
+    Connector = connector;
+    Socket = socket;
+    Stream = new NetworkStream(socket, true);
   }
 }

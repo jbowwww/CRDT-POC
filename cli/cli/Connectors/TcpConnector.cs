@@ -11,62 +11,27 @@ namespace Aemo.Connectors;
 
 public class TcpConnector : ConnectorBase<TcpConnection, TcpConnectorOptions>
 {
+  private readonly object _syncObject = new();
+
   public const int ListenSocketAcceptQueueSize = 8;
 
   public const int ClientConnectDelay = 2000;
 
   public const int PostConnectDelay = 500;
-  private readonly object _syncObject = new();
+  // private readonly object _syncObject = new();
 
   public override string ConnectionId => Options.Endpoint.ToString();
-
-  public TcpConnector() : base()
-  {
-
-  }
-
-  public TcpConnector(TcpConnectorOptions? options = default)
-    : base(
-      new ConnectedDocument($"Document#{Guid.NewGuid().ToString().Substring(0, 6)}"),
-      options ?? new TcpConnectorOptions())
-  { }
-
-  public TcpConnector(ConnectedDocument document, TcpConnectorOptions? options = default)
-   : base(document, options ?? new TcpConnectorOptions())
-  {
-    // TODO: Take an IPv4 address in connection string & a port number & connect a TCP socket
-    // Note: You need a listener/server and a client, how to model/handle that??
-    // TODO: Write a (de)multiplexer IConnector class(es) that probably use a MemoryStream/BufferedStream
-    // to write to multiple TcpConnectors. ALso opposite for reading.
-    // TODO: Then you either need one global parent/root doc containing all shared docs
-    // and then you can read from connector's rxsocket and always update that global Root
-    // OR maintain a map of constructed YDoc/ConnectedDocument's and write the ID
-    // I think the 1st option is best there, because the doc structure implements subdoc maps already so use it
-    // But I read somewhere there may be situations that are suited to the 2nd option (where did i read..?)
-  }
-
-  // internal override static ConnectorBase<TcpConnection, TcpConnectorOptions> Create(ConnectedDocument document, TcpConnectorOptions? options = default)
-  // {
-  //   var rootDocumentName = options?.RootDocumentName ?? "Document";
-  //   var rootDocument = document ?? new ConnectedDocument(
-  //     rootDocumentName,
-  //     new ConnectedDocument.Options() { Name = rootDocumentName });
-  //   var connector = new TcpConnector(rootDocument, options);
-  //   return connector;
 
   public override async Task Connect()
   {
     lock (_syncObject)
     {
-      if (Status == ConnectorStatus.Connecting || Status == ConnectorStatus.Connected)
+      if (!IsInit)
       {
+        Console.WriteLine($"TcpConnector.Connect(): returning because Status={Status}");
         return;
       }
-      else if (Status == ConnectorStatus.Error || Status == ConnectorStatus.Disconnected)
-      {
-        throw new InvalidOperationException($"TcpConnector.Connect(): Status={Status}");
-      }
-      Status = ConnectorStatus.Connecting;
+      Status = ConnectionStatus.Connecting;
     }
     ServerListen();
     await Task.Delay(ClientConnectDelay);
@@ -74,11 +39,10 @@ public class TcpConnector : ConnectorBase<TcpConnection, TcpConnectorOptions>
     {
       foreach (var remoteEndpoint in Options.RemoteEndpoints)
       {
-        Connections.Add(ClientConnect(remoteEndpoint));
+        ClientConnect(remoteEndpoint);
       }
-      Status = ConnectorStatus.Connected;
+      Status = ConnectionStatus.Connected;
     }
-    await Task.Delay(PostConnectDelay);
   }
 
   public override void Disconnect()
@@ -86,8 +50,10 @@ public class TcpConnector : ConnectorBase<TcpConnection, TcpConnectorOptions>
     Console.WriteLine($"Disconnect(): Disconnecting client with connectionId={ConnectionId} ...");
     lock (_syncObject)
     {
-      if (Status <= ConnectorStatus.Connected)
-        Status = ConnectorStatus.Disconnecting;
+      if (IsConnected)
+      {
+        Status = ConnectionStatus.Disconnecting;
+      }
     }
     Console.WriteLine($"Disconnect(): End Disconnect() client with connectionId={ConnectionId} ...");
   }
@@ -99,74 +65,44 @@ public class TcpConnector : ConnectorBase<TcpConnection, TcpConnectorOptions>
     {
       listenSocket.Bind(Options.Endpoint);
       listenSocket.Listen(ListenSocketAcceptQueueSize);
-      Console.WriteLine($"ServerListen(): Listening on {Options.Endpoint} ...");
-      while (Options.Listen)
+      Console.WriteLine($"ServerListen(): Listening on {listenSocket.LocalEndPoint} ListenSocketAcceptQueueSize={ListenSocketAcceptQueueSize}...");
+      while (Options.Listen && IsConnected)
       {
-        Status = ConnectorStatus.Connecting;
-        var connection = TcpConnection.FromSocket(await listenSocket.AcceptAsync(), this);
-        Console.WriteLine($"ServerListen(): Accepted connection from {connection.Socket.RemoteEndPoint}");
-        Status = ConnectorStatus.Connected;
-        _ = Task.Run(() =>
-        {
-          Console.WriteLine($"ServerListen(): Listening on {connection.Socket.LocalEndPoint} to connection {connection.ConnectionId}"); // on {connection.Socket.RemoteEndPoint} ...
-          while (Options.Listen && (Status == ConnectorStatus.Connecting || Status == ConnectorStatus.Connected))
-          {
-            if (connection.Stream.Socket.Available > 0)
-            {
-              var available = connection.Stream.Socket.Available;
-              var messageType = SyncProtocol.ReadSyncMessage(connection.Stream, connection.Stream, Document, this);
-              Console.WriteLine($"ServerListen(): connection.Stream.Socket.Available={available} for connection {connection.ConnectionId}: SyncProtocol.ReadSyncMessage returned {messageType}");
-
-            }
-          }
-          Console.WriteLine($"ServerListen(): Closing server connection from {connection.Socket.RemoteEndPoint} Options.Listen={Options.Listen} Status={Status}");
-          listenSocket.Close(1000);
-          Status = ConnectorStatus.Disconnected;
-        });
+        var acceptedSocket = await listenSocket.AcceptAsync();
+        Console.WriteLine($"ServerListen(): Accepting connection from [{acceptedSocket.RemoteEndPoint}->{acceptedSocket.LocalEndPoint}]");
+        // Creates a TcpConnection object, which wraps the accepted and Task.Run()'s ConnectionBase.ServerMessageLoop
+        var connection = new TcpConnection(this, acceptedSocket);
+        Console.WriteLine($"ServerListen(): Established connection={connection}");
+        // Task WriteSyncStep1 then loops on ReadSyncMessage (client just sends updates when they happen)
+        _ = Task.Run(() => connection.MessageLoop(true));
       }
+      // lock (_syncObject)
+      // {
+      Console.WriteLine($"ServerListen(): Closing the listener on Endpoint={Options.Endpoint}");
+      listenSocket.Close(1000);
+      while (Connections.Count > 0)
+        ;
+      if (Status == ConnectionStatus.Disconnecting)
+      {
+        Status = ConnectionStatus.Disconnected;
+      }
+      // }
     }
     catch (Exception ex)
     {
       Console.WriteLine($"ServerListen(): Exception: Options.Listen={Options.Listen} Status={Status}\n\t{ex}");
-      Status = ConnectorStatus.Error;  // TODO: I think this status needs to be per IConnection not IConnector? at least per server/client
+      Status = ConnectionStatus.Error;  // TODO: I think this status needs to be per IConnection not IConnector? at least per server/client
     }
-    Console.WriteLine($"Closing the listener on Endpoint={Options.Endpoint}");
   }
 
   public TcpConnection ClientConnect(IPEndPoint remoteEndpoint)
   {
-    Console.WriteLine($"ClientConnect(): remoteEndpoint={remoteEndpoint}");
     var client = new TcpClient(remoteEndpoint.AddressFamily);
+    Console.WriteLine($"ClientConnect(): Connecting to {client.Client.LocalEndPoint}->{client.Client.RemoteEndPoint} ...");
     client.Connect(remoteEndpoint);
-    var connection = TcpConnection.FromSocket(client.Client, this);
-    try
-    {
-      Console.WriteLine($"ClientConnect(): Established connection to {connection.ConnectionId}");
-      // _ = Task.Run(() =>
-      // {
-      //   Console.WriteLine($"ClientConnect(): Listening on {connection.Socket.LocalEndPoint} to connection {connection.ConnectionId}"); // on {connection.Socket.RemoteEndPoint} ...
-      //   while (Status == ConnectorStatus.Connecting || Status == ConnectorStatus.Connected)
-      //   {
-      //     if (client.Client.Available > 0)
-      //     {
-      //       var available = client.Client.Available;
-      //       var messageType = SyncProtocol.ReadSyncMessage(connection.Stream, connection.Stream, Document, this);
-      //       Console.WriteLine($"ClientConnect(): connection.Stream.Socket.Available={available} for connection {connection.ConnectionId}: SyncProtocol.ReadSyncMessage returned {messageType}");
-      //     }
-      //   }
-      //   client.Close();
-      //   Status = ConnectorStatus.Disconnected;
-      //   Console.WriteLine($"ClientConnect(): Closing connection to server {connection.ConnectionId} Options.Listen={Options.Listen} Status={Status}");
-      // });
-    }
-    catch (Exception ex)
-    {
-      Console.WriteLine($"ClientConnect(): Exception: Options.Listen={Options.Listen} Status={Status}\n\t{ex}");
-      Status = ConnectorStatus.Error;  // TODO: I think this status needs to be per IConnection not IConnector? at least per server/client
-    }
-    Console.WriteLine($"ClientConnect(): Returning remoteEndpoint={remoteEndpoint}");
+    var connection = new TcpConnection(this, client.Client);
+    Console.WriteLine($"ClientConnect(): Established connection={connection}");
+    _ = Task.Run(() => connection.MessageLoop(false));
     return connection;
   }
-
-
 }

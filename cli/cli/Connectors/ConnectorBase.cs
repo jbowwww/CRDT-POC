@@ -1,59 +1,39 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
+using cli.Connectors;
 using Ycs;
 
 namespace Aemo.Connectors;
 
-public enum ConnectorStatus
-{
-  Init = 0,
-  Connecting,
-  Connected,
-  Partitioned,
-  Error,
-  Disconnecting,
-  Disconnected
-};
-
-public abstract class ConnectorBase<TConnection, TConnectorOptions> : IConnector<TConnection, TConnectorOptions>, IConnector
-  where TConnection : ConnectionBase, IConnection, new()
-  where TConnectorOptions : IConnectorOptions<TConnectorOptions>, new()
+public abstract class ConnectorBase<TConnection, TConnectorOptions>
+ : IConnector<TConnection, TConnectorOptions>
+  where TConnection : IConnection
+  where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
 {
   public virtual TConnectorOptions Options { get; init; } = new();
+  public abstract string ConnectionId { get; }
+  public ConnectionDictionary<IConnection> Connections { get; } = new();
+  public ConnectionStatus Status { get; set; }
+  public virtual bool IsInit => Status == ConnectionStatus.Init;
+  public virtual bool IsConnected => Status <= ConnectionStatus.Partitioned;
+  public virtual bool IsPartitioned => Status == ConnectionStatus.Partitioned;
+  public virtual bool IsError => Status == ConnectionStatus.Error;
+  public virtual bool IsDisconnected => Status >= ConnectionStatus.Disconnecting;
+  public virtual ConnectedDocument Document { get; init; } = null!;
 
-  public virtual string ConnectionId { get; } = null!;
+  public override string ToString()
+   => $"[{GetType().Name} Id=\"{ConnectionId}\" Status={Status} Document.Name={Document?.Name} Connections={Connections}]";
 
-  public ConnectorStatus Status { get; set; }
-
-  public virtual bool IsInit => Status == ConnectorStatus.Init;
-  public virtual bool IsConnected => Status == ConnectorStatus.Connected;
-
-  public virtual ConnectedDocument Document { get; protected set; } = null!;
-
-  /// <summary>
-  /// Use this for now, for simple client/server POC test. Worry about mapping using <see cref="Connections"/> later.
-  /// </summary>
-  public IConnection? Connection { get; protected set; }
-
-  public ConnectionDictionary<TConnection> Connections { get; } = new();
-
-  // ConnectionDictionary<IConnection> IConnector.Connections => (ConnectionDictionary<IConnection>)Connections;//.Cast<KeyValuePair<string, IConnection>>();
-
-  internal ConnectorBase() { }
-
-  public ConnectorBase(ConnectedDocument document, TConnectorOptions? options = default)
+  ~ConnectorBase()
   {
-    Init(document, options);
+    Dispose();
   }
 
-  public void Init(ConnectedDocument rootDocument, IConnectorOptions<TConnectorOptions>? connectorOptions = default)
+  public void Dispose()
   {
-    Document = rootDocument;
-    connectorOptions?.CopyTo(Options);
+    Disconnect();
+    System.GC.SuppressFinalize(this);
   }
 
   public abstract Task Connect();
@@ -62,12 +42,12 @@ public abstract class ConnectorBase<TConnection, TConnectorOptions> : IConnector
 
   public void Receive(string connectionId, byte[] data)
   {
-    Console.WriteLine($"Receive(): IsConnected={IsConnected} Connections.Count={Connections.Count} Options={this}\n\tconnectionId={connectionId}\n\tdata.Length={data.Length}");
-    if (Connections.TryGetValue(connectionId, out TConnection? connection))
+    Console.WriteLine($"Receive(): Status={Status} Connections.Count={Connections.Count} Options={this}\n\tconnectionId={connectionId}\n\tdata.Length={data.Length}");
+    if (Connections.TryGetValue(connectionId, out IConnection? connection))
     {
       if (IsConnected)
       {
-        SyncProtocol.ReadUpdate(connection.Stream, Document, this);
+        SyncProtocol.ReadUpdate(connection?.Stream, Document, this);
       }
     }
     else
@@ -79,12 +59,12 @@ public abstract class ConnectorBase<TConnection, TConnectorOptions> : IConnector
 
   public void Send(string connectionId, byte[] data)
   {
-    Console.WriteLine($"Send(): IsConnected={IsConnected} Connections.Count={Connections.Count} Options={this}\n\tconnectionId={connectionId}\n\tdata={SyncProtocol.EncodeBytes(data)}");
-    if (Connections.TryGetValue(connectionId, out TConnection? connection))
+    Console.WriteLine($"Send(): Status={Status} Connections.Count={Connections.Count} Options={this}\n\tconnectionId={connectionId}\n\tdata={SyncProtocol.EncodeBytes(data)}");
+    if (Connections.TryGetValue(connectionId, out IConnection? connection))
     {
       if (IsConnected)
       {
-        SyncProtocol.WriteUpdate(connection.Stream, data);
+        SyncProtocol.WriteUpdate(connection?.Stream, data);
       }
     }
     else
@@ -96,19 +76,18 @@ public abstract class ConnectorBase<TConnection, TConnectorOptions> : IConnector
 
   public void Broadcast(byte[] data)
   {
-    Console.WriteLine($"Broadcast(): IsConnected={IsConnected} Connections.Count={Connections.Count} Options={this}\n\tdata={SyncProtocol.EncodeBytes(data)}");
+    Console.WriteLine($"Broadcast(): Status={Status} Connections.Count={Connections.Count} Options={this}\n\tdata={SyncProtocol.EncodeBytes(data)}");
     if (IsConnected)
     {
-      Connections.AsParallel().ForAll<TConnection>(
+      Connections?.AsParallel<IConnection>().ForAll(
         connection => SyncProtocol.WriteUpdate(connection.Stream, data));
     }
     Console.WriteLine($"Broadcast(): End");
   }
 
-  public void Broadcast(Action<Stream> streamAction)
+  public void Broadcast(Action<IConnection> streamAction)
   {
-    Console.WriteLine($"Broadcast(): streamAction={SyncProtocol.EncodeBytes(streamAction.Method?.GetMethodBody()?.GetILAsByteArray()!)}");
-    Connections.AsParallel().ForAll<TConnection>(
-      connection => streamAction.Invoke((connection.Stream)));
+    Console.WriteLine($"Broadcast(): streamAction={streamAction}");
+    Connections.AsParallel<IConnection>().ForAll(streamAction.Invoke);
   }
 }
