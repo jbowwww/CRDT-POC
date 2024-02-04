@@ -45,7 +45,7 @@ namespace cli.Connectors
       }
       catch (Exception ex)
       {
-        throw new InvalidOperationException($"Cannot add TConnection={typeof(TConnection).Name} item={connection}");
+        throw new InvalidOperationException($"Cannot add TConnection={typeof(TConnection).Name} item={connection}", ex);
       }
     }
 

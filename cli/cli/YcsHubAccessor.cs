@@ -8,7 +8,7 @@ namespace Ycs.Middleware
 {
     public class YcsHubAccessor
     {
-        private static readonly Lazy<YcsHubAccessor> _instance = new Lazy<YcsHubAccessor>(() => new YcsHubAccessor());
+        private static readonly Lazy<YcsHubAccessor> _instance = new(() => new YcsHubAccessor());
 
         private YcsHubAccessor()
         {
