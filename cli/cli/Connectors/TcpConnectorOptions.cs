@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -39,15 +40,15 @@ public class TcpConnectorOptions : ConnectorOptions<TcpConnectorOptions>
 
   public TcpConnectorOptions() { }
 
-  public TcpConnectorOptions(string[]? args = null)
-   : this()
+  public TcpConnectorOptions(string[] args)
   {
     if (args != null && args.Length > 0)
       Parse(args);
   }
 
-  public override string ToString()
-   => $"[TcpConnectorOptions AutoConnect={AutoConnect} Listen={Listen} Endpoint={Endpoint} RemoteEndpoints={string.Join(", ", RemoteEndpoints.Select(e => e))}";
+  public override string ToString() =>
+   $"[TcpConnectorOptions AutoConnect={AutoConnect} Listen={Listen} Endpoint={Endpoint} "
+   + $"RemoteEndpoints={string.Join(", ", RemoteEndpoints.Select(e => e))}";
 
   /// <summary>
   /// Parse instace type, host and port from string array, presumably/probably taken from a CLI
@@ -55,10 +56,9 @@ public class TcpConnectorOptions : ConnectorOptions<TcpConnectorOptions>
   public override void Parse(string[] args)
   {
     if (args.Length < 2)
-      throw new ArgumentException(
-          $"Must specify 2| command line arguments! args=[ "
-          + string.Join(", ", args.ToList().Select(a => a))
-          + "\n\tUsage: {CrdtPoc.ProcessName} [host:port] { [remotehost]:[remoteport] }... ");
+      throw new ArgumentException($"Must specify 2| command line arguments! args=[ {string.Join(", ", args.ToList().Select(a => a))} ]"
+          + $"\nUsage: {Process.GetCurrentProcess().ProcessName}" + " <LocalEndpoint> [RemoteEndpoint1] [RemoteEndpoint2] ... [RemoteEndpointN]"
+          + "\n\twhere LocalEndpoint and RemoteEndpointN are in the format <hostname_or_ip_address>:<port_number>");
     Endpoint = IPEndpointParser.Parse(args[0]);
     for (int i = 1; i < args.Length; i++)
     {
