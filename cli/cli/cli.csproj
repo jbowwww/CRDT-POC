@@ -4,8 +4,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.2" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.2" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1" />
-    <!--<Reference Include=".\ycs\Ycs.dll" />-->
     <ProjectReference Include="../../../ycs/src/Ycs/Ycs.csproj" />
   </ItemGroup>
 
