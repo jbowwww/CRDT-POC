@@ -6,29 +6,36 @@ using Ycs;
 
 namespace Aemo.Connectors;
 
-public abstract class ConnectionBase : IConnection, IDisposable
+public class Connection : IConnection, IDisposable
 {
     public IConnector Connector { get; init; } = null!;
 
-    public virtual string ConnectionId => RemoteEndpoint?.ToString() ?? throw new InvalidDataException($"{this}");
+    public string Id => RemoteEndpoint?.ToString() ?? throw new InvalidDataException($"{this}");
 
     public EndPoint? LocalEndpoint => Socket?.LocalEndPoint;
 
     public EndPoint? RemoteEndpoint => Socket?.RemoteEndPoint;
 
-    public virtual Socket Socket { get; init; } = null!;
+    public Socket Socket { get; init; } = null!;
 
-    public virtual NetworkStream Stream { get; init; } = null!;
+    public Stream Stream { get; init; } = null!;
 
-    public virtual ConnectionStatus Status => Connector != null ? Connector.Status : ConnectionStatus.Init;
+    public ConnectionStatus Status => Connector != null ? Connector.Status : ConnectionStatus.Init;
 
     public string ToString(string? suffix = null) =>
-      $"[{GetType().Name} Id={this.ConnectionId} Status={Status}]: " +
+      $"[{GetType().Name} Id={this.Id} Status={Status}]: " +
       (suffix ?? $"LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
 
     public override string ToString() => ToString(null);
 
-    ~ConnectionBase()
+    public Connection(IConnector connector, Socket socket)
+    {
+        Connector = connector;
+        Socket = socket;
+        Stream = new NetworkStream(socket, true);
+    }
+
+    ~Connection()
     {
         Dispose();
     }
@@ -61,7 +68,7 @@ public abstract class ConnectionBase : IConnection, IDisposable
                 {
                     Console.WriteLine(ToString($"MessageLoop(server={server})] ReadSyncMessage available={available}"));
                     var messageType = ReadSyncMessage();
-                    Console.WriteLine(ToString($"MessageLoop(server={server})] ReadSyncMessage returned messageType={messageType}\n\tupdatedDoc={Connector?.Document.ToString(Connector?.Document.ValuesToString())}"));
+                    Console.WriteLine(ToString($"MessageLoop(server={server})] ReadSyncMessage returned messageType={messageType}\n\tupdatedDoc={Connector?.Document.ToString()}"));
                 }
             }
             if (server)

@@ -34,14 +34,4 @@ public abstract class ConnectorOptions<T> : IConnectorOptions<T>
   }
 
   public abstract T CopyTo(IConnectorOptions<T> options);
-
-  public TConnector CreateConnector<TConnector, TConnection>(ConnectedDocument? document = null)
-    where TConnector : ConnectorBase<TConnection, T>, new()
-    where TConnection : ConnectionBase
-  {
-    var rootDocumentName = RootDocumentName ?? "Document";
-    var rootDocument = document ?? new ConnectedDocument() { Name = rootDocumentName };
-    var connector = new TConnector() { Document = rootDocument, Options = (T)this };
-    return connector;
-  }
 }

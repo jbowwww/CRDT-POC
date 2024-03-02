@@ -28,7 +28,7 @@ namespace cli.Connectors
       try
       {
         AddOrUpdate(
-        connection.ConnectionId,
+        connection.Id,
         (connectionId) =>
         {
           Console.WriteLine($"Listening to connection={connection}, listening ...");
@@ -49,7 +49,7 @@ namespace cli.Connectors
       }
     }
 
-    public bool Contains(TConnection item) => ContainsKey(item.ConnectionId);
+    public bool Contains(TConnection item) => ContainsKey(item.Id);
 
     public void CopyTo(TConnection[] array, int arrayIndex)
     {
@@ -57,7 +57,7 @@ namespace cli.Connectors
       Values.CopyTo(array, arrayIndex);
     }
 
-    public bool Remove(TConnection item) => TryRemove(item.ConnectionId, out _);
+    public bool Remove(TConnection item) => TryRemove(item.Id, out _);
 
     IEnumerator<TConnection> IEnumerable<TConnection>.GetEnumerator() => Values.GetEnumerator();
 

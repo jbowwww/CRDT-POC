@@ -6,13 +6,11 @@ using Ycs;
 
 namespace Aemo.Connectors;
 
-public abstract class ConnectorBase<TConnection, TConnectorOptions>
- : IConnector<TConnection, TConnectorOptions>
-  where TConnection : IConnection
+public abstract class ConnectorBase<TConnectorOptions> : IConnector<TConnectorOptions>
   where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
 {
   public virtual TConnectorOptions Options { get; init; } = new();
-  public abstract string ConnectionId { get; }
+  public abstract string Id { get; }
   public ConnectionDictionary<IConnection> Connections { get; } = new();
   public ConnectionStatus Status { get; set; }
   public virtual bool IsInit => Status == ConnectionStatus.Init;
@@ -20,10 +18,10 @@ public abstract class ConnectorBase<TConnection, TConnectorOptions>
   public virtual bool IsPartitioned => Status == ConnectionStatus.Partitioned;
   public virtual bool IsError => Status == ConnectionStatus.Error;
   public virtual bool IsDisconnected => Status >= ConnectionStatus.Disconnecting;
-  public virtual ConnectedDocument Document { get; init; } = null!;
+  public virtual YDoc Document { get; init; } = null!;
 
   public override string ToString()
-   => $"[{GetType().Name} Id=\"{ConnectionId}\" Status={Status} Document.Name={Document?.Name} Connections={Connections}]";
+   => $"[{GetType().Name} Id=\"{Id}\" Status={Status} Document.ClientId={Document?.ClientId} Connections={Connections}]";
 
   ~ConnectorBase()
   {

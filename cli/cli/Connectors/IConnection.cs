@@ -1,16 +1,17 @@
+using System.IO;
 using System.Net.Sockets;
 
 namespace Aemo.Connectors;
 
 public interface IConnection
 {
-  public string ConnectionId { get; }
+  string Id { get; }
 
-  public Socket Socket { get; }
+  // Socket Socket { get; }
 
-  public NetworkStream Stream { get; }
+  Stream Stream { get; }
 
-  public ConnectionStatus Status { get; }
+  ConnectionStatus Status { get; }
 
   void WriteSyncStep1();
 
