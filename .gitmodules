@@ -1,0 +1,3 @@
+[submodule "ycs"]
+	path = ycs
+	url = https://github.com/yjs/ycs
