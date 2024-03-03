@@ -1,12 +1,14 @@
-using System;
 using Aemo.Connectors;
 
 namespace Aemo;
 
-public interface IConnectorOptions<TConnector>
-   where TConnector : ConnectorOptions<TConnector>, new()
+public interface IConnectorOptions
 {
   void Parse(string[] args);
+}
 
-  TConnector CopyTo(IConnectorOptions<TConnector> options);
+public interface IConnectorOptions<TConnector> : IConnectorOptions
+  where TConnector : IConnector<TConnector>, new()
+{
+  // TConnector CopyTo(IConnectorOptions<TConnector> options);
 }

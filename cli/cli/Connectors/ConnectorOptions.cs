@@ -3,14 +3,14 @@ using Aemo.Connectors;
 
 namespace Aemo;
 
-public abstract class ConnectorOptions<T> : IConnectorOptions<T>
-  where T : ConnectorOptions<T>, new()
+public abstract class ConnectorOptions<TConnector> : IConnectorOptions
+  where TConnector : IConnector, new()
 {
   public string RootDocumentName { get; init; } = "ConnectedDocument";
 
   public abstract void Parse(string[] args);
 
-  public static bool TryParse(string[] args, ref T options)
+  public static bool TryParse(string[] args, ref IConnectorOptions<TConnector> options)
   {
     if (args != null && args.Length > 0)
     {
@@ -27,11 +27,18 @@ public abstract class ConnectorOptions<T> : IConnectorOptions<T>
     return false;
   }
 
-  public static T? TryParse(string[] args)
-  {
-    T options = new();
-    return TryParse(args, ref options) ? options : default;
-  }
+  // public static IConnectorOptions<TConnector>? TryParse<TConnector>(string[] args)
+  //   where TConnector : IConnector<TConnector>, new()
+  // {
+  //   IConnectorOptions<TConnector> options = new Connector();
+  //   return TryParse<TConnector>(args, ref options) ? options : default;
+  // }
 
-  public abstract T CopyTo(IConnectorOptions<T> options);
+  // public abstract TConnector CopyTo<TConnector>(IConnectorOptions<TConnector> options)
+  //   where TConnector : ConnectorBase<TConnector>, new();
+
 }
+
+// public abstract class ConnectorOptions : IConnectorOptions
+// {
+// }

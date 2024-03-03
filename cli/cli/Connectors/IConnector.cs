@@ -5,16 +5,16 @@ using Ycs;
 
 namespace Aemo.Connectors;
 
-public interface IConnector<TConnectorOptions> : IConnector
-  where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
+public interface IConnector<TConnector> : IConnector
+  where TConnector : IConnector, new()
 {
-  TConnectorOptions Options { get; init; }
+  IConnectorOptions<TConnector> Options { get; init; }
 }
 
 public interface IConnector : IDisposable
 {
   string Id { get; }
-  ConnectionDictionary<IConnection> Connections { get; }
+  ConnectionDictionary Connections { get; }
   ConnectionStatus Status { get; protected set; }
   bool IsConnected { get; }
   YDoc Document { get; }

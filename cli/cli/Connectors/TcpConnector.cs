@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Aemo.Connectors;
 
-public class TcpConnector : ConnectorBase<TcpConnectorOptions>
+public class TcpConnector : ConnectorBase<TcpConnector>
 {
   private readonly object _syncObject = new();
 

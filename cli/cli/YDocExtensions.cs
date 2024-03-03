@@ -31,8 +31,8 @@ public static class YDocExtensions
     this YDoc document,
     Action<TConnectorOptions>? connectorOptionsConfiguration = null
   )
-    where TConnector : IConnector<TConnectorOptions>, new()
-    where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
+    where TConnector : IConnector<TConnector>, new()
+    where TConnectorOptions : IConnectorOptions<TConnector>, new()
   {
     return await document.Connect<TConnector, TConnectorOptions>(
       new TConnectorOptions(),
@@ -42,11 +42,12 @@ public static class YDocExtensions
 
   public static async Task<TConnector> Connect<TConnector, TConnectorOptions>(
     this YDoc document,
+    // TConnectorOptions? connectorOptions = default,
     TConnectorOptions? connectorOptions = default,
     Action<TConnectorOptions>? connectorOptionsConfiguration = null
   )
-    where TConnector : IConnector<TConnectorOptions>, new()
-    where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
+    where TConnector : IConnector<TConnector>, new()
+    where TConnectorOptions : IConnectorOptions<TConnector>, new()
   {
     connectorOptions ??= new TConnectorOptions();
     connectorOptionsConfiguration?.Invoke(connectorOptions);

@@ -7,15 +7,14 @@ using Aemo.Connectors;
 
 namespace cli.Connectors
 {
-  public class ConnectionDictionary<TConnection>
-      : ConcurrentDictionary<string, TConnection>,
-        IDictionary<string, TConnection>,
-        ICollection<TConnection>
-    where TConnection : IConnection
+  public class ConnectionDictionary
+  : ConcurrentDictionary<string, IConnection>,
+    IDictionary<string, IConnection>,
+    ICollection<IConnection>
   {
     public bool IsReadOnly => false;
 
-    TConnection IDictionary<string, TConnection>.this[string connectionId]
+    IConnection IDictionary<string, IConnection>.this[string connectionId]
     {
       get => base[connectionId];
       set => base[connectionId] = value;
@@ -23,7 +22,7 @@ namespace cli.Connectors
 
     public override string ToString() => $"{Count} connections, {Values.Count(c => c.Status <= ConnectionStatus.Connected)} active";
 
-    public void Add(TConnection connection)
+    public void Add(IConnection connection)
     {
       try
       {
@@ -45,34 +44,20 @@ namespace cli.Connectors
       }
       catch (Exception ex)
       {
-        throw new InvalidOperationException($"Cannot add TConnection={typeof(TConnection).Name} item={connection}", ex);
+        throw new InvalidOperationException($"Cannot add TConnection={connection.GetType().Name} item={connection}", ex);
       }
     }
 
-    public bool Contains(TConnection item) => ContainsKey(item.Id);
+    public bool Contains(IConnection item) => ContainsKey(item.Id);
 
-    public void CopyTo(TConnection[] array, int arrayIndex)
+    public void CopyTo(IConnection[] array, int arrayIndex)
     {
       Debug.Assert(array.Length >= arrayIndex + Keys.Count);
       Values.CopyTo(array, arrayIndex);
     }
 
-    public bool Remove(TConnection item) => TryRemove(item.Id, out _);
+    public bool Remove(IConnection item) => TryRemove(item.Id, out _);
 
-    IEnumerator<TConnection> IEnumerable<TConnection>.GetEnumerator() => Values.GetEnumerator();
-
-    // public TConnection CreateFromSocket<TConnector, TConnectorOptions>(Socket socket, TConnector connector)
-    //   where TConnector : ConnectorBase<TConnection, TConnectorOptions>, new()
-    //   where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
-    // {
-    //   var connection = new TConnection()
-    //   {
-    //     Connector = connector,
-    //     Socket = socket,
-    //     Stream = new NetworkStream(socket, true),
-    //   };
-
-    //   return connection;
-    // }
+    IEnumerator<IConnection> IEnumerable<IConnection>.GetEnumerator() => Values.GetEnumerator();
   }
 }

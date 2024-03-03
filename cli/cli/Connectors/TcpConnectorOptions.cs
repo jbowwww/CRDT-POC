@@ -24,7 +24,7 @@ public static class IPEndpointParser
   }
 }
 
-public class TcpConnectorOptions : ConnectorOptions<TcpConnectorOptions>
+public class TcpConnectorOptions : ConnectorOptions<TcpConnector>
 {
   public bool AutoConnect { get; set; } = true;
 
@@ -67,13 +67,13 @@ public class TcpConnectorOptions : ConnectorOptions<TcpConnectorOptions>
     }
   }
 
-  public override TcpConnectorOptions CopyTo(IConnectorOptions<TcpConnectorOptions> options)
-  {
-    var tcpOptions = ((TcpConnectorOptions)options);
-    tcpOptions.AutoConnect = AutoConnect;
-    tcpOptions.Listen = Listen;
-    tcpOptions.Endpoint = Endpoint;
-    tcpOptions.RemoteEndpoints = RemoteEndpoints;
-    return tcpOptions;
-  }
+  // public override TcpConnectorOptions CopyTo(IConnectorOptions<TcpConnector> options)
+  // {
+  //   var tcpOptions = ((TcpConnectorOptions)options);
+  //   tcpOptions.AutoConnect = AutoConnect;
+  //   tcpOptions.Listen = Listen;
+  //   tcpOptions.Endpoint = Endpoint;
+  //   tcpOptions.RemoteEndpoints = RemoteEndpoints;
+  //   return tcpOptions;
+  // }
 }

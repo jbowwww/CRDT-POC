@@ -6,12 +6,12 @@ using Ycs;
 
 namespace Aemo.Connectors;
 
-public abstract class ConnectorBase<TConnectorOptions> : IConnector<TConnectorOptions>
-  where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
+public abstract class ConnectorBase<TConnector> : IConnector<TConnector>
+  where TConnector : IConnector<TConnector>, new()
 {
-  public virtual TConnectorOptions Options { get; init; } = new();
+  public virtual IConnectorOptions<TConnector> Options { get; init; } = null!; //new ConnectorOptions<TConnector>();
   public abstract string Id { get; }
-  public ConnectionDictionary<IConnection> Connections { get; } = new();
+  public ConnectionDictionary Connections { get; } = new();
   public ConnectionStatus Status { get; set; }
   public virtual bool IsInit => Status == ConnectionStatus.Init;
   public virtual bool IsConnected => Status <= ConnectionStatus.Partitioned;
