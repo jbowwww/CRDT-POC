@@ -1,14 +1,12 @@
-using System.Net.Sockets;
+using System.IO;
 
 namespace Aemo.Connectors;
 
 public interface IConnection
 {
-  public string ConnectionId { get; }
+  public string Id { get; }
 
-  public Socket Socket { get; }
-
-  public NetworkStream Stream { get; }
+  public Stream Stream { get; }
 
   public ConnectionStatus Status { get; }
 

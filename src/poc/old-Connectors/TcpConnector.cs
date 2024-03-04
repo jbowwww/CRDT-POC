@@ -9,7 +9,7 @@ using Ycs;
 
 namespace Aemo.Connectors;
 
-public class TcpConnector : ConnectorBase<TcpConnection, TcpConnectorOptions>
+public class TcpConnector : ConnectorBase<NetworkConnection, TcpConnectorOptions>
 {
   private readonly object _syncObject = new();
 
@@ -71,7 +71,7 @@ public class TcpConnector : ConnectorBase<TcpConnection, TcpConnectorOptions>
         var acceptedSocket = await listenSocket.AcceptAsync();
         Console.WriteLine($"ServerListen(): Accepting connection from [{acceptedSocket.RemoteEndPoint}->{acceptedSocket.LocalEndPoint}]");
         // Creates a TcpConnection object, which wraps the accepted and Task.Run()'s ConnectionBase.ServerMessageLoop
-        var connection = new TcpConnection(this, acceptedSocket);
+        var connection = new NetworkConnection(this, acceptedSocket);
         Console.WriteLine($"ServerListen(): Established connection={connection}");
         // Task WriteSyncStep1 then loops on ReadSyncMessage (client just sends updates when they happen)
         _ = Task.Run(() => connection.MessageLoop(true));
@@ -95,12 +95,12 @@ public class TcpConnector : ConnectorBase<TcpConnection, TcpConnectorOptions>
     }
   }
 
-  public TcpConnection ClientConnect(IPEndPoint remoteEndpoint)
+  public NetworkConnection ClientConnect(IPEndPoint remoteEndpoint)
   {
     var client = new TcpClient(remoteEndpoint.AddressFamily);
     Console.WriteLine($"ClientConnect(): Connecting to {client.Client.LocalEndPoint}->{client.Client.RemoteEndPoint} ...");
     client.Connect(remoteEndpoint);
-    var connection = new TcpConnection(this, client.Client);
+    var connection = new NetworkConnection(this, client.Client);
     Console.WriteLine($"ClientConnect(): Established connection={connection}");
     _ = Task.Run(() => connection.MessageLoop(false));
     return connection;

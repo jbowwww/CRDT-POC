@@ -12,5 +12,5 @@ public interface IConnectorOptions<T>
 
   TConnector CreateConnector<TConnector, TConnection>(ConnectedDocument document)
     where TConnector : ConnectorBase<TConnection, T>, new()
-    where TConnection : ConnectionBase;
+    where TConnection : Connection;
 }

@@ -37,7 +37,7 @@ public abstract class ConnectorOptions<T> : IConnectorOptions<T>
 
   public TConnector CreateConnector<TConnector, TConnection>(ConnectedDocument? document = null)
     where TConnector : ConnectorBase<TConnection, T>, new()
-    where TConnection : ConnectionBase
+    where TConnection : Connection
   {
     var rootDocumentName = RootDocumentName ?? "Document";
     var rootDocument = document ?? new ConnectedDocument() { Name = rootDocumentName };

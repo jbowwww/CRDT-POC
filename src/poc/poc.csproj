@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+
+  <ItemGroup>
+    <ProjectReference Include="..\\ycs\\ycs.csproj" />
+    <!-- <ProjectReference Include=".\\lib\\ycs\\src\\Ycs\\*.cs" Exclude=".\\lib\\ycs\\tests\\*;.\\lib\\ycs\\samples\\*" \\> -->
+    <!-- <Reference Include="..\\ycs\\src\\Ycs\\obj\\Debug\\netstandard2.0\\Ycs.dll" /> -->
+   <!-- <UseSourcePath Include=".\\cli" /> -->
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
+    <Nullable>enable</Nullable>
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+</Project>

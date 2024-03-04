@@ -1,4 +1,9 @@
-version: "3.1"
 services:
-  cli:
-    build: cli
+  poc:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    # volumes:
+    #   - type: bind
+    #     source: ./bin
+    #     target: /bin

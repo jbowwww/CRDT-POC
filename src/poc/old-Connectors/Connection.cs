@@ -6,29 +6,28 @@ using Ycs;
 
 namespace Aemo.Connectors;
 
-public abstract class ConnectionBase : IConnection, IDisposable
+public abstract class Connection : IConnection, IDisposable
 {
-    public IConnector Connector { get; init; } = null!;
+    public IConnector Connector { get; init; }
 
-    public virtual string ConnectionId => RemoteEndpoint?.ToString() ?? throw new InvalidDataException($"{this}");
+    public string Id { get; init; }
 
-    public EndPoint? LocalEndpoint => Socket?.LocalEndPoint;
-
-    public EndPoint? RemoteEndpoint => Socket?.RemoteEndPoint;
-
-    public virtual Socket Socket { get; init; } = null!;
-
-    public virtual NetworkStream Stream { get; init; } = null!;
+    public Stream Stream { get; init; }
 
     public virtual ConnectionStatus Status => Connector != null ? Connector.Status : ConnectionStatus.Init;
 
-    public string ToString(string? suffix = null) =>
-      $"[{GetType().Name} Id={this.ConnectionId} Status={Status}]: " +
-      (suffix ?? $"LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
+    public string ToString(string? suffix = null) => $"[{GetType().Name} Id={this.Id} Status={Status}]: {suffix}";
 
     public override string ToString() => ToString(null);
 
-    ~ConnectionBase()
+    public Connection(IConnector connector, string id, Stream stream)
+    {
+        Connector = connector;
+        Id = id;
+        Stream = stream;
+    }
+
+    ~Connection()
     {
         Dispose();
     }
@@ -56,7 +55,7 @@ public abstract class ConnectionBase : IConnection, IDisposable
             }
             while (Status <= ConnectionStatus.Partitioned)
             {
-                var available = Socket.Available;
+                var available = Stream.Length;// Socket.Available;
                 if (available > 0)
                 {
                     Console.WriteLine(ToString($"MessageLoop(server={server})] ReadSyncMessage available={available}"));

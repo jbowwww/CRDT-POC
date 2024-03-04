@@ -18,7 +18,7 @@ namespace cli
         public static async Task Main(string[] args)
         {
             var doc1 = new ConnectedDocument(/*, new YDocOptions() {}*/) { Name = "Document #1" };
-            _ = await doc1.Connect<TcpConnector, TcpConnection, TcpConnectorOptions>(options => options.Parse(args)); // TODO: Change return value to IConnector if need to continue using doc1.Connector.* e.g. .ConnectionId. Saves getting out of doc1.
+            _ = await doc1.Connect<TcpConnector, NetworkConnection, TcpConnectorOptions>(options => options.Parse(args)); // TODO: Change return value to IConnector if need to continue using doc1.Connector.* e.g. .ConnectionId. Saves getting out of doc1.
             bool isPrimaryNode = doc1?.Connector?.ConnectionId.EndsWith("1") ?? throw new InvalidOperationException($"doc1(={doc1}) or doc1.Connector(={doc1?.Connector}) is null");
             Console.WriteLine($"INIT isPrimaryNode={isPrimaryNode} doc1={doc1}: {doc1.ValuesToString()}");
             if (isPrimaryNode)

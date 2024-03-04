@@ -37,7 +37,7 @@ public class ConnectedDocument : YDoc, IDisposable
   public async Task<IConnector> Connect<TConnector, TConnection, TConnectorOptions>
   (Action<TConnectorOptions> optionsConfiguration = null!)
     where TConnector : ConnectorBase<TConnection, TConnectorOptions>, new()
-    where TConnection : ConnectionBase
+    where TConnection : Connection
     where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
    => await Connect<TConnector, TConnection, TConnectorOptions>(
         new TConnectorOptions(),
@@ -47,7 +47,7 @@ public class ConnectedDocument : YDoc, IDisposable
   (TConnectorOptions? options = default,
   Action<TConnectorOptions> optionsConfiguration = null!)
     where TConnector : ConnectorBase<TConnection, TConnectorOptions>, new()
-    where TConnection : ConnectionBase
+    where TConnection : Connection
     where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
   {
     options ??= new TConnectorOptions();
@@ -63,7 +63,7 @@ public class ConnectedDocument : YDoc, IDisposable
   internal async Task<IConnector> Connect<TConnector, TConnection, TConnectorOptions>
   (IConnector<TConnection, TConnectorOptions>? connector = null)
     where TConnector : ConnectorBase<TConnection, TConnectorOptions>, new()
-    where TConnection : ConnectionBase
+    where TConnection : Connection
     where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
   {
     Console.WriteLine($"ConnectedDocument.Connect():\n\tconnector={connector}\n\tConnector={connector}");
