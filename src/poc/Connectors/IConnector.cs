@@ -1,26 +1,27 @@
 using System;
 using System.Threading.Tasks;
 using cli.Connectors;
+using Ycs;
 
 namespace Aemo.Connectors;
 
-public interface IConnector<TConnection, TConnectorOptions> : IConnector
-  where TConnection : IConnection
-  where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
+public interface IConnector<TConnector, TConnectorOptions> : IConnector
+  where TConnector : IConnector
+  where TConnectorOptions : IConnectorOptions<TConnector>
 {
   TConnectorOptions Options { get; init; }
 }
 
 public interface IConnector : IDisposable
 {
-  string ConnectionId { get; }
-  ConnectionDictionary<IConnection> Connections { get; }
+  string Id { get; }
+  ConnectionDictionary<IConnection> ServerConnections { get; }
 
   ConnectionStatus Status { get; protected set; }
 
   bool IsConnected { get; }
 
-  ConnectedDocument Document { get; }
+  YDoc Document { get; }
 
   Task Connect();
 

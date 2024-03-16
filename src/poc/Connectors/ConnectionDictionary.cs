@@ -60,19 +60,5 @@ namespace cli.Connectors
     public bool Remove(TConnection item) => TryRemove(item.Id, out _);
 
     IEnumerator<TConnection> IEnumerable<TConnection>.GetEnumerator() => Values.GetEnumerator();
-
-    // public TConnection CreateFromSocket<TConnector, TConnectorOptions>(Socket socket, TConnector connector)
-    //   where TConnector : ConnectorBase<TConnection, TConnectorOptions>, new()
-    //   where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
-    // {
-    //   var connection = new TConnection()
-    //   {
-    //     Connector = connector,
-    //     Socket = socket,
-    //     Stream = new NetworkStream(socket, true),
-    //   };
-
-    //   return connection;
-    // }
   }
 }

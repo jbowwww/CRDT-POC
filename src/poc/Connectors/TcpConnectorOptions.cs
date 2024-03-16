@@ -24,21 +24,25 @@ public static class IPEndpointParser
   }
 }
 
-public class TcpConnectorOptions : ConnectorOptions<TcpConnectorOptions>
+public class TcpConnectorOptions : ConnectorOptions<TcpConnector, TcpConnectorOptions>
 {
   public bool AutoConnect { get; set; } = true;
 
+  public IPEndPoint ListenEndpoint { get; internal set; } = IPEndPoint.Parse($"{IPAddress.Any}:2312");
+
+  public string Host => ListenEndpoint.Address.ToString();
+
+  public int Port => ListenEndpoint.Port;
+
   public bool Listen { get; internal set; } = true;
 
-  public IPEndPoint Endpoint { get; internal set; } = IPEndPoint.Parse($"{IPAddress.Any}:2312");
+  public int ListenSocketAcceptQueueSize = 8;
 
   public IList<IPEndPoint> RemoteEndpoints = new List<IPEndPoint>();
 
-  public string Host => Endpoint.Address.ToString();
+  public int ClientConnectDelay = 2000;
 
-  public int Port => Endpoint.Port;
-
-  public TcpConnectorOptions() { }
+  public int PostConnectDelay = 500;
 
   public TcpConnectorOptions(string[] args)
   {
@@ -47,33 +51,21 @@ public class TcpConnectorOptions : ConnectorOptions<TcpConnectorOptions>
   }
 
   public override string ToString() =>
-   $"[TcpConnectorOptions AutoConnect={AutoConnect} Listen={Listen} Endpoint={Endpoint} "
+   $"[TcpConnectorOptions AutoConnect={AutoConnect} Listen={Listen} Endpoint={ListenEndpoint} "
    + $"RemoteEndpoints={string.Join(", ", RemoteEndpoints.Select(e => e))}";
 
-  /// <summary>
-  /// Parse instace type, host and port from string array, presumably/probably taken from a CLI
-  /// <summary>
-  public override void Parse(string[] args)
+  public override IConnectorOptions<TcpConnector> Parse(string[] args)
   {
     if (args.Length < 2)
       throw new ArgumentException($"Must specify 2| command line arguments! args=[ {string.Join(", ", args.ToList().Select(a => a))} ]"
           + $"\nUsage: {Process.GetCurrentProcess().ProcessName}" + " <LocalEndpoint> [RemoteEndpoint1] [RemoteEndpoint2] ... [RemoteEndpointN]"
           + "\n\twhere LocalEndpoint and RemoteEndpointN are in the format <hostname_or_ip_address>:<port_number>");
-    Endpoint = IPEndpointParser.Parse(args[0]);
+    ListenEndpoint = IPEndpointParser.Parse(args[0]);
     for (int i = 1; i < args.Length; i++)
     {
       var remoteEndpoint = IPEndpointParser.Parse(args[i]);
       RemoteEndpoints.Add(remoteEndpoint);
     }
-  }
-
-  public override TcpConnectorOptions CopyTo(IConnectorOptions<TcpConnectorOptions> options)
-  {
-    var tcpOptions = ((TcpConnectorOptions)options);
-    tcpOptions.AutoConnect = AutoConnect;
-    tcpOptions.Listen = Listen;
-    tcpOptions.Endpoint = Endpoint;
-    tcpOptions.RemoteEndpoints = RemoteEndpoints;
-    return tcpOptions;
+    return this;
   }
 }
