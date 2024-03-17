@@ -13,7 +13,7 @@ public class TcpConnector : Connector<TcpConnector, TcpConnectorOptions>
 {
   private readonly object _syncObject = new();
 
-  public override string Id => Options.ListenEndpoint.ToString();
+  public override string Id => Options.ListenEndpoint?.ToString() ?? "";
 
   public override async Task Connect()
   {
@@ -53,6 +53,8 @@ public class TcpConnector : Connector<TcpConnector, TcpConnectorOptions>
 
   public async Task ServerListenIncomingAsync()
   {
+    if (Options.ListenEndpoint == null)
+      throw new ArgumentNullException("Options.ListenEndpoint");
     var listenSocket = new Socket(Options.ListenEndpoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
     try
     {

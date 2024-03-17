@@ -10,7 +10,7 @@
     "build": "npm run build:debug",
     "build:debug": "reset; echo \"==========\nBuilding solution: Debug ...\n==========\n\" ; /bin/bash -vc \"dotnet publish -c Debug -o ./app --self-contained true --use-current-runtime ./src/poc/poc.csproj\"",
     "build:release": "reset; echo \"==========\nCleaning solution: Release ...\n==========\n\" ; /bin/bash -vc \"dotnet publish -c Release -o ./app --self-contained true --use-current-runtime ./src/poc/poc.csproj\"",
-    "run": "./app/cli"
+    "run": "./app/poc"
   },
   "author": "",
   "license": "ISC"

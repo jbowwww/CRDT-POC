@@ -22,7 +22,10 @@ public abstract class Connector<TConnector, TConnectorOptions>
   public virtual bool IsDisconnected => Status >= ConnectionStatus.Disconnecting;
   public virtual YDoc Document { get; init; } = null!;
 
-  public override string ToString() => $"[{GetType().Name} Id=\"{Id}\" Status={Status} Connections={ServerConnections}]";
+  public string ToString(string? suffix = null) =>
+    $"[{GetType().Name} Id=\"{Id}\" Status={Status} Connections={ServerConnections}]"
+    + ((suffix == null) ? "" : (": " + suffix));
+  public override string ToString() => ToString(null);
 
   ~Connector()
   {
@@ -86,7 +89,10 @@ public abstract class Connector<TConnector, TConnectorOptions>
 
   public void Broadcast(Action<IConnection> streamAction)
   {
-    Console.WriteLine($"Broadcast(): streamAction={streamAction}");
-    ServerConnections.AsParallel<IConnection>().ForAll(streamAction.Invoke);
+    ServerConnections.AsParallel<IConnection>().ForAll(connection =>
+    {
+      Console.WriteLine($"Broadcast(): streamAction=()=>{{ ... }} connection={connection}");
+      streamAction.Invoke(connection);
+    });
   }
 }

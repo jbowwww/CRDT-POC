@@ -1,11 +1,9 @@
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Ycs;
 
-namespace Aemo;
+namespace Poc;
 
 public static class YMapExtensions
 {
-  public static string ToString(this YMap map) => string.Join("\n\t", map.Select(entry => $"{entry.Key}={entry.Value}"));
+  public static string ToString(this YMap map, string separator = ",") => string.Join(separator, map.Select(entry => $"{entry.Key}={entry.Value}"));
 }

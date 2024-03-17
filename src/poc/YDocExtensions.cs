@@ -3,12 +3,15 @@ using System.Threading.Tasks;
 using Aemo;
 using Aemo.Connectors;
 using Ycs;
+using Poc;
+
+namespace Poc;
 
 public static class YDocExtensions
 {
-    public static string ToSummaryString(this YDoc document) => $"[YDoc ClientId={document.ClientId} map.Count={document.GetMap().Count}]";
-
-    public static string ToString(this YDoc document) => $"{document.ToSummaryString()}: {document.GetMap()}";
+    public static string ToString(this YDoc document, bool includeDocument = true) =>
+        $"[YDoc ClientId={document.ClientId} map.Count={document.GetMap().Count}]:"
+        + (!includeDocument ? " " : "\n\t" + document.GetMap().ToString("\n\t"));
 
     public static TValue Get<TValue>(this YDoc document, string key = "")
       where TValue : class => (TValue)document.GetMap().Get(key);
@@ -31,18 +34,20 @@ public static class YDocExtensions
         return connector;
     }
 
-    private static EventHandler<(byte[] data, object origin, Transaction transaction)> HandleUpdate<TConnector, TConnectorOptions>(YDoc document, IConnector<TConnector, TConnectorOptions> connector)
+    private static EventHandler<(byte[] data, object origin, Transaction transaction)>
+        HandleUpdate<TConnector, TConnectorOptions>
+    (YDoc document, IConnector<TConnector, TConnectorOptions> connector)
         where TConnector : IConnector<TConnector, TConnectorOptions>, new()
         where TConnectorOptions : IConnectorOptions<TConnector>
     {
-        return (object? sender, (byte[] data, object origin, Transaction transaction) e) =>
+        return (sender, e) =>
         {
-            Console.WriteLine($"{document.ToSummaryString()}.UpdateV2():\n\tsender={sender}\n\te.data={SyncProtocol.EncodeBytes(e.data)}\n\torigin={e.origin}\n\ttransaction={e.transaction}\n\tdocument={document}\n\tconnector={connector}");
+            Console.WriteLine($"{document.ToString(false)}.UpdateV2():\n\tsender={sender}\n\te.data={SyncProtocol.EncodeBytes(e.data)}\n\torigin={e.origin}\n\ttransaction={e.transaction}\n\tdocument={document}\n\tconnector={connector}");
             if (e.data != null && e.data.Length > 0 && connector.IsConnected && sender != null && e.origin == sender)
             {
                 connector.Broadcast(connection =>
                 {
-                    Console.WriteLine($"{document.ToSummaryString()}.UpdateV2: Broadcast: connection={connection}");
+                    Console.WriteLine($"{document.ToString(false)}.UpdateV2: Broadcast: connection={connection}");
                     connection.WriteUpdate(document.EncodeStateAsUpdateV2()); // e.data); // TODO: Or encode state vector/update using state vector , and broadcast that ??
                 });
             }

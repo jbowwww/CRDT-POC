@@ -13,21 +13,22 @@ public abstract class Connection : IConnection, IDisposable
 
     public Stream Stream { get; init; }
 
+    public bool IsServer { get; init; } = false;
+
     public virtual ConnectionStatus Status => Connector != null ? Connector.Status : ConnectionStatus.Init;
 
     public string ToString(string? suffix = null) => $"[{GetType().Name} Id={this.Id} Status={Status}]: {suffix}";
-
     public override string ToString() => ToString(null);
 
-    public Connection(IConnector connector, string id, Stream stream, bool server = false)
+    public Connection(IConnector connector, string id, Stream stream, bool isServer = false)
     {
         Connector = connector;
         Id = id;
         Stream = stream;
-        if (server)
+        IsServer = isServer;
+        if (isServer)
         {
             connector.ServerConnections.Add(this);
-            WriteSyncStep1();
         }
         RunMessageLoop();
     }
@@ -46,6 +47,10 @@ public abstract class Connection : IConnection, IDisposable
     internal Task RunMessageLoop() => Task.Run(() => MessageLoop());
     internal void MessageLoop()
     {
+        if (IsServer)
+        {
+            WriteSyncStep1();
+        }
         while (Status <= ConnectionStatus.Partitioned)
         {
             if (Stream.Length > 0)
