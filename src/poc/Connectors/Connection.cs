@@ -26,11 +26,13 @@ public abstract class Connection : IConnection, IDisposable
         Id = id;
         Stream = stream;
         IsServer = isServer;
-        if (isServer)
-        {
-            connector.ServerConnections.Add(this);
-        }
-        RunMessageLoop();
+        // if (isServer)
+        // {
+
+        //     WriteSyncStep1();
+        //     connector.ServerConnections.Add(this);
+        // }
+        // RunMessageLoop();
     }
 
     ~Connection()
@@ -47,6 +49,7 @@ public abstract class Connection : IConnection, IDisposable
     internal Task RunMessageLoop() => Task.Run(() => MessageLoop());
     internal void MessageLoop()
     {
+        Console.WriteLine(ToString($".MessageLoop(): {this}"));
         if (IsServer)
         {
             WriteSyncStep1();

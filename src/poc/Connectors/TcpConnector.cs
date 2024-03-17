@@ -40,7 +40,7 @@ public class TcpConnector : Connector<TcpConnector, TcpConnectorOptions>
 
   public override void Disconnect()
   {
-    Console.WriteLine($"Disconnect(): Disconnecting client with connectionId={Id} ...");
+    Console.WriteLine($"Disconnect(): Disconnecting clients from server listening at {Options.ListenEndpoint} ...");
     lock (_syncObject)
     {
       if (IsConnected)
@@ -65,7 +65,8 @@ public class TcpConnector : Connector<TcpConnector, TcpConnectorOptions>
       while (Options.Listen && IsConnected)
       {
         var connection = await TcpConnection.AcceptIncomingAsync(this, listenSocket);
-        Console.WriteLine($"OK: connection={connection}");
+        connection.WriteSyncStep1();
+        _ = connection.RunMessageLoop();
       }
       Console.WriteLine($"ServerListen(): Closing the listener on {Options.ListenEndpoint}");
       listenSocket.Close(1000);
@@ -86,7 +87,7 @@ public class TcpConnector : Connector<TcpConnector, TcpConnectorOptions>
   public TcpConnection ClientConnect(IPEndPoint remoteEndpoint)
   {
     var client = new TcpClient(remoteEndpoint.AddressFamily);
-    Console.Write($"ClientConnect(): Connecting {client.Client.LocalEndPoint} -> {client.Client.RemoteEndPoint} ... ");
+    Console.Write($"ClientConnect(): Connecting {client.Client.LocalEndPoint} -> {remoteEndpoint} ... ");
     try
     {
       client.Connect(remoteEndpoint);

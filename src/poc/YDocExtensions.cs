@@ -7,10 +7,15 @@ using Poc;
 
 namespace Poc;
 
+public static class ObjectExtensions
+{
+    public static string ToStringAsDocOrObject(this object obj, bool includeDocument = false) =>
+        (obj as YDoc)?.ToString(includeDocument) ?? obj.ToString() ?? "(null)";
+}
 public static class YDocExtensions
 {
     public static string ToString(this YDoc document, bool includeDocument = true) =>
-        $"[YDoc ClientId={document.ClientId} map.Count={document.GetMap().Count}]:"
+        $"[YDoc ClientId={document.ClientId} map.Count={document.GetMap().Count}]"
         + (!includeDocument ? " " : "\n\t" + document.GetMap().ToString("\n\t"));
 
     public static TValue Get<TValue>(this YDoc document, string key = "")
@@ -19,14 +24,16 @@ public static class YDocExtensions
     public static void Set(this YDoc document, string key, object value) =>
         document.Transact((tr) => document.GetMap().Set(key, value), document, true);
 
-    public static async Task<TConnector> Connect<TConnector, TConnectorOptions>(this YDoc document, TConnectorOptions connectorOptions
+    public static async Task<TConnector> Connect<TConnector, TConnectorOptions>(
+        this YDoc document, TConnectorOptions connectorOptions
     )
       where TConnector : IConnector<TConnector, TConnectorOptions>, new()
       where TConnectorOptions : IConnectorOptions<TConnector>
     {
         var connector = new TConnector()
         {
-            Options = connectorOptions
+            Options = connectorOptions,
+            Document = document
         };
         await connector.Connect();
 
@@ -34,21 +41,27 @@ public static class YDocExtensions
         return connector;
     }
 
-    private static EventHandler<(byte[] data, object origin, Transaction transaction)>
-        HandleUpdate<TConnector, TConnectorOptions>
-    (YDoc document, IConnector<TConnector, TConnectorOptions> connector)
+    private static EventHandler<(byte[] data, object origin, Transaction transaction)> HandleUpdate<TConnector, TConnectorOptions>(
+        YDoc document, IConnector<TConnector, TConnectorOptions> connector
+    )
         where TConnector : IConnector<TConnector, TConnectorOptions>, new()
         where TConnectorOptions : IConnectorOptions<TConnector>
     {
         return (sender, e) =>
         {
-            Console.WriteLine($"{document.ToString(false)}.UpdateV2():\n\tsender={sender}\n\te.data={SyncProtocol.EncodeBytes(e.data)}\n\torigin={e.origin}\n\ttransaction={e.transaction}\n\tdocument={document}\n\tconnector={connector}");
+            Console.WriteLine($"{document.ToString(false)}.UpdateV2():\n\t"
+            + $"sender={sender?.ToStringAsDocOrObject(false)}\n\t"
+            + $"e.data={SyncProtocol.EncodeBytes(e.data)}\n\t"
+            + $"origin={e.origin.ToStringAsDocOrObject(false)}\n\t"
+            + $"transaction={e.transaction.ToStringAsDocOrObject(false)}\n\t"
+            + $"document={document.ToStringAsDocOrObject()}\n\t"
+            + $"connector={connector}\n\t");
             if (e.data != null && e.data.Length > 0 && connector.IsConnected && sender != null && e.origin == sender)
             {
                 connector.Broadcast(connection =>
                 {
-                    Console.WriteLine($"{document.ToString(false)}.UpdateV2: Broadcast: connection={connection}");
-                    connection.WriteUpdate(document.EncodeStateAsUpdateV2()); // e.data); // TODO: Or encode state vector/update using state vector , and broadcast that ??
+                    connector.Send(connection.Id, e.data);
+                    // connection.WriteUpdate(e.data);//document.EncodeStateAsUpdateV2()); // e.data); // TODO: Or encode state vector/update using state vector , and broadcast that ??
                 });
             }
         };

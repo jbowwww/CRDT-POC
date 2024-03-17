@@ -21,7 +21,7 @@ public interface IConnector : IDisposable
 
   bool IsConnected { get; }
 
-  YDoc Document { get; }
+  YDoc Document { get; init; }
 
   Task Connect();
 

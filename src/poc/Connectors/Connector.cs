@@ -23,7 +23,7 @@ public abstract class Connector<TConnector, TConnectorOptions>
   public virtual YDoc Document { get; init; } = null!;
 
   public string ToString(string? suffix = null) =>
-    $"[{GetType().Name} Id=\"{Id}\" Status={Status} Connections={ServerConnections}]"
+    $"[{GetType().Name} Id=\"{Id}\" Status={Status} ServerConnections={ServerConnections}]"
     + ((suffix == null) ? "" : (": " + suffix));
   public override string ToString() => ToString(null);
 

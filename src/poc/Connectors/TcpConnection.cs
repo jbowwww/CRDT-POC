@@ -25,6 +25,8 @@ public sealed class TcpConnection : Connection
   {
     var acceptedSocket = await listenSocket.AcceptAsync();
     Console.Write($"TcpConnector.Server(): Accepting {acceptedSocket.RemoteEndPoint} -> {acceptedSocket.LocalEndPoint} ... ");
-    return new TcpConnection(connector, acceptedSocket, true);
+    var connection = new TcpConnection(connector, acceptedSocket, true);
+    Console.WriteLine($"OK: connection={connection}");
+    return connection;
   }
 }

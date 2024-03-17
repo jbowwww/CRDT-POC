@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using Aemo.Connectors;
@@ -21,7 +23,8 @@ namespace cli.Connectors
       set => base[connectionId] = value;
     }
 
-    public override string ToString() => $"{Count} connections, {Values.Count(c => c.Status <= ConnectionStatus.Connected)} active";
+    public override string ToString() => $"[{Count}]: " + string.Join(",", this.ToArray().Select(
+      (KeyValuePair<string, TConnection> kvp) => kvp.Value.Id));// {Values.Count(c => c.Status <= ConnectionStatus.Connected)} active";
 
     public void Add(TConnection connection)
     {

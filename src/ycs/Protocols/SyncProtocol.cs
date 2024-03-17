@@ -20,6 +20,7 @@ namespace Ycs
 
         public static void WriteSyncStep1(Stream stream, YDoc doc)
         {
+            Console.WriteLine($"SyncProtocol.WSS1: Stream={stream} doc={doc}");
             stream.WriteVarUint(MessageYjsSyncStep1);
             var sv = doc.EncodeStateVectorV2();
             stream.WriteVarUint8Array(sv);
@@ -27,6 +28,7 @@ namespace Ycs
 
         public static void WriteSyncStep2(Stream stream, YDoc doc, byte[] encodedStateVector)
         {
+            Console.WriteLine($"SyncProtocol.WSS2: Stream={stream} doc={doc} esv={encodedStateVector}");
             stream.WriteVarUint(MessageYjsSyncStep2);
             var update = doc.EncodeStateAsUpdateV2(encodedStateVector);
             stream.WriteVarUint8Array(update);
@@ -34,24 +36,28 @@ namespace Ycs
 
         public static void ReadSyncStep1(Stream stream, YDoc doc)
         {
+            Console.WriteLine($"SyncProtocol.RSS1: Stream={stream} doc={doc}");
             var encodedStateVector = stream.ReadVarUint8Array();
             WriteSyncStep2(stream, doc, encodedStateVector);
         }
 
         public static void ReadSyncStep2(Stream stream, YDoc doc, object transactionOrigin)
         {
+            Console.WriteLine($"SyncProtocol.RSS2: Stream={stream} doc={doc} transactionOrigin={transactionOrigin}");
             var update = stream.ReadVarUint8Array();
             doc.ApplyUpdateV2(update, transactionOrigin);
         }
 
         public static void WriteUpdate(Stream stream, byte[] update)
         {
+            Console.WriteLine($"SyncProtocol.WriteUpdate: Stream={stream} update={update}");
             stream.WriteVarUint(MessageYjsUpdate);
             stream.WriteVarUint8Array(update);
         }
 
         public static void ReadUpdate(Stream stream, YDoc doc, object transactionOrigin)
         {
+            Console.WriteLine($"SyncProtocol.WriteUpdate: Stream={stream} doc={doc} transactionOrigin={transactionOrigin}");
             ReadSyncStep2(stream, doc, transactionOrigin);
         }
 
@@ -66,7 +72,7 @@ namespace Ycs
         public static uint ReadSyncMessage(Stream stream, YDoc doc, object transactionOrigin)
         {
             var messageType = stream.ReadVarUint();
-
+            Console.WriteLine($"SyncProtocol.ReadSyncMessage(): messageType={messageType}\n\tdoc={doc}\n\ttransactionOrigin={transactionOrigin}");
             switch (messageType)
             {
                 case MessageYjsSyncStep1:
