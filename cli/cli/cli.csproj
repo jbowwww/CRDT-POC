@@ -4,7 +4,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.2" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.2" />
-    <ProjectReference Include="../../../ycs/src/Ycs/Ycs.csproj" />
+    <ProjectReference Include="../ycs/src/Ycs/Ycs.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

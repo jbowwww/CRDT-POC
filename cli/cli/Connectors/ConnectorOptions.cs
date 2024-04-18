@@ -1,12 +1,15 @@
 using System;
-using Aemo.Connectors;
+using Ycs;
+using cli.Connectors;
 
-namespace Aemo;
+namespace cli.Connectors;
 
 public abstract class ConnectorOptions<T> : IConnectorOptions<T>
   where T : ConnectorOptions<T>, new()
 {
   public string RootDocumentName { get; init; } = "ConnectedDocument";
+
+  public YDoc Document { get; set; } = null;
 
   public abstract void Parse(string[] args);
 

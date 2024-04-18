@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using Ycs;
 
-namespace Aemo.Connectors;
+namespace cli.Connectors;
 
 public class Connection : IConnection, IDisposable
 {
@@ -18,19 +18,22 @@ public class Connection : IConnection, IDisposable
 
     public Socket Socket { get; init; } = null!;
 
+    public bool IsServer { get; init; } = false;
+
     public Stream Stream { get; init; } = null!;
 
     public ConnectionStatus Status => Connector != null ? Connector.Status : ConnectionStatus.Init;
 
     public string ToString(string? suffix = null) =>
-      $"[{GetType().Name} Id={this.Id} Status={Status}]: " +
-      (suffix ?? $"LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
+      $"[{GetType().Name} Id={this.Id} Status={Status} IsServer={IsServer}]: " +
+      (suffix);// ?? $"LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
 
     public override string ToString() => ToString(null);
 
-    public Connection(IConnector connector, Socket socket)
+    public Connection(IConnector connector, Socket socket, bool isServer = false)
     {
         Connector = connector;
+        IsServer = isServer;
         Socket = socket;
         Stream = new NetworkStream(socket, true);
     }
@@ -46,19 +49,19 @@ public class Connection : IConnection, IDisposable
         Stream?.Close();
     }
 
-    internal void MessageLoop(bool server = false)
+    internal void MessageLoop()
     {
         if (Connector == null)
         {
-            throw new InvalidOperationException(ToString($"MessageLoop(server={server}): Connector == null"));
+            throw new InvalidOperationException(ToString($"MessageLoop: Connector == null"));
         }
-        Console.WriteLine(ToString($"MessageLoop(server={server}): START"));
+        Console.WriteLine(ToString($"MessageLoop: START"));
         if (Status <= ConnectionStatus.Partitioned)
         {
-            if (server)
+            if (IsServer)
             {
                 Connector.Connections.Add(this);
-                Console.WriteLine(ToString($"MessageLoop(server={server}): WriteSyncStep1"));
+                Console.WriteLine(ToString($"MessageLoop: WriteSyncStep1"));
                 WriteSyncStep1();
             }
             while (Status <= ConnectionStatus.Partitioned)
@@ -66,30 +69,30 @@ public class Connection : IConnection, IDisposable
                 var available = Socket.Available;
                 if (available > 0)
                 {
-                    Console.WriteLine(ToString($"MessageLoop(server={server})] ReadSyncMessage available={available}"));
+                    Console.WriteLine(ToString($"MessageLoop] ReadSyncMessage available={available}"));
                     var messageType = ReadSyncMessage();
-                    Console.WriteLine(ToString($"MessageLoop(server={server})] ReadSyncMessage returned messageType={messageType}\n\tupdatedDoc={Connector?.Document.ToString()}"));
+                    Console.WriteLine(ToString($"MessageLoop] ReadSyncMessage returned messageType={messageType}\n\tupdatedDoc={Connector?.Document.ToString(Connector?.Document.ValuesToString())}"));
                 }
             }
-            if (server)
+            if (IsServer)
             {
                 if (Connector == null)
                 {
-                    throw new InvalidOperationException(ToString($"MessageLoop(server={server}): Connector == null"));
+                    throw new InvalidOperationException(ToString($"MessageLoop: Connector == null"));
                 }
                 Connector.Connections.Remove(this);
-                Console.WriteLine(ToString($"MessageLoop(server={server}): Disposing ..."));
+                Console.WriteLine(ToString($"MessageLoop: Disposing ..."));
             }
             Dispose();
         }
-        Console.WriteLine(ToString($"MessageLoop(server={server}): END"));
+        Console.WriteLine(ToString($"MessageLoop: END"));
     }
 
     public void WriteSyncStep1() => SyncProtocol.WriteSyncStep1(Stream, Connector?.Document);
     public void WriteSyncStep2(byte[] stateVector) => SyncProtocol.WriteSyncStep2(Stream, Connector?.Document, stateVector);
-    public void ReadSyncStep1() => SyncProtocol.ReadSyncStep1(Stream, Connector?.Document);
+    public void ReadSyncStep1() => SyncProtocol.ReadSyncStep1(Stream, Stream, Connector?.Document);
     public void ReadSyncStep2() => SyncProtocol.ReadSyncStep2(Stream, Connector?.Document, this);
     public void WriteUpdate(byte[] update) => SyncProtocol.WriteUpdate(Stream, update);
     public void ReadUpdate() => SyncProtocol.ReadUpdate(Stream, Connector?.Document, this);
-    public uint ReadSyncMessage() => SyncProtocol.ReadSyncMessage(Stream, Connector?.Document, this);
+    public uint ReadSyncMessage() => SyncProtocol.ReadSyncMessage(Stream, Stream, Connector?.Document, this);
 }

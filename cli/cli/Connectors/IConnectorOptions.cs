@@ -1,7 +1,7 @@
 using System;
-using Aemo.Connectors;
+using cli.Connectors;
 
-namespace Aemo;
+namespace cli;
 
 public interface IConnectorOptions<TConnector>
    where TConnector : ConnectorOptions<TConnector>, new()

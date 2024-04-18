@@ -18,13 +18,7 @@ namespace Ycs
         GetMissing,
         Update
     }
-
-    public class MessageToProcess
-    {
-        public YjsCommandType Command;
-        public YjsCommandType? InReplyTo;
-        public string? Data;
-    }
+EncodeBytes
 
     public class YcsManager
     {

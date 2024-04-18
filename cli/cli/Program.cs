@@ -2,8 +2,8 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using System.Timers;
-using Aemo;
-using Aemo.Connectors;
+using cli;
+using cli.Connectors;
 using Ycs;
 
 namespace cli
@@ -24,7 +24,7 @@ namespace cli
             {
                 // TODO: Change return value to IConnector if need to continue using doc1.Connector.* e.g. .ConnectionId. Saves getting out of doc1.
                 bool isPrimaryNode = connector.Id.EndsWith("1");// ?? throw new InvalidOperationException($"doc1(={doc1}) or doc1.Connector(={doc1?.Connector}) is null");
-                Console.WriteLine($"INIT isPrimaryNode={isPrimaryNode} doc1={doc1}");
+                Console.WriteLine($"INIT isPrimaryNode={isPrimaryNode} doc1={doc1.ToString(doc1.ValuesToString())}");
                 if (isPrimaryNode)
                 {
                     await Task.Delay(500);
@@ -37,7 +37,7 @@ namespace cli
                 doc1.Set("prop3-2", isPrimaryNode ? "stringValue1" : "stringValue2");
                 doc1.Set(isPrimaryNode ? "prop4-1" : "prop4-2", isPrimaryNode ? "stringValue1" : "stringValue2");
                 doc1.Set(isPrimaryNode ? "prop4-2" : "prop4-1", isPrimaryNode ? "stringValue1" : "stringValue2");
-                Console.WriteLine($"SET doc1={doc1}");
+                Console.WriteLine($"SET doc1={doc1.ToString(doc1.ValuesToString())}");
 
                 if (!isPrimaryNode)
                 {
@@ -46,14 +46,14 @@ namespace cli
                     {
                         doc1.Set("propTimer", "timerValue");
                         doc1.Set("prop1", "prop1timered");
-                        Console.WriteLine($"TIMER doc1={doc1}");
+                        Console.WriteLine($"TIMER doc1={doc1.ToString(doc1.ValuesToString())}");
                     };
                     timer.Start();
                 }
             }
 
             _ = Console.ReadKey();
-            Console.WriteLine($"POSTEXIT doc1={doc1}");
+            Console.WriteLine($"POSTEXIT doc1={doc1.ToString(doc1.ValuesToString())}");
         }
     }
 }

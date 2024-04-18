@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Aemo.Connectors;
+using cli.Connectors;
 
 namespace cli.Connectors
 {

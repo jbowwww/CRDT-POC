@@ -1,4 +1,4 @@
-namespace Aemo.Connectors;
+namespace cli.Connectors;
 
 public enum ConnectionStatus
 {

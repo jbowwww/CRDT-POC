@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using cli.Connectors;
 using Ycs;
 
-namespace Aemo.Connectors;
+namespace cli.Connectors;
 
 public abstract class ConnectorBase<TConnectorOptions> : IConnector<TConnectorOptions>
   where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
@@ -18,7 +18,7 @@ public abstract class ConnectorBase<TConnectorOptions> : IConnector<TConnectorOp
   public virtual bool IsPartitioned => Status == ConnectionStatus.Partitioned;
   public virtual bool IsError => Status == ConnectionStatus.Error;
   public virtual bool IsDisconnected => Status >= ConnectionStatus.Disconnecting;
-  public virtual YDoc Document { get; init; } = null!;
+  public virtual YDoc Document => Options.Document;
 
   public override string ToString()
    => $"[{GetType().Name} Id=\"{Id}\" Status={Status} Document.ClientId={Document?.ClientId} Connections={Connections}]";
@@ -57,7 +57,7 @@ public abstract class ConnectorBase<TConnectorOptions> : IConnector<TConnectorOp
 
   public void Send(string connectionId, byte[] data)
   {
-    Console.WriteLine($"Send(): Status={Status} Connections.Count={Connections.Count} Options={this}\n\tconnectionId={connectionId}\n\tdata={SyncProtocol.EncodeBytes(data)}");
+    Console.WriteLine($"Send(): Status={Status} Connections.Count={Connections.Count} Options={this}\n\tconnectionId={connectionId}\n\tdata={EncodeBytes(data)}");
     if (Connections.TryGetValue(connectionId, out IConnection? connection))
     {
       if (IsConnected)
@@ -74,7 +74,7 @@ public abstract class ConnectorBase<TConnectorOptions> : IConnector<TConnectorOp
 
   public void Broadcast(byte[] data)
   {
-    Console.WriteLine($"Broadcast(): Status={Status} Connections.Count={Connections.Count} Options={this}\n\tdata={SyncProtocol.EncodeBytes(data)}");
+    Console.WriteLine($"Broadcast(): Status={Status} Connections.Count={Connections.Count} Options={this}\n\tdata={EncodeBytes(data)}");
     if (IsConnected)
     {
       Connections?.AsParallel<IConnection>().ForAll(
@@ -85,7 +85,8 @@ public abstract class ConnectorBase<TConnectorOptions> : IConnector<TConnectorOp
 
   public void Broadcast(Action<IConnection> streamAction)
   {
-    Console.WriteLine($"Broadcast(): streamAction={streamAction}");
     Connections.AsParallel<IConnection>().ForAll(streamAction.Invoke);
   }
+  private static string EncodeBytes(byte[] arr) => Convert.ToBase64String(arr);
+  private static byte[] DecodeString(string str) => Convert.FromBase64String(str);
 }

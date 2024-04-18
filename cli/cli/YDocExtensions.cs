@@ -1,8 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using Aemo;
-using Aemo.Connectors;
 using Ycs;
+using cli.Connectors;
+
+namespace cli;
 
 public static class YDocExtensions
 {
@@ -19,13 +20,13 @@ public static class YDocExtensions
   public static void Set(this YDoc document, string key, object value) =>
       document.Transact((tr) => document.GetMap().Set(key, value), document, true);
 
-  // public string ValuesToString() => GetMap().ToString() ?? string.Empty;
-  // public override string ToString() => ToString();
-  // public string ToString(string? suffix = null) =>
-  //   $"[{GetType().Name} Name={Name} ClientId={ClientId} map.Count={GetMap().Count}]" + (suffix != null ? " " + suffix : "");
+  public static string ValuesToString(this YDoc document) => document.GetMap().ToString("") ?? string.Empty;
+  public static string ToString(this YDoc document) => ToString(document, ValuesToString(document));
+  public static string ToString(this YDoc document, string? suffix = null) =>
+    $"[{document.GetType().Name} ClientId={document.ClientId} map.Count={document.GetMap().Count}]" + (suffix != null ? (suffix.Contains("\n") ? "\n\t" : " ") + suffix : "");
 
   public static string ToSummaryString(this YDoc document) => $"[YDoc ClientId={document.ClientId} map.Count={document.GetMap().Count}]";
-  public static string ToString(this YDoc document) => $"{document.ToSummaryString()}: {document.GetMap()}";      // $"[{doc.GetType()} {(doc is ConnectedDocument ? (doc as ConnectedDocument)!.Name : "YDoc")}]: {doc.GetMap()}";
+  // public static string ToString(this YDoc document) => $"{document.ToSummaryString()}: {document.GetMap()}";      // $"[{doc.GetType()} {(doc is ConnectedDocument ? (doc as ConnectedDocument)!.Name : "YDoc")}]: {doc.GetMap()}";
 
   public static async Task<TConnector> Connect<TConnector, TConnectorOptions>(
     this YDoc document,
@@ -50,6 +51,7 @@ public static class YDocExtensions
   {
     connectorOptions ??= new TConnectorOptions();
     connectorOptionsConfiguration?.Invoke(connectorOptions);
+    connectorOptions.Document = document;
     var connector = new TConnector()
     {
       Options = connectorOptions
@@ -57,17 +59,20 @@ public static class YDocExtensions
     await connector.Connect();
 
     document.UpdateV2 += (object? sender, (byte[] data, object origin, Transaction transaction) e) =>
-    {
-      Console.WriteLine($"{document.ToSummaryString()}.UpdateV2():\n\tsender={sender}\n\te.data={SyncProtocol.EncodeBytes(e.data)}\n\torigin={e.origin}\n\ttransaction={e.transaction}\n\tdocument={document}\n\tconnector={connector}");
+    {//\n\ttransaction={e.transaction}
+      Console.WriteLine($"{document.ToSummaryString()}.UpdateV2(): sender.ClientId={((YDoc)sender).ClientId} origin.ClientId={((YDoc)e.origin).ClientId} document[ClientId={document.ClientId}, map.Count={document.GetMap().Count}]\n\tconnector={connector}");
       if (e.data != null && e.data.Length > 0 && connector.IsConnected && sender != null && e.origin == sender)
       {
         connector.Broadcast(connection =>
         {
-          Console.WriteLine($"{document.ToSummaryString()}.UpdateV2: Broadcast: connection={connection}");
+          // Console.WriteLine($"{document.ToSummaryString()}.UpdateV2: Broadcast: connection={connection}");
           connection.WriteUpdate(document.EncodeStateAsUpdateV2()); // e.data); // TODO: Or encode state vector/update using state vector , and broadcast that ??
         });
       }
     };
     return connector;
   }
+
+  private static string EncodeBytes(byte[] arr) => Convert.ToBase64String(arr);
+  private static byte[] DecodeString(string str) => Convert.FromBase64String(str);
 }

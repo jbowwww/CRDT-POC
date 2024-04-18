@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using cli.Connectors;
 using Ycs;
 
-namespace Aemo.Connectors;
+namespace cli.Connectors;
 
 public interface IConnector<TConnectorOptions> : IConnector
   where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()

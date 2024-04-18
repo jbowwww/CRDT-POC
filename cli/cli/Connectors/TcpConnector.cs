@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace Aemo.Connectors;
+namespace cli.Connectors;
 
 public class TcpConnector : ConnectorBase<TcpConnectorOptions>
 {
@@ -24,7 +24,7 @@ public class TcpConnector : ConnectorBase<TcpConnectorOptions>
     {
       if (!IsInit)
       {
-        Console.WriteLine($"TcpConnector.Connect(): returning because Status={Status}");
+        Console.WriteLine($"TcpConnector.Connect(): Aborting on connector.Id={Id} because Status={Status}");
         return;
       }
       Status = ConnectionStatus.Connecting;
@@ -43,7 +43,7 @@ public class TcpConnector : ConnectorBase<TcpConnectorOptions>
 
   public override void Disconnect()
   {
-    Console.WriteLine($"Disconnect(): Disconnecting client with connectionId={Id} ...");
+    Console.Write($"Disconnect(): Disconnecting client from connector.Id={Id} ... ");
     lock (_syncObject)
     {
       if (IsConnected)
@@ -51,7 +51,7 @@ public class TcpConnector : ConnectorBase<TcpConnectorOptions>
         Status = ConnectionStatus.Disconnecting;
       }
     }
-    Console.WriteLine($"Disconnect(): End Disconnect() client with connectionId={Id} ...");
+    Console.WriteLine("OK");//$"Disconnect(): End Disconnect() client with connector.Id={Id} ...");
   }
 
   public async void ServerListen()
@@ -65,16 +65,16 @@ public class TcpConnector : ConnectorBase<TcpConnectorOptions>
       while (Options.Listen && IsConnected)
       {
         var acceptedSocket = await listenSocket.AcceptAsync();
-        Console.WriteLine($"ServerListen(): Accepting connection from [{acceptedSocket.RemoteEndPoint}->{acceptedSocket.LocalEndPoint}]");
+        Console.Write($"ServerListen(): Accepting connection from [{acceptedSocket.RemoteEndPoint}->{acceptedSocket.LocalEndPoint}] ... ");
         // Creates a TcpConnection object, which wraps the accepted and Task.Run()'s ConnectionBase.ServerMessageLoop
-        var connection = new Connection(this, acceptedSocket);
-        Console.WriteLine($"ServerListen(): Established connection={connection}");
+        var connection = new Connection(this, acceptedSocket, true);
+        Console.WriteLine($"OK");//ServerListen(): Established connection={connection}");
         // Task WriteSyncStep1 then loops on ReadSyncMessage (client just sends updates when they happen)
-        _ = Task.Run(() => connection.MessageLoop(true));
+        _ = Task.Run(() => connection.MessageLoop());
       }
       // lock (_syncObject)
       // {
-      Console.WriteLine($"ServerListen(): Closing the listener on Endpoint={Options.Endpoint}");
+      Console.Write($"ServerListen(): Closing the listener on Endpoint={Options.Endpoint} ...");
       listenSocket.Close(1000);
       while (Connections.Count > 0)
         ;
@@ -82,6 +82,7 @@ public class TcpConnector : ConnectorBase<TcpConnectorOptions>
       {
         Status = ConnectionStatus.Disconnected;
       }
+      Console.Write("OK");
       // }
     }
     catch (Exception ex)
@@ -94,11 +95,11 @@ public class TcpConnector : ConnectorBase<TcpConnectorOptions>
   public IConnection ClientConnect(IPEndPoint remoteEndpoint)
   {
     var client = new TcpClient(remoteEndpoint.AddressFamily);
-    Console.WriteLine($"ClientConnect(): Connecting to {client.Client.LocalEndPoint}->{client.Client.RemoteEndPoint} ...");
+    Console.Write($"ClientConnect(): Connecting to {remoteEndpoint} ... ");
     client.Connect(remoteEndpoint);
     var connection = new Connection(this, client.Client);
-    Console.WriteLine($"ClientConnect(): Established connection={connection}");
-    _ = Task.Run(() => connection.MessageLoop(false));
+    Console.WriteLine("OK");//$"ClientConnect(): Established connection={connection}");
+    _ = Task.Run(() => connection.MessageLoop());
     return connection;
   }
 }
