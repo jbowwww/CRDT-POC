@@ -18,11 +18,10 @@ public static class CrdtPoc
     //TODO: Remove Console.WriteLine's pasted repeatedly, add a doc1.Update handler to do it and count #updates(local/not?)
     public static async Task Main(string[] args)
     {
-        var doc1 = new YDoc(/*, new YDocOptions() {}*/);    // ConnectedDocument( { Name = "Document #1" };
+        var doc1 = new YDoc(/*, new YDocOptions() {}*/);
         using (var connector = await doc1.Connect<TcpConnector, TcpConnectorOptions>(options => options.Parse(args)))
         {
-            // TODO: Change return value to IConnector if need to continue using doc1.Connector.* e.g. .ConnectionId. Saves getting out of doc1.
-            bool isPrimaryNode = connector.Id.EndsWith("1");// ?? throw new InvalidOperationException($"doc1(={doc1}) or doc1.Connector(={doc1?.Connector}) is null");
+            bool isPrimaryNode = connector.Id.EndsWith("1");
             Console.WriteLine($"INIT isPrimaryNode={isPrimaryNode} doc1={doc1.ToString(doc1.ValuesToString())}");
             if (isPrimaryNode)
             {
