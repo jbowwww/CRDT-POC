@@ -15,6 +15,24 @@ namespace cli.Connectors
   {
     public bool IsReadOnly => false;
 
+    public enum ChangeType { Add, Remove, Update };
+
+    public class ChangeEventArgs : EventArgs {
+      readonly ChangeType Change;
+      readonly string Key;
+      readonly TConnection Connection;
+      public ChangeEventArgs (ChangeType changeType, string key, TConnection connection)
+      {
+        Change = changeType;
+        Key = key;
+        Connection = connection;
+      }
+    }
+
+    public delegate void ChangeEventHandler(object sender, ChangeEventArgs e);
+
+    public event ChangeEventHandler? Change;
+    
     TConnection IDictionary<string, TConnection>.this[string connectionId]
     {
       get => base[connectionId];
@@ -27,21 +45,21 @@ namespace cli.Connectors
     {
       try
       {
-        AddOrUpdate(
-        connection.Id,
-        (connectionId) =>
-        {
-          Console.WriteLine($"Listening to connection={connection}, listening ...");
-          return connection;
-        },
-        (connectionId, oldConnection) =>
-        {
-          Console.WriteLine($"Replaced and listening to new connection={connection}\n\toldConnection={oldConnection} ...");
-          oldConnection.Stream.Flush();
-          oldConnection.Stream.Close();
-          oldConnection.Stream.Dispose();
-          return connection;
-        });
+        var change = AddOrUpdate(
+          connection.Id,
+          (connectionId) =>
+          {
+            Change?.Invoke(this, new ChangeEventArgs(ChangeType.Add, connection.Id, connection));
+            return connection;
+          },
+          (connectionId, oldConnection) =>
+          {
+            Change?.Invoke(this, new ChangeEventArgs(ChangeType.Update, connection.Id, connection));
+            oldConnection.Stream.Flush();
+            oldConnection.Stream.Close();
+            oldConnection.Stream.Dispose();
+            return connection;
+          });
       }
       catch (Exception ex)
       {
@@ -57,7 +75,14 @@ namespace cli.Connectors
       Values.CopyTo(array, arrayIndex);
     }
 
-    public bool Remove(TConnection item) => TryRemove(item.Id, out _);
+    public bool Remove(TConnection item) {
+      if (TryRemove(item.Id, out _))
+      {
+        Change?.Invoke(this, new ChangeEventArgs(ChangeType.Remove, item.Id, item));
+        return true;
+      }
+      return false;
+    }
 
     IEnumerator<TConnection> IEnumerable<TConnection>.GetEnumerator() => Values.GetEnumerator();
 

@@ -2,6 +2,8 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using System.Text;
+using System.Linq;
 
 namespace cli.Connectors;
 
@@ -11,10 +13,7 @@ public class TcpConnector : ConnectorBase<TcpConnectorOptions>
 
   public const int ListenSocketAcceptQueueSize = 8;
 
-  public const int ClientConnectDelay = 2000;
-
-  public const int PostConnectDelay = 500;
-  // private readonly object _syncObject = new();
+  public const int ClientConnectDelay = 5000;
 
   public override string Id => Options.Endpoint.ToString();
 
@@ -31,14 +30,14 @@ public class TcpConnector : ConnectorBase<TcpConnectorOptions>
     }
     ServerListen();
     await Task.Delay(ClientConnectDelay);
-    lock (_syncObject)
-    {
+    // lock (_syncObject)
+    // {
       foreach (var remoteEndpoint in Options.RemoteEndpoints)
       {
-        ClientConnect(remoteEndpoint);
+        await ClientConnect(remoteEndpoint);
       }
       Status = ConnectionStatus.Connected;
-    }
+    // }
   }
 
   public override void Disconnect()
@@ -62,28 +61,48 @@ public class TcpConnector : ConnectorBase<TcpConnectorOptions>
       listenSocket.Bind(Options.Endpoint);
       listenSocket.Listen(ListenSocketAcceptQueueSize);
       Console.WriteLine($"ServerListen(): Listening on {listenSocket.LocalEndPoint} ListenSocketAcceptQueueSize={ListenSocketAcceptQueueSize}...");
-      while (Options.Listen && IsConnected)
+      await Task.Run(async () =>
       {
-        var acceptedSocket = await listenSocket.AcceptAsync();
-        Console.Write($"ServerListen(): Accepting connection from [{acceptedSocket.RemoteEndPoint}->{acceptedSocket.LocalEndPoint}] ... ");
-        // Creates a TcpConnection object, which wraps the accepted and Task.Run()'s ConnectionBase.ServerMessageLoop
-        var connection = new Connection(this, acceptedSocket, true);
-        Console.WriteLine($"OK");//ServerListen(): Established connection={connection}");
-        // Task WriteSyncStep1 then loops on ReadSyncMessage (client just sends updates when they happen)
-        _ = Task.Run(() => connection.MessageLoop());
-      }
-      // lock (_syncObject)
-      // {
-      Console.Write($"ServerListen(): Closing the listener on Endpoint={Options.Endpoint} ...");
-      listenSocket.Close(1000);
-      while (Connections.Count > 0)
-        ;
-      if (Status == ConnectionStatus.Disconnecting)
-      {
-        Status = ConnectionStatus.Disconnected;
-      }
-      Console.Write("OK");
-      // }
+        while (Options.Listen && IsConnected)
+        {
+          var acceptedSocket = await listenSocket.AcceptAsync();
+          Console.Write($"ServerListen(): Accepting connection from [{acceptedSocket.RemoteEndPoint}->{acceptedSocket.LocalEndPoint}] ... ");
+          lock (_syncObject)
+          {
+            if (acceptedSocket.RemoteEndPoint is IPEndPoint remoteIP)
+            {
+              var remoteIdBuffer = new byte[256];
+              var byteCount = acceptedSocket.Receive(remoteIdBuffer);
+              var length = remoteIdBuffer[0];
+              var remoteId = Encoding.ASCII.GetString(remoteIdBuffer, 1, byteCount - 1);
+              if (Connections.ContainsKey(remoteId))
+              {
+                Console.Write($"Closing: Connection {remoteId} (byteCount={byteCount}) already exists: Connection=${Connections[remoteId]}");
+                acceptedSocket.Shutdown(SocketShutdown.Both);
+                acceptedSocket.Close();
+                Console.WriteLine("OK");
+              }
+              else
+              {
+                Console.WriteLine($"OK (byteCount={byteCount} length={length} remoteId={remoteId})");
+                var connection = new Connection(remoteId, this, acceptedSocket, true);
+              }
+            }
+          }
+        }
+        lock (_syncObject)
+        {
+          Console.Write($"ServerListen(): Closing the listener on Endpoint={Options.Endpoint} ...");
+          listenSocket.Close(1000);
+          while (Connections.Count > 0)
+            ;
+          if (Status == ConnectionStatus.Disconnecting)
+          {
+            Status = ConnectionStatus.Disconnected;
+          }
+          Console.Write("OK");
+        }
+      });
     }
     catch (Exception ex)
     {
@@ -92,14 +111,26 @@ public class TcpConnector : ConnectorBase<TcpConnectorOptions>
     }
   }
 
-  public IConnection ClientConnect(IPEndPoint remoteEndpoint)
+  public async Task<IConnection> ClientConnect(IPEndPoint remoteEndpoint)
   {
-    var client = new TcpClient(remoteEndpoint.AddressFamily);
-    Console.Write($"ClientConnect(): Connecting to {remoteEndpoint} ... ");
-    client.Connect(remoteEndpoint);
-    var connection = new Connection(this, client.Client);
-    Console.WriteLine("OK");//$"ClientConnect(): Established connection={connection}");
-    _ = Task.Run(() => connection.MessageLoop());
-    return connection;
+    if (!Connections.ContainsKey(remoteEndpoint.ToString()))
+    {
+      var client = new TcpClient(remoteEndpoint.AddressFamily);
+      Console.Write($"ClientConnect(): Connecting to {remoteEndpoint} ... ");
+      client.Connect(remoteEndpoint);
+      Console.WriteLine($"OK");
+      var connection = new Connection(remoteEndpoint.ToString(), this, client.Client);
+      byte[] thisIdBuffer = Encoding.ASCII.GetBytes(Id).Prepend((byte)Id.Length).ToArray();
+      //(byte[])new byte[1] { (byte)Id.Length }.Concat();
+      var byteCount = client.Client.Send(thisIdBuffer);
+      Console.WriteLine($"(Id={Id} thisIdBuffer={thisIdBuffer} byteCount={byteCount})");//$"ClientConnect(): Established connection={connection}");
+      return connection;
+    }
+    else
+    {
+      var connection = Connections[remoteEndpoint.ToString()];
+      Console.WriteLine($"ClientConnect(): Already have server connection to {remoteEndpoint}: {connection}");
+      return connection;
+    }
   }
 }

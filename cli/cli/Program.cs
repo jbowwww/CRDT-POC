@@ -50,9 +50,9 @@ namespace cli
                     };
                     timer.Start();
                 }
+                _ = Console.ReadKey();
             }
 
-            _ = Console.ReadKey();
             Console.WriteLine($"POSTEXIT doc1={doc1.ToString(doc1.ValuesToString())}");
         }
     }

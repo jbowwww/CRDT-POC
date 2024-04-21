@@ -32,5 +32,10 @@
     "csharp.inlayHints.enableInlayHintsForImplicitVariableTypes": true,
     "csharp.inlayHints.enableInlayHintsForLambdaParameterTypes": false,
     "csharp.inlayHints.enableInlayHintsForImplicitObjectCreation": true,
-    "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true
+    "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+    "editor.defaultFormatter": "ms-dotnettools.csharp",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": false,
+    "editor.formatOnType": true,
+    "razor.format.codeBlockBraceOnNextLine": true
 }

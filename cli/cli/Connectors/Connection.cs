@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Ycs;
 
 namespace cli.Connectors;
@@ -10,11 +12,11 @@ public class Connection : IConnection, IDisposable
 {
     public IConnector Connector { get; init; } = null!;
 
-    public string Id => RemoteEndpoint?.ToString() ?? throw new InvalidDataException($"{this}");
+    public string Id { get; init; }// RemoteEndpoint?.ToString() ?? throw new InvalidDataException($"Connection: LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");// ?? "(null)"
 
-    public EndPoint? LocalEndpoint => Socket?.LocalEndPoint;
+    public EndPoint LocalEndpoint => Socket.LocalEndPoint ?? throw new InvalidDataException($"Connection: LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
 
-    public EndPoint? RemoteEndpoint => Socket?.RemoteEndPoint;
+    public EndPoint RemoteEndpoint => Socket.RemoteEndPoint ?? throw new InvalidDataException($"Connection: LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
 
     public Socket Socket { get; init; } = null!;
 
@@ -22,20 +24,23 @@ public class Connection : IConnection, IDisposable
 
     public Stream Stream { get; init; } = null!;
 
+    public bool Synced { get; protected set; } = false;
+
     public ConnectionStatus Status => Connector != null ? Connector.Status : ConnectionStatus.Init;
 
-    public string ToString(string? suffix = null) =>
-      $"[{GetType().Name} Id={this.Id} Status={Status} IsServer={IsServer}]: " +
-      (suffix);// ?? $"LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
+    public string ToString(string? suffix = null) => $"[{GetType().Name} Id={this.Id} Status={Status} IsServer={IsServer}]: {suffix}";// ?? $"LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
 
     public override string ToString() => ToString(null);
 
-    public Connection(IConnector connector, Socket socket, bool isServer = false)
+    public Connection(string id, IConnector connector, Socket socket, bool isServer = false)
     {
+        Id = id;
         Connector = connector;
         IsServer = isServer;
         Socket = socket;
         Stream = new NetworkStream(socket, true);
+        Connector.Connections.Add(this);
+        _ = Task.Run(() => MessageLoop());
     }
 
     ~Connection()
@@ -45,11 +50,12 @@ public class Connection : IConnection, IDisposable
 
     public void Dispose()
     {
+        Connector.Connections.Remove(this);
         System.GC.SuppressFinalize(this);
         Stream?.Close();
     }
 
-    internal void MessageLoop()
+    internal async void MessageLoop()
     {
         if (Connector == null)
         {
@@ -58,20 +64,35 @@ public class Connection : IConnection, IDisposable
         Console.WriteLine(ToString($"MessageLoop: START"));
         if (Status <= ConnectionStatus.Partitioned)
         {
-            if (IsServer)
+            if (!IsServer)
             {
-                Connector.Connections.Add(this);
                 Console.WriteLine(ToString($"MessageLoop: WriteSyncStep1"));
                 WriteSyncStep1();
             }
-            while (Status <= ConnectionStatus.Partitioned)
+            while (Status != ConnectionStatus.Partitioned && Connector?.Status <= ConnectionStatus.Partitioned)
             {
                 var available = Socket.Available;
                 if (available > 0)
                 {
-                    Console.WriteLine(ToString($"MessageLoop] ReadSyncMessage available={available}"));
+                    Console.WriteLine(ToString($"MessageLoop: ReadSyncMessage available={available}"));
                     var messageType = ReadSyncMessage();
-                    Console.WriteLine(ToString($"MessageLoop] ReadSyncMessage returned messageType={messageType}\n\tupdatedDoc={Connector?.Document.ToString(Connector?.Document.ValuesToString())}"));
+                    if (!Synced)
+                    {
+                        if (messageType == SyncProtocol.MessageYjsSyncStep1)
+                        {
+                            Console.WriteLine($"MessageLoop: Synced (half) {this}");
+                        }
+                        else if (messageType == SyncProtocol.MessageYjsSyncStep2)
+                        {
+                            if (!IsServer)
+                            {
+                                Synced = true;
+                            }
+                            WriteSyncStep1();
+                            Console.WriteLine($"MessageLoop: Synced (full) {this}");
+                        }
+                    }
+                    Console.WriteLine(ToString($"MessageLoop: ReadSyncMessage returned messageType={messageType}\n\tupdatedDoc={Connector?.Document.ToString(Connector?.Document.ValuesToString())}"));
                 }
             }
             if (IsServer)
@@ -80,12 +101,11 @@ public class Connection : IConnection, IDisposable
                 {
                     throw new InvalidOperationException(ToString($"MessageLoop: Connector == null"));
                 }
-                Connector.Connections.Remove(this);
                 Console.WriteLine(ToString($"MessageLoop: Disposing ..."));
             }
             Dispose();
         }
-        Console.WriteLine(ToString($"MessageLoop: END"));
+        Console.WriteLine($"MessageLoop: END");
     }
 
     public void WriteSyncStep1() => SyncProtocol.WriteSyncStep1(Stream, Connector?.Document);

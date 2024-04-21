@@ -60,7 +60,7 @@ public static class YDocExtensions
 
     document.UpdateV2 += (object? sender, (byte[] data, object origin, Transaction transaction) e) =>
     {//\n\ttransaction={e.transaction}
-      Console.WriteLine($"{document.ToSummaryString()}.UpdateV2(): sender.ClientId={((YDoc)sender).ClientId} origin.ClientId={((YDoc)e.origin).ClientId} document[ClientId={document.ClientId}, map.Count={document.GetMap().Count}]\n\tconnector={connector}");
+      Console.WriteLine($"{document.ToSummaryString()}.UpdateV2(): sender={sender} origin={e.origin} document.ClientId={document.ClientId}, map.Count={document.GetMap().Count}]\n\tconnector={connector}");
       if (e.data != null && e.data.Length > 0 && connector.IsConnected && sender != null && e.origin == sender)
       {
         connector.Broadcast(connection =>
