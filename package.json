@@ -10,7 +10,11 @@
     "build": "npm run build:debug",
     "build:debug": "reset; echo \"==========\nBuilding solution: Debug ...\n==========\n\" ; /bin/bash -vc \"dotnet publish -c Debug --self-contained true --use-current-runtime ./src/cli/cli.csproj\"",
     "build:release": "reset; echo \"==========\nCleaning solution: Release ...\n==========\n\" ; /bin/bash -vc \"dotnet publish -c Release --self-contained true --use-current-runtime ./src/cli/cli.csproj\"",
-    "run": "./src/cli/bin/Debug/net7.0/linux-x64/cli"
+    "run": "npm run run:debug",
+    "run:debug": "./src/cli/bin/Debug/net7.0/linux-x64/cli",
+    "run:release": "./src/cli/bin/Release/net7.0/linux-x64/cli",
+    "publish:debug": "rm -rf ./app ; mkdir ./app ; cp ./src/cli/bin/Debug/net7.0/linux-x64/* ./app",
+    "publish:release": "rm -rf ./app ; mkdir ./app ; cp ./src/cli/bin/Release/net7.0/linux-x64/* ./app"
   },
   "author": "",
   "license": "ISC"
