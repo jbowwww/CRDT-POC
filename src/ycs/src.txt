@@ -1,1 +1,0 @@
-Note that this source code for the Ycs library was in this folder under ./src/Ycs, but to better suit how I'm building this along with my own code, and wanting to avoid anything to do with Ycs's own samples and tests, I moved Ycs's source code to /src/ycs , living nextdoor to my code in /src/poc.
