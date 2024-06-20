@@ -36,7 +36,7 @@ public static class YDocExtensions
     where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
   {
     return await document.Connect<TConnector, TConnectorOptions>(
-      new TConnectorOptions(),
+      new TConnectorOptions() { Document = document },
       connectorOptionsConfiguration
     );
   }
@@ -49,13 +49,9 @@ public static class YDocExtensions
     where TConnector : IConnector<TConnectorOptions>, new()
     where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
   {
-    connectorOptions ??= new TConnectorOptions();
+    connectorOptions ??= new TConnectorOptions() { Document = document };
     connectorOptionsConfiguration?.Invoke(connectorOptions);
-    connectorOptions.Document = document;
-    var connector = new TConnector()
-    {
-      Options = connectorOptions
-    };
+    var connector = new TConnector() { Options = connectorOptions };
     await connector.Connect();
 
     document.UpdateV2 += (object? sender, (byte[] data, object origin, Transaction transaction) e) =>

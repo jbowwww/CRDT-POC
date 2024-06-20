@@ -9,7 +9,7 @@ public abstract class ConnectorOptions<T> : IConnectorOptions<T>
 {
   public string RootDocumentName { get; init; } = "ConnectedDocument";
 
-  public YDoc? Document { get; set; } = null;
+  public YDoc Document { get; init; } = null!;
 
   public abstract void Parse(string[] args);
 
