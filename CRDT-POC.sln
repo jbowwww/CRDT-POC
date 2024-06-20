@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cli", "src\cli\cli.csproj", "{13CD4A85-262F-48CE-8066-5E761F5AEF03}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ycs", "src\ycs\src\Ycs\Ycs.csproj", "{13F94051-CE90-4D46-984F-FD60909A8AD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ycs", "src\ycs\ycs.csproj", "{13F94051-CE90-4D46-984F-FD60909A8AD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
