@@ -23,5 +23,10 @@ FROM mcr.microsoft.com/dotnet/runtime:7.0
 # copy dotnet build result /app 
 COPY --from=build /app /app
 
+# environment variables passed into the container instance
+ENV HOST=
+ENV PORT=
+ENV REMOTE_LIST=
+
 # the executable built in the build container from our source in this build context
-ENTRYPOINT [ "/app/cli" ]
+ENTRYPOINT /app/cli $HOST:$PORT $REMOTE_LIST

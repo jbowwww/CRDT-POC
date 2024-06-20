@@ -1,4 +1,16 @@
 version: "3.1"
 services:
-  cli:
-    build: cli
+  cli-1:
+    image: crdt-poc:tagname
+    build: .
+    environment:
+      HOST: cli-1
+      PORT: 2221
+      REMOTE_LIST: cli-2:2222
+  cli-2:
+    image: crdt-poc:tagname
+    build: .
+    environment:
+      HOST: cli-2
+      PORT: 2222
+      REMOTE_LIST: cli-1:2221

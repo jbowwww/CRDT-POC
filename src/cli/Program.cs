@@ -47,7 +47,8 @@ public static class CrdtPoc
                 };
                 timer.Start();
             }
-            _ = Console.ReadKey();
+
+            await Task.Delay(3500);
         }
 
         Console.WriteLine($"POSTEXIT doc1={doc1.ToString(doc1.ValuesToString())}");
