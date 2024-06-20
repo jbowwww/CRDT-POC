@@ -1,19 +1,21 @@
 # https://hub.docker.com/_/microsoft-dotnet
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /source/cli
+
+WORKDIR /src
 
 # the .csproj files are copied first so the dotnet restore only runs if either .csproj has changed
-COPY ./cli/cli.csproj ./cli/
-COPY ./ycs/src/Ycs/Ycs.csproj ./ycs/src/Ycs/
+COPY ./src/cli/cli.csproj ./cli/
+COPY ./src/ycs/ycs.csproj ./ycs/
 
 # Will restore both projects as cli references Ycs
-RUN dotnet restore --use-current-runtime "./cli/cli.csproj"
+RUN dotnet restore ./cli/cli.csproj
 
 # Copy the projects' source files, so only the dotnet publish image layer is invalidated if actual source changes
-COPY . .
+COPY ./src/cli ./cli/
+COPY ./src/ycs ./ycs/
 
 # copy and publish app and libraries
-RUN dotnet publish -c Release -o /app --self-contained true --use-current-runtime --no-restore "./cli/cli.csproj"
+RUN dotnet publish ./cli/cli.csproj -o /app
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime:7.0
