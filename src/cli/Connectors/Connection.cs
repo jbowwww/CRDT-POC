@@ -9,13 +9,17 @@ namespace cli.Connectors;
 
 public class Connection : IConnection, IDisposable
 {
-    public IConnector Connector { get; init; } = null!;
+    public const uint MessageYjsSyncStep1 = 0;
+    public const uint MessageYjsSyncStep2 = 1;
+    public const uint MessageYjsUpdate = 2;
 
-    public string Id { get; init; }// RemoteEndpoint?.ToString() ?? throw new InvalidDataException($"Connection: LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");// ?? "(null)"
+    public IConnector Connector { get; init; }
 
-    public EndPoint LocalEndpoint => Socket.LocalEndPoint ?? throw new InvalidDataException($"Connection: LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
+    public string Id { get; init; }
 
-    public EndPoint RemoteEndpoint => Socket.RemoteEndPoint ?? throw new InvalidDataException($"Connection: LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
+    public EndPoint LocalEndpoint => Socket.LocalEndPoint!;// ?? throw new InvalidDataException($"Connection: LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
+
+    public EndPoint RemoteEndpoint => Socket.RemoteEndPoint!;// ?? throw new InvalidDataException($"Connection: LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
 
     public Socket Socket { get; init; } = null!;
 
@@ -25,7 +29,16 @@ public class Connection : IConnection, IDisposable
 
     public bool Synced { get; protected set; } = false;
 
-    public ConnectionStatus Status => Connector != null ? Connector.Status : ConnectionStatus.Init;
+    public ConnectionStatus? ConnectionStatus { get; protected set; }
+    public ConnectionStatus Status
+    {
+        get => ConnectionStatus ?? Connector.Status;
+        set => ConnectionStatus = value;
+    }
+
+    public Exception? Error { get; protected set; }
+
+    protected byte[]? StateVector { get; set; } = null;
 
     public string ToString(string? suffix = null) => $"[{GetType().Name} Id={this.Id} Status={Status} IsServer={IsServer}]: {suffix}";// ?? $"LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
 
@@ -51,67 +64,106 @@ public class Connection : IConnection, IDisposable
     {
         Connector.Connections.Remove(this);
         System.GC.SuppressFinalize(this);
-        Stream?.Close();
+        Stream.Close();
     }
 
-    internal async void MessageLoop()
+    public void Disconnect()
     {
-        if (Connector == null)
+        Status = Connectors.ConnectionStatus.Disconnecting;
+    }
+    
+    internal void MessageLoop()
+    {
+        Console.WriteLine(ToString($"MessageLoop: START this={this}")); //IsServer={IsServer}"));
+        if (!IsServer)
         {
-            throw new InvalidOperationException(ToString($"MessageLoop: Connector == null"));
+            WriteSyncStep1();
         }
-        Console.WriteLine(ToString($"MessageLoop: START"));
-        if (Status <= ConnectionStatus.Partitioned)
+        while (Status <= cli.Connectors.ConnectionStatus.Partitioned && Connector.Status < cli.Connectors.ConnectionStatus.Disconnecting)
         {
-            if (!IsServer)
+            var available = Socket.Available;
+            if (available > 0)
             {
-                Console.WriteLine(ToString($"MessageLoop: WriteSyncStep1"));
-                WriteSyncStep1();
+                Console.WriteLine(ToString($"MessageLoop: ReadSyncMessage available={available}"));
+                var messageType = ReadSyncMessage();
             }
-            while (Status != ConnectionStatus.Partitioned && Connector?.Status <= ConnectionStatus.Partitioned)
-            {
-                var available = Socket.Available;
-                if (available > 0)
-                {
-                    Console.WriteLine(ToString($"MessageLoop: ReadSyncMessage available={available}"));
-                    var messageType = ReadSyncMessage();
-                    if (!Synced)
-                    {
-                        if (messageType == SyncProtocol.MessageYjsSyncStep1)
-                        {
-                            Console.WriteLine($"MessageLoop: Synced (half) {this}");
-                        }
-                        else if (messageType == SyncProtocol.MessageYjsSyncStep2)
-                        {
-                            if (!IsServer)
-                            {
-                                Synced = true;
-                            }
-                            WriteSyncStep1();
-                            Console.WriteLine($"MessageLoop: Synced (full) {this}");
-                        }
-                    }
-                    Console.WriteLine(ToString($"MessageLoop: ReadSyncMessage returned messageType={messageType}\n\tupdatedDoc={Connector?.Document.ToString(Connector?.Document.ValuesToString())}"));
-                }
-            }
-            if (IsServer)
-            {
-                if (Connector == null)
-                {
-                    throw new InvalidOperationException(ToString($"MessageLoop: Connector == null"));
-                }
-                Console.WriteLine(ToString($"MessageLoop: Disposing ..."));
-            }
-            Dispose();
         }
-        Console.WriteLine($"MessageLoop: END");
+        Console.WriteLine(ToString($"MessageLoop: END this={this}"));
+        Dispose();
     }
 
-    public void WriteSyncStep1() => SyncProtocol.WriteSyncStep1(Stream, Connector?.Document);
-    public void WriteSyncStep2(byte[] stateVector) => SyncProtocol.WriteSyncStep2(Stream, Connector?.Document, stateVector);
-    public void ReadSyncStep1() => SyncProtocol.ReadSyncStep1(Stream, Stream, Connector?.Document);
-    public void ReadSyncStep2() => SyncProtocol.ReadSyncStep2(Stream, Connector?.Document, this);
-    public void WriteUpdate(byte[] update) => SyncProtocol.WriteUpdate(Stream, update);
-    public void ReadUpdate() => SyncProtocol.ReadUpdate(Stream, Connector?.Document, this);
-    public uint ReadSyncMessage() => SyncProtocol.ReadSyncMessage(Stream, Stream, Connector?.Document, this);
+    public void WriteSyncStep1()
+    {
+        Stream.WriteVarUint(MessageYjsSyncStep1);
+        var sv = Connector.Document.EncodeStateVectorV2();
+        Stream.WriteVarUint8Array(sv);
+    }
+
+    public void WriteSyncStep2(byte[] encodedStateVector)
+    {
+        Stream.WriteVarUint(MessageYjsSyncStep2);
+        var update = Connector.Document.EncodeStateAsUpdateV2(encodedStateVector);
+        Stream.WriteVarUint8Array(update);
+    }
+
+    public void ReadSyncStep1()
+    {
+        StateVector = Stream.ReadVarUint8Array();
+        WriteSyncStep2(StateVector);
+        if (!Synced && IsServer)
+        {
+            Console.WriteLine($"MessageLoop: Synced (half) (server) {this}");
+            WriteSyncStep1();
+            Synced = true;
+        }
+    }
+
+    public void ReadSyncStep2()
+    {
+        var update = Stream.ReadVarUint8Array();
+        Connector.Document.ApplyUpdateV2(update, this);
+        if (!Synced && !IsServer)
+        {
+            Console.WriteLine($"MessageLoop: Synced (full) (client) {this}");
+            Synced = true;
+        }
+    }
+
+    public void WriteUpdate(byte[] update)
+    {
+        if (Synced)
+        {
+            Stream.WriteVarUint(MessageYjsUpdate);
+            Stream.WriteVarUint8Array(update);
+        }
+    }
+
+    public void ReadUpdate()
+    {
+        ReadSyncStep2();
+    }
+
+    public uint ReadSyncMessage()
+    {
+        var messageType = Stream.ReadVarUint();
+
+        switch (messageType)
+        {
+            case MessageYjsSyncStep1:
+                ReadSyncStep1();
+                break;
+            case MessageYjsSyncStep2:
+                ReadSyncStep2();
+                break;
+            case MessageYjsUpdate:
+                ReadUpdate();
+                break;
+            default:
+                throw new Exception($"Unknown message type: {messageType}");
+        }
+
+        Console.WriteLine(ToString($"MessageLoop: ReadSyncMessage returned messageType={messageType}\n\tupdatedDoc={Connector.Document.ToString(Connector.Document.ValuesToString())}"));
+
+        return messageType;
+    }
 }

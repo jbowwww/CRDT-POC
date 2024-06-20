@@ -16,6 +16,25 @@ public class TcpConnector : Connector<TcpConnectorOptions>
   public const int ClientConnectDelay = 5000;
 
   public override string Id => Options.Endpoint.ToString();
+  
+  public TcpConnector()
+  {
+    Connections.Change += async (sender, e) =>
+    {
+      if (e.Change == ConnectionDictionary<IConnection>.ChangeType.Remove)
+      {
+        var endpoint = e.Connection.RemoteEndpoint.ToString();
+        if (endpoint == null)
+        {
+          throw new ApplicationException($"TcpConnector.Connections: Connection {e.Connection} removed with error {e.Connection.Error}", e.Connection.Error);
+        }
+        await Task.Delay(1000).ContinueWith(task =>
+        {
+          ClientConnect(Options.RemoteEndpoints.First(ep => ep.Address.Equals(IPEndPoint.Parse(endpoint).Address)));
+        });
+      }
+    };
+  }
 
   public override async Task Connect()
   {

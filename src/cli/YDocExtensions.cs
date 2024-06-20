@@ -62,7 +62,7 @@ public static class YDocExtensions
         connector.Broadcast(connection =>
         {
           // Console.WriteLine($"{document.ToSummaryString()}.UpdateV2: Broadcast: connection={connection}");
-          connection.WriteUpdate(document.EncodeStateAsUpdateV2()); // e.data); // TODO: Or encode state vector/update using state vector , and broadcast that ??
+          connection.WriteUpdate(e.data); // document.EncodeStateAsUpdateV2()); // TODO: Or encode state vector/update using state vector , and broadcast that ??
         });
       }
     };

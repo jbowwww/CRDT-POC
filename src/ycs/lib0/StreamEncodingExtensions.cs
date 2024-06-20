@@ -16,7 +16,7 @@ namespace Ycs
     /// Contains <see cref="Stream"/> extensions compatible with the <c>lib0</c>:
     /// <see href="https://github.com/dmonad/lib0"/>.
     /// </summary>
-    internal static class StreamEncodingExtensions
+    public static class StreamEncodingExtensions
     {
         /// <summary>
         /// Writes two bytes as an unsigned unteger.

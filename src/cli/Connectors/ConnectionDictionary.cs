@@ -17,9 +17,9 @@ namespace cli.Connectors
     public enum ChangeType { Add, Remove, Update };
 
     public class ChangeEventArgs : EventArgs {
-      readonly ChangeType Change;
-      readonly string Key;
-      readonly TConnection Connection;
+      public readonly ChangeType Change;
+      public readonly string Key;
+      public readonly TConnection Connection;
       public ChangeEventArgs (ChangeType changeType, string key, TConnection connection)
       {
         Change = changeType;
