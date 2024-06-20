@@ -1,7 +1,4 @@
-using System;
-using cli.Connectors;
-
-namespace cli;
+namespace cli.Connectors;
 
 public interface IConnectorOptions<TConnector>
    where TConnector : ConnectorOptions<TConnector>, new()

@@ -3,11 +3,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using cli.Connectors;
 
 namespace cli.Connectors
 {
-  public class ConnectionDictionary<TConnection>
+    public class ConnectionDictionary<TConnection>
       : ConcurrentDictionary<string, TConnection>,
         IDictionary<string, TConnection>,
         ICollection<TConnection>

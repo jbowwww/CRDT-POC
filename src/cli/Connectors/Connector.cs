@@ -1,12 +1,11 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using cli.Connectors;
 using Ycs;
 
 namespace cli.Connectors;
 
-public abstract class ConnectorBase<TConnectorOptions> : IConnector<TConnectorOptions>
+public abstract class Connector<TConnectorOptions> : IConnector<TConnectorOptions>
   where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
 {
   public virtual TConnectorOptions Options { get; init; } = new();
@@ -23,7 +22,7 @@ public abstract class ConnectorBase<TConnectorOptions> : IConnector<TConnectorOp
   public override string ToString()
    => $"[{GetType().Name} Id=\"{Id}\" Status={Status} Document.ClientId={Document?.ClientId} Connections={Connections}]";
 
-  ~ConnectorBase()
+  ~Connector()
   {
     Dispose();
   }

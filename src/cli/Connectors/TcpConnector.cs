@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace cli.Connectors;
 
-public class TcpConnector : ConnectorBase<TcpConnectorOptions>
+public class TcpConnector : Connector<TcpConnectorOptions>
 {
   private readonly object _syncObject = new();
 
