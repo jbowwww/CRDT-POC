@@ -1,8 +1,6 @@
 # CRDT-POC
 
-## eventually **C**onsistent **R**eplicated **D**ata **T**ypes - Proof of Concept
-
-CRDTs are one of the more interesting ideas and modern concepts to appear in recent years.
+eventually **C**onsistent **R**eplicated **D**ata **T**ypes (CRDTs), IMHO, are one of the more interesting ideas and modern concepts to appear in recent years.
 
 This code may or may not work - it's experimental & exploratory - but hopefully it does and I can formally prove/verify its correctness with some tests.
 
