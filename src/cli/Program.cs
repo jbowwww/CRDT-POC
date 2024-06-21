@@ -3,53 +3,73 @@ using System.Threading.Tasks;
 using System.Timers;
 using Ycs;
 using cli.Connectors;
+using System.Linq;
 
 namespace cli;
 
 public static class CrdtPoc
 {
-    // Run instructions: Seen to be working, run 2 instances of this CLI program:
-    // - "reset ; ./app/cli 127.0.0.1:2222 127.0.0.1:2221"
-    // - "reset ; ./app/cli 127.0.0.1:2221 127.0.0.1:2222"
-    // Note: The last digit of the instance's listening port number is tested to see if it is 1 ;
-    // if so, that instance is nominally the 'primary' node (isPrimaryNode = true)
-    // This is used to perform slightly different write operations on the primary node (or not)
-    //TODO: Remove Console.WriteLine's pasted repeatedly, add a doc1.Update handler to do it and count #updates(local/not?)
+    // Now experimenting with docker-compose and 2-4 instances
+    // I want to first implement some primitive method of testing 2-4 or more instances
+    // Each instance extracts a unique nodeNumber from their hostnames, set in docker-compose.yaml
+    // If I use this (similar to before with 2 nodes) to select both property names and values,
+    // I should be able to confirm that all instances are transmitting & applying updates to each.
+    // If I use microsecond timer values as part of the values, I can hopefully confirm
+    // that the distributed updates are being applied at each node in the correct order.
+    // (Since all instances are in docker, the timer values should all be perfectly synced)
+    // Then you could use the nodeNumber's to delay the operations at each instance by a varied amount.
+    // Obviously the latest written values should prevail (and obviously become consistent eventually)
+    // THEN, you could try simulating network outages and/or delays (again, based on timer values should
+    // mean expected, predictable, i.e. test-able outcomes )
+    // Try to implement the ideas above (for starters..) in proper test cases.
     public static async Task Main(string[] args)
     {
         var doc1 = new YDoc(/*, new YDocOptions() {}*/);
         using (var connector = await doc1.Connect<TcpConnector, TcpConnectorOptions>(options => options.Parse(args)))
         {
-            bool isPrimaryNode = connector.Id.EndsWith("1");
-            Console.WriteLine($"INIT isPrimaryNode={isPrimaryNode} doc1={doc1.ToString(doc1.ValuesToString())}");
-            if (isPrimaryNode)
-            {
-                await Task.Delay(500);
-            }
+            var nodeStart = DateTime.Now;
+            var nodeName = connector.Id;
+            int nodeNumber = int.Parse(nodeName.Last().ToString());
 
+            var getMs = () => DateTime.Now.Subtract(nodeStart).TotalMicroseconds;
+            var dbg = (string txt) => Console.WriteLine($"{getMs()} {txt}");
+
+            // The higher the node number, the more dominant (i.e. more props and/or more often) that node's values should be in the end document
+            //await Task.Delay(100 * nodeNumber);
             // TODO: Try doc.Transact()
-            doc1.Set("prop1", isPrimaryNode ? "stringValue1" : "stringValue2");
-            doc1.Set(isPrimaryNode ? "prop2-1" : "prop2-2", isPrimaryNode ? "stringValue1" : "stringValue2");
-            doc1.Set("prop3-1", isPrimaryNode ? "stringValue1" : "stringValue2");
-            doc1.Set("prop3-2", isPrimaryNode ? "stringValue1" : "stringValue2");
-            doc1.Set(isPrimaryNode ? "prop4-1" : "prop4-2", isPrimaryNode ? "stringValue1" : "stringValue2");
-            doc1.Set(isPrimaryNode ? "prop4-2" : "prop4-1", isPrimaryNode ? "stringValue1" : "stringValue2");
-            Console.WriteLine($"SET doc1={doc1.ToString(doc1.ValuesToString())}");
+            
+            dbg($"START @ {nodeStart} nodeNumber={nodeNumber} doc1={doc1.ToString(doc1.ValuesToString())}");
 
-            if (!isPrimaryNode)
-            {
-                var timer = new Timer(4000) { AutoReset = false };
-                timer.Elapsed += (sender, e) =>
-                {
-                    doc1.Set("propTimer", "timerValue");
-                    doc1.Set("prop1", "prop1timered");
-                    Console.WriteLine($"TIMER doc1={doc1.ToString(doc1.ValuesToString())}");
-                };
-                timer.Start();
-            }
+            doc1.Set(nodeName + "-start", $"{getMs()}{(nodeStart - new DateTime(0)).TotalMicroseconds}");
+            doc1.Set("shared-start", $"{getMs()}value-from-node{nodeNumber}");
 
-            await Task.Delay(3500);
+            dbg($"PROP @ {nodeStart} nodeNumber={nodeNumber} doc1={doc1.ToString(doc1.ValuesToString())}");
+
+            doc1.Set($"prop{nodeNumber}-1", $"{getMs()}value-from-node{nodeNumber}");
+            doc1.Set($"prop{nodeNumber}-2", $"{getMs()}value-from-node{nodeNumber}");
+            doc1.Set($"prop{nodeNumber}-3", $"{getMs()}value-from-node{nodeNumber}");
+            doc1.Set($"prop{nodeNumber}-4", $"{getMs()}value-from-node{nodeNumber}");
+
+            dbg($"DELAY @ {nodeStart} nodeNumber={nodeNumber} doc1={doc1.ToString(doc1.ValuesToString())}");
+
+            await Task.Delay(100 * nodeNumber);
+
+            doc1.Set($"delay{nodeNumber}-1", $"{getMs()}value-from-node{nodeNumber}");
+            doc1.Set($"delay{nodeNumber}-2", $"{getMs()}value-from-node{nodeNumber}");
+            doc1.Set($"delay{nodeNumber}-3", $"{getMs()}value-from-node{nodeNumber}");
+            doc1.Set($"delay{nodeNumber}-4", $"{getMs()}value-from-node{nodeNumber}");
+
+            dbg($"LAST doc1={doc1.ToString(doc1.ValuesToString())}");
+
+            await Task.Delay(100 * nodeNumber);
+
+            doc1.Set(nodeName + "-last", $"{getMs()}value-from-node{nodeNumber}");
+            doc1.Set("shared-last", $"{getMs()}value-from-node{nodeNumber}");
+
+            await Task.Delay(1000);
         }
+        
+        await Task.Delay(1000);
 
         Console.WriteLine($"POSTEXIT doc1={doc1.ToString(doc1.ValuesToString())}");
     }
