@@ -6,11 +6,9 @@ This code may or may not work - it's experimental & exploratory - but hopefully 
 
 For now I need to understand the inner workings of Ycs better.
 
-**TcpConnector**: A TCP protocol implementation for Ycs.
+**TcpConnector**: This project essentially uses Ycs, via a pure TCP sockets protocol layer implementation, and some YDoc extensions syntactic sugar.
 
-This project essentially uses Ycs, via a pure TCP sockets protocol layer implementation, and some YDoc extensions syntactic sugar.
-
-Use through the provided YDocExtensions.Connect() like this:
+Use the provided YDocExtensions.Connect() like this:
 
 ```c#
 public static async Task Main(string[] args)
@@ -37,6 +35,20 @@ Simply
 ```bash
 docker compose up --build
 ```
+
+Configuration of nodes (currently testing with 4) is done in docker-compose.yaml with environment variables that get passed via command line in the container image. Each node should be specified by something like this:
+
+```docker-compse
+  cli-1:
+    image: crdt-poc:tagname
+    build: .
+    environment:
+      HOST: cli-1
+      PORT: 2221
+      REMOTE_LIST: cli-2:2221 cli-3:2221 cli-4:2221**
+```
+
+$HOST:$PORT is the endpoint that node will listen on, and $REMOTE_LIST are the other nodes to connect to.
 
 ## Analysis & Verification
 
