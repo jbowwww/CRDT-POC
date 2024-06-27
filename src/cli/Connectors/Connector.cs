@@ -19,8 +19,11 @@ public abstract class Connector<TConnectorOptions> : IConnector<TConnectorOption
   public virtual bool IsDisconnected => Status >= ConnectionStatus.Disconnecting;
   public virtual YDoc Document => Options.Document;
 
-  public override string ToString()
-   => $"[{GetType().Name} Id=\"{Id}\" Status={Status} Document.ClientId={Document?.ClientId} Connections={Connections}]";
+  public string ToString(string? suffix = null)
+   => $"[{GetType().Name} Id=\"{Id}\" Status={Status} Document.ClientId={Document?.ClientId} Connections={Connections}]"
+   + (suffix != null ? ": " + suffix : string.Empty);
+
+  public override string ToString() => ToString(null);
 
   ~Connector()
   {

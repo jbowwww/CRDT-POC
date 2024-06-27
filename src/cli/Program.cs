@@ -29,7 +29,7 @@ public static class CrdtPoc
         {
             var nodeStart = DateTime.Now;
             var nodeName = connector.Id;
-            int nodeNumber = int.Parse(nodeName.Last().ToString());
+            int nodeNumber = int.Parse(new char[] { connector?.Options.Host?.HostName.Last() ?? (char)0 });
 
             var getMs = () => DateTime.Now.Subtract(nodeStart).TotalMicroseconds;
             var dbg = (string txt) => Console.WriteLine($"{getMs()} {txt}");

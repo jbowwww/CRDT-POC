@@ -7,7 +7,7 @@ using Ycs;
 
 namespace cli.Connectors;
 
-public class Connection : IConnection, IDisposable
+public abstract class Connection : IConnection, IDisposable
 {
     public const uint MessageYjsSyncStep1 = 0;
     public const uint MessageYjsSyncStep2 = 1;
@@ -15,17 +15,17 @@ public class Connection : IConnection, IDisposable
 
     public IConnector Connector { get; init; }
 
-    public string Id { get; init; }
+    public abstract string Id { get; init; }
 
     public EndPoint LocalEndpoint => Socket.LocalEndPoint!;// ?? throw new InvalidDataException($"Connection: LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
 
     public EndPoint RemoteEndpoint => Socket.RemoteEndPoint!;// ?? throw new InvalidDataException($"Connection: LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
 
-    public Socket Socket { get; init; } = null!;
+    public Socket Socket { get; protected set; } = null!;
 
     public bool IsServer { get; init; } = false;
 
-    public Stream Stream { get; init; } = null!;
+    public Stream Stream { get; protected set; } = null!;
 
     public bool Synced { get; protected set; } = false;
 
@@ -40,20 +40,72 @@ public class Connection : IConnection, IDisposable
 
     protected byte[]? StateVector { get; set; } = null;
 
-    public string ToString(string? suffix = null) => $"[{GetType().Name} Id={this.Id} Status={Status} IsServer={IsServer}]: {suffix}";// ?? $"LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
+    public string ToString(string? suffix = null) =>
+        $"[{GetType().Name} Id={this.Id} Status={Status} IsServer={IsServer}]: {suffix}";// ?? $"LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
 
     public override string ToString() => ToString(null);
 
-    public Connection(string id, IConnector connector, Socket socket, bool isServer = false)
+    public Connection(IConnector connector)
     {
-        Id = id;
         Connector = connector;
-        IsServer = isServer;
-        Socket = socket;
-        Stream = new NetworkStream(socket, true);
-        Connector.Connections.Add(this);
-        _ = Task.Run(() => MessageLoop());
+        StartMessageLoop();
     }
+
+    protected void Connect(Socket socket)
+    {
+        Socket = socket;
+        Stream = new NetworkStream(Socket, true);
+        //         _ = Task.Run(() => MessageLoop());
+    }
+
+    //     private Connection(string id, IConnector connector, Socket socket, bool isServer = false)
+    //     {
+    //         Id = id;
+    //         Connector = connector;
+    //         IsServer = isServer;
+    //         Socket = socket;
+    //         Console.Write($"Connection(): Id={Id} Connector.Id={Connector.Id} IsServer={IsServer} ");
+    //         if (IsServer)
+    //         {
+    //             var remoteIdBuffer = new byte[256];
+    //             var byteCount = Socket.Receive(remoteIdBuffer);
+    //             var length = remoteIdBuffer[0];
+    //             var remoteId = Encoding.ASCII.GetString(remoteIdBuffer, 1, byteCount - 1);
+    //             Console.Write($"remoteId={remoteId} "); 
+    //             if (Connector.Connections.ContainsKey(remoteId))
+    //             {
+    //                 Console.Write($"Closing: Connection {remoteId} (byteCount={byteCount}) already exists: Connection=${Connections[remoteId]}");
+    // Socket.Shutdown(SocketShutdown.Both);
+    //                 Socket.Close();
+    //                 Console.WriteLine("OK");
+    //             }
+    //             else
+    //             {
+    //                 Console.WriteLine($"OK (byteCount={byteCount} length={length} remoteId={remoteId})");
+    //                 var connection = new Connection(remoteId, this, Socket, true);
+    //             }
+    // IsServer ?  $"Accepting connection from [{Socket.RemoteEndPoint}->{Socket.LocalEndPoint}] ... ")
+    //         :   $"Connecting to "
+    // var remoteIdBuffer = new byte[256];
+    //         var byteCount = Socket.Receive(remoteIdBuffer);
+    //         var length = remoteIdBuffer[0];
+    //         var remoteId = Encoding.ASCII.GetString(remoteIdBuffer, 1, byteCount - 1);
+    //         if (connector.Connections.ContainsKey(remoteId))
+    //         {
+    //             Console.Write($"Closing: Connection {remoteId} (byteCount={byteCount}) already exists: Connection=${Connections[remoteId]}");
+    //             Socket.Shutdown(SocketShutdown.Both);
+    //             Socket.Close();
+    //             Console.WriteLine("OK");
+    //         }
+    //         else
+    //         {
+    //             Console.WriteLine($"OK (byteCount={byteCount} length={length} remoteId={remoteId})");
+    //             var connection = new Connection(remoteId, this, Socket, true);
+    //         }
+    //         Stream = new NetworkStream(socket, true);
+    //         Connector.Connections.Add(this);
+    //         _ = Task.Run(() => MessageLoop());
+    //     }
 
     ~Connection()
     {
@@ -62,14 +114,19 @@ public class Connection : IConnection, IDisposable
 
     public void Dispose()
     {
-        Connector.Connections.Remove(this);
         System.GC.SuppressFinalize(this);
+        Socket.Shutdown(SocketShutdown.Both);
         Stream.Close();
     }
 
     public void Disconnect()
     {
         Status = Connectors.ConnectionStatus.Disconnecting;
+    }
+    
+    internal void StartMessageLoop()
+    {
+        _ = Task.Run(() => MessageLoop());
     }
     
     internal void MessageLoop()
