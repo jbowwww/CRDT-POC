@@ -19,8 +19,7 @@ public abstract class Connector<TConnectorOptions> : IConnector<TConnectorOption
   public virtual bool IsDisconnected => Status >= ConnectionStatus.Disconnecting;
   public virtual YDoc Document => Options.Document;
 
-  public override string ToString()
-   => $"[{GetType().Name} Id=\"{Id}\" Status={Status} Document.ClientId={Document?.ClientId} Connections={Connections}]";
+    public override string ToString() => $"[{GetType().Name} Id=\"{Id}\" Status={Status} Document.ClientId={Document?.ClientId} Connections={Connections}]";
 
   ~Connector()
   {
@@ -44,7 +43,7 @@ public abstract class Connector<TConnectorOptions> : IConnector<TConnectorOption
     {
       if (IsConnected)
       {
-        SyncProtocol.ReadUpdate(connection?.Stream, Document, this);
+                connection.ReadUpdate();
       }
     }
     else
@@ -61,7 +60,7 @@ public abstract class Connector<TConnectorOptions> : IConnector<TConnectorOption
     {
       if (IsConnected)
       {
-        SyncProtocol.WriteUpdate(connection?.Stream, data);
+                connection.WriteUpdate(data);
       }
     }
     else
@@ -77,7 +76,7 @@ public abstract class Connector<TConnectorOptions> : IConnector<TConnectorOption
     if (IsConnected)
     {
       Connections?.AsParallel<IConnection>().ForAll(
-        connection => SyncProtocol.WriteUpdate(connection.Stream, data));
+              connection => connection.WriteUpdate(data));
     }
     Console.WriteLine($"Broadcast(): End");
   }

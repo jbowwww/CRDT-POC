@@ -7,13 +7,16 @@ namespace cli.Connectors;
 
 public class TcpConnectorOptions : ConnectorOptions<TcpConnectorOptions>
 {
-    public bool AutoConnect { get; set; } = true;
 
     public bool Listen { get; internal set; } = true;
 
+    public int ListenSocketAcceptQueueSize = 8;
+
     public bool UseHostName { get; set; } = true;
 
-    public IPHost Host { get; internal set; } = null!; //new IPHost();
+    public IPHost Host { get; internal set; } = null!;
+    
+    public bool AutoConnect { get; set; } = true;
 
     public IList<IPHost> RemoteHosts = new List<IPHost>();
 
@@ -28,7 +31,7 @@ public class TcpConnectorOptions : ConnectorOptions<TcpConnectorOptions>
     }
 
     public override string ToString() =>
-        $"[TcpConnectorOptions AutoConnect={AutoConnect} Listen={Listen} Host={Host} "
+        $"[{GetType().Name} AutoConnect={AutoConnect} Listen={Listen} Host={Host} "
         + $"RemoteHosts={string.Join(", ", RemoteHosts.Select(e => e))}";
 
     /// <summary>
