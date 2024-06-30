@@ -33,7 +33,7 @@ public static class YDocExtensions
     Action<TConnectorOptions>? connectorOptionsConfiguration = null
   )
     where TConnector : IConnector<TConnectorOptions>, new()
-    where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
+    where TConnectorOptions : Options<TConnectorOptions>, new()
   {
     return await document.Connect<TConnector, TConnectorOptions>(
       new TConnectorOptions() { Document = document },
@@ -47,7 +47,7 @@ public static class YDocExtensions
     Action<TConnectorOptions>? connectorOptionsConfiguration = null
   )
     where TConnector : IConnector<TConnectorOptions>, new()
-    where TConnectorOptions : ConnectorOptions<TConnectorOptions>, new()
+    where TConnectorOptions : Options<TConnectorOptions>, new()
   {
     connectorOptions ??= new TConnectorOptions() { Document = document };
     connectorOptionsConfiguration?.Invoke(connectorOptions);
