@@ -36,6 +36,10 @@ public class Connection : IConnection, IDisposable
         set => ConnectionStatus = value;
     }
 
+    public int BytesAvailable => Socket.Available;
+
+    public bool IsDataAvailable => BytesAvailable > 0;
+
     public Exception? Error { get; protected set; }
 
     protected byte[]? StateVector { get; set; } = null;

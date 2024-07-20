@@ -5,11 +5,11 @@ using System.Net;
 
 namespace cli.Options;
 
-public class IPHost : IOptionParser//<IPHost>
+public class IPHost
 {
     public string HostOrAddress { get; internal init; } = "0.0.0.0";
 
-    public IPHostEntry HostEntry => IsIPAddress ? Dns.GetHostEntry(IPAddress.Parse(HostOrAddress)) : Dns.GetHostEntry(HostOrAddress);
+    public IPHostEntry HostEntry => /* IsIPAddress ? Dns.GetHostEntry(IPAddress.Parse(HostOrAddress)) : */ Dns.GetHostEntry(HostOrAddress);
 
     public string HostName => HostEntry.HostName;
 
@@ -26,7 +26,7 @@ public class IPHost : IOptionParser//<IPHost>
     public override string ToString() => $"{HostOrAddress}:{Port}";
 
     // endpoint should be a string like "hostOrIpAddress:port" 
-    object IOptionParser/* <IPHost> */.Parse(string endPoint)
+    public IPHost(string endPoint)
     {
         string[] ep = endPoint.Split(':');
         if (ep.Length != 2) throw new FormatException($"endPoint=\"{endPoint}\" could not be parsed into an IPHost");
@@ -37,6 +37,26 @@ public class IPHost : IOptionParser//<IPHost>
         {
             throw new FormatException($"endPoint=\"{endPoint}\" could not be parsed into an IPHost");
         }
-        return new IPHost() { HostOrAddress = ep[0], Port = port };
+        HostOrAddress = ep[0]; 
+        Port = port;
+    }
+
+    public static IPHost Parse(string endPoint)
+    {
+        return new IPHost(endPoint);
+    }
+
+    public static bool TryParse(string endPoint, out IPHost? ipHost)
+    {
+        try
+        {
+            ipHost = new IPHost(endPoint);
+            return true;
+        }
+        catch (FormatException)
+        {
+            ipHost = null;
+            return false;
+        }
     }
 }

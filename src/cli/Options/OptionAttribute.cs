@@ -1,38 +1,57 @@
 using System;
+using System.Data;
+using System.Diagnostics.Contracts;
+using System.Linq;
+using System.Reflection;
 
 namespace cli.Options;
 
+/// <summary>
+/// The <see cref="Attribute"> used to describe members in an <see cref="Options"/>-derived class.
+/// </summary> 
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-public class OptionAttribute : Attribute
+internal class OptionAttribute : Attribute, IOption
 {
-    // option names are either:
-    // a short form option specified with a single hyphen ('-') and a single character e.g. -o
-    // a long form option specified with two hyphens ('--') and a string e.g. --option
-    public string? Name { get; init; } = null;
+    public static OptionAttribute MakeDefault() => new OptionAttribute() { IsDefault = true };
 
-    // indicates this option positional (i.e. there is no long or short flags)
-    public bool IsPositional => Name == null;
+    public bool IsDefault { get; init; } = false;// object.ReferenceEquals(this, OptionAttribute.Default);
+    public bool IsRequired { get; init; } = true;
+    public bool IsPositional { get; init; } = false;
 
-    // An optional user-specified ordering/position of this option relative to the other options
+    public bool IsNamed => Name != null; //!IsPositional;
+    //  ?
+    //     (HasShortName || HasLongName) ?
+    //         throw new ArgumentOutOfRangeException(
+    //             "IsPositional", IsPositional,
+    //             "IsPostional options cannot have a name")
+    //     : false : true;
+    public string? Name =>
+        HasShortName ?
+            HasLongName ?
+                throw new ArgumentOutOfRangeException("HasLongName", "HasLongName can't be true while HasShortName is true") :
+                ShortName.ToString() :
+            HasLongName ?
+        LongName :
+        null;
+    public bool IsCaseSensitive { get; init; } = true;
+
     public int? ExplicitPosition { get; init; } = null;
+    public bool HasExplicitPosition => ExplicitPosition != null;
 
-    // indicates this option is a short named option (-C) where C is any single character
-    public bool IsShort => Name?.Length == 1;
+    public char? ShortName { get; init; } = null;
+    public bool HasShortName => ShortName != null;
 
-    public bool IsLong => Name?.Length >= 2 && Name.StartsWith("--") && char.IsAsciiLetter(Name[2]);
+    public string? LongName { get; init; } = null;
+    public bool HasLongName => LongName != null;
 
-    public bool IsNamed => Name?.Length > 0;
-
-    public bool IsCaseSensitive { get; } = true;
-
-    public Type? Parser { get; init; } = null;
+    public OptionMember ToOptionMember(MemberInfo memberInfo) => new OptionMember(this, memberInfo);
 }
 
 
-[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-public sealed class OptionAttribute<T> : OptionAttribute
-    where T : IOptionParser
-{
-    // Optionally specify a typed parser
-    // public IOptionParser<T>? Parser { get; init; } = null;
-}
+// [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+// public sealed class OptionAttribute<T> : OptionAttribute
+//     where T : IOptionParser
+// {
+//     // Optionally specify a typed parser
+//     // public IOptionParser<T>? Parser { get; init; } = null;
+// }
