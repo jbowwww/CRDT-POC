@@ -1,7 +1,4 @@
 using System;
-using System.Data;
-using System.Diagnostics.Contracts;
-using System.Linq;
 using System.Reflection;
 
 namespace cli.Options;
@@ -14,17 +11,11 @@ internal class OptionAttribute : Attribute, IOption
 {
     public static OptionAttribute MakeDefault() => new OptionAttribute() { IsDefault = true };
 
-    public bool IsDefault { get; init; } = false;// object.ReferenceEquals(this, OptionAttribute.Default);
+    public bool IsDefault { get; init; } = false;
     public bool IsRequired { get; init; } = true;
     public bool IsPositional { get; init; } = false;
 
-    public bool IsNamed => Name != null; //!IsPositional;
-    //  ?
-    //     (HasShortName || HasLongName) ?
-    //         throw new ArgumentOutOfRangeException(
-    //             "IsPositional", IsPositional,
-    //             "IsPostional options cannot have a name")
-    //     : false : true;
+    public bool IsNamed => Name != null;
     public string? Name =>
         HasShortName ?
             HasLongName ?
@@ -48,12 +39,3 @@ internal class OptionAttribute : Attribute, IOption
 
     public OptionMember ToOptionMember(MemberInfo memberInfo) => new OptionMember(this, memberInfo);
 }
-
-
-// [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-// public sealed class OptionAttribute<T> : OptionAttribute
-//     where T : IOptionParser
-// {
-//     // Optionally specify a typed parser
-//     // public IOptionParser<T>? Parser { get; init; } = null;
-// }
