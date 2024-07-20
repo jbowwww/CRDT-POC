@@ -1,11 +1,39 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using Ycs;
 
 namespace cli.Connectors;
+
+public enum YjsCommandType
+{
+    GetMissing,
+    Update
+}
+
+public class MessageToProcess
+{
+    public YjsCommandType Command;
+    public YjsCommandType? InReplyTo;
+    public required string Data;
+}
+
+internal class MessageToClient
+{
+    [JsonPropertyName("clock")]
+    public long Clock { get; set; }
+
+    [JsonPropertyName("data")]
+    public required string Data { get; set; }
+
+    [JsonPropertyName("inReplyTo")]
+    public YjsCommandType? InReplyTo { get; set; }
+}
 
 public class Connection : IConnection, IDisposable
 {
@@ -27,8 +55,25 @@ public class Connection : IConnection, IDisposable
 
     public Stream Stream { get; init; } = null!;
 
-    public bool Synced { get; protected set; } = false;
+    private long _synced = 0;
+    private long _serverClock = -1;
+    private long _clientClock = -1;
 
+    public bool Synced
+    {
+        get => _synced != 0;
+        set => Interlocked.Exchange(ref _synced, value ? 1 : 0);
+    }
+
+    public long ServerClock => _serverClock;
+    public long ClientClock => _clientClock;
+
+    public SortedList<long, MessageToProcess> Messages { get; } = new SortedList<long, MessageToProcess>();
+
+    public long IncrementAndGetServerClock() => Interlocked.Increment(ref _serverClock);
+    public long IncrementAndGetClientClock() => Interlocked.Increment(ref _clientClock);
+    public void ReassignClientClock(long clock) => Interlocked.Exchange(ref _clientClock, clock);
+    
     public ConnectionStatus? ConnectionStatus { get; protected set; }
     public ConnectionStatus Status
     {
@@ -116,9 +161,9 @@ public class Connection : IConnection, IDisposable
         WriteSyncStep2(StateVector);
         if (!Synced && IsServer)
         {
+            Synced = true;
             Console.WriteLine($"MessageLoop: Synced (half) (server) {this}");
             WriteSyncStep1();
-            Synced = true;
         }
     }
 
@@ -128,8 +173,8 @@ public class Connection : IConnection, IDisposable
         Connector.Document.ApplyUpdateV2(update, this);
         if (!Synced && !IsServer)
         {
-            Console.WriteLine($"MessageLoop: Synced (full) (client) {this}");
             Synced = true;
+            Console.WriteLine($"MessageLoop: Synced (full) (client) {this}");
         }
     }
 

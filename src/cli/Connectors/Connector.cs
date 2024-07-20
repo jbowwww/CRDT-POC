@@ -38,6 +38,12 @@ public abstract class Connector<TConnectorOptions> : IConnector<TConnectorOption
         System.GC.SuppressFinalize(this);
     }
 
+    public void HandleClientConnected(IConnection connection) => Connections.Add(connection);
+
+    public void HandleClientDisconnected(IConnection connection) => Connections.Remove(connection);
+
+    public async Task EnqueueAndProcessMessagesAsync(string connectionId, long clock, MessageToProcess messageToEnqueue, CancellationToken cancellationToken = default)
+
     public abstract Task Connect();
 
     public abstract void Disconnect();
