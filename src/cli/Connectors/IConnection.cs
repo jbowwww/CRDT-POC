@@ -21,13 +21,15 @@ public interface IConnection
   bool Synced { get; }
 
   ConnectionStatus? ConnectionStatus { get; }
-  ConnectionStatus Status { get; }
+  ConnectionStatus Status { get; internal set; }
 
   int BytesAvailable { get; }
 
   bool IsDataAvailable { get; }
 
   Exception? Error { get; }
+
+  void MessageLoop();
 
   void WriteSyncStep1();
 
