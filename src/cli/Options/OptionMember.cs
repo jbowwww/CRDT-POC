@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace cli.Options;
@@ -30,10 +33,21 @@ internal class OptionMember : IOption
     public string? LongName => Option.LongName;
     public bool HasLongName => LongName != null;
 
+    public bool IsList => Option.IsList;
+
     public int? ExplicitPosition => Option.ExplicitPosition;
     public bool HasExplicitPosition => Option.HasExplicitPosition;
 
-    public Type Type => Member.GetDeclaredType();
+    public Type Type
+    {
+        get
+        {
+            var memberType = Member.GetDeclaredType();
+            var isAss = IsList || memberType.HasElementType;// || (memberType.GetGenericTypeDefinition().GetInterface("IList`1") != null);
+            // Console.WriteLine(/* ToString */($"isAss={isAss} memberType.Name={memberType.Name}"));
+            return isAss ? memberType.GetGenericArguments().FirstOrDefault() ?? typeof(object) : memberType;
+        }
+    }
 
     public bool IsBoolean => Type == typeof(bool);
 
@@ -45,10 +59,12 @@ internal class OptionMember : IOption
 
     public OptionMemberValue ToOptionMemberValue(object value) => new OptionMemberValue(this, value);
 
-    public override string ToString() =>
+    public override string ToString() => ToString(null);
+    public string ToString(string? suffix = null) =>
         IsPositional ?
             HasExplicitPosition ?
                 $"Position=Explicit" :
-                $"Position=Implicit,Member={Member.Name}" :
-                $"Name={Name}";
+                $"Position=Implicit,Member={Member.Name},Type={Type}" :
+                $"Name={Name},Type={Type}"
+        + (suffix ?? "");
 }

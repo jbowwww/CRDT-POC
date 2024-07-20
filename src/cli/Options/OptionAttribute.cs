@@ -44,6 +44,8 @@ internal class OptionAttribute : Attribute, IOption
     public string? LongName { get; init; } = null;
     public bool HasLongName => LongName != null;
 
+    public bool IsList { get; init; } = false;
+
     public OptionMember ToOptionMember(MemberInfo memberInfo) => new OptionMember(this, memberInfo);
 }
 

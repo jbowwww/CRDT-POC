@@ -39,6 +39,8 @@ public interface IOption
     string? LongName { get; }
     bool HasLongName { get; }
 
+    public bool IsList { get; }
+
     public int? ExplicitPosition { get; }
     public bool HasExplicitPosition { get; }
 }
