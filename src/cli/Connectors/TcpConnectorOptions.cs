@@ -17,7 +17,7 @@ public class TcpConnectorOptions : ConnectorOptions, IOptionsParser<TcpConnector
     
     public bool AutoConnect { get; set; } = true;
 
-    [Option(IsPositional = true)] 
+    [Option(IsPositional = true, IsList = true)] 
     public IList<IPHost> RemoteHosts = new List<IPHost>();
 
     public override string Usage =>

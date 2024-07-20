@@ -80,7 +80,7 @@ public class TcpConnector : Connector<TcpConnectorOptions>
         try
         {
             Console.Write($"ServerListen(): Listening on {Options.Host.EndPoint/* listenSocket.LocalEndPoint */} ListenSocketAcceptQueueSize={ListenSocketAcceptQueueSize} ... ");
-            listenSocket.Bind(new IPEndPoint(Dns.g(Options.Host.HostOrAddress, Options.Host.Address.AddressFamily)).);//Options.Host.Address, Options.Host.Port));
+            listenSocket.Bind(Options.Host.EndPoint); //new IPEndPoint(Dns.g(Options.Host.HostOrAddress, Options.Host.Address.AddressFamily)).);//Options.Host.Address, Options.Host.Port));
             listenSocket.Listen(ListenSocketAcceptQueueSize);
             Console.WriteLine("OK");
             await Task.Run(async () =>

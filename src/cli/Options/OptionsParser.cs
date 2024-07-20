@@ -37,12 +37,13 @@ public class OptionsParser<TOptions>
             $"OrderedPositionalOptions={OrderedPositionalOptions.AsString()}"+
             $"HighestOrderedPosition={HighestOrderedPosition}");
 
+        var positionalIndex = 0;
         while (argsQueue.TryDequeue(out var arg))
         {
             var optionMember =
                 IsLong(arg) ? OptionMembers.FirstOrDefault(om => om.HasLongName && om.LongName == arg.Substring(2)) :
                 IsShort(arg) ? OptionMembers.FirstOrDefault(om => om.HasShortName && om.ShortName == arg[1]) :
-                PositionalOptions.FirstOrDefault();
+                PositionalOptions.Skip(positionalIndex++).FirstOrDefault();
 
             if (optionMember == null)
             {

@@ -39,7 +39,7 @@ public static class CrdtPoc
             //await Task.Delay(100 * nodeNumber);
             // TODO: Try doc.Transact()
             
-            dbg($"START @ {nodeStart} nodeNumber={nodeNumber} doc1={doc1.ToString(doc1.ValuesToString())}");
+            dbg($"START @ {nodeStart} nodeName={nodeName} nodeNumber={nodeNumber} options={options} doc1={doc1.ToString(doc1.ValuesToString())}");
 
             doc1.Set(nodeName + "-start", $"{getMs()}{(nodeStart - new DateTime(0)).TotalMicroseconds}");
             doc1.Set("shared-start", $"{getMs()}value-from-node{nodeNumber}");
@@ -67,10 +67,10 @@ public static class CrdtPoc
             doc1.Set(nodeName + "-last", $"{getMs()}value-from-node{nodeNumber}");
             doc1.Set("shared-last", $"{getMs()}value-from-node{nodeNumber}");
 
-            await Task.Delay(1000);
+            await Task.Delay(2500);
         }
         
-        await Task.Delay(1000);
+        await Task.Delay(2000);
 
         Console.WriteLine($"POSTEXIT doc1={doc1.ToString(doc1.ValuesToString())}");
     }

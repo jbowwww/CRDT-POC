@@ -15,7 +15,14 @@ internal class OptionMemberValue : OptionMember
 
     internal void Apply(object options)
     {
-        Member.Set(options, Value);
+        if (IsList || Type.HasElementType)
+        {
+            Member.AddToList(options, Value);
+        }
+        else
+        {
+            Member.Set(options, Value);
+        }
     }
 
     internal static OptionMemberValue Parse(OptionMember optionMember, string value)
