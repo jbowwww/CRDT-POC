@@ -1,17 +1,17 @@
 using System;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
-using cli.Options;
 using Ycs;
 
 namespace cli.Connectors;
 
 public abstract class Connector<TConnectorOptions> : IConnector<TConnectorOptions>
-    where TConnectorOptions : Options<TConnectorOptions>, new()
+    where TConnectorOptions : ConnectorOptions, new()
 {
-    public virtual TConnectorOptions Options { get; init; } = new();
     public abstract string Id { get; }
+    public virtual TConnectorOptions Options { get; init; } = null!;
+    ConnectorOptions IConnector.Options { get => Options; init => Options = (TConnectorOptions)value; }
+    public virtual YDoc Document => Options.Document;
     public ConnectionDictionary<IConnection> Connections { get; } = new();
     public ConnectionStatus Status { get; set; }
     public virtual bool IsInit => Status == ConnectionStatus.Init;
@@ -19,25 +19,12 @@ public abstract class Connector<TConnectorOptions> : IConnector<TConnectorOption
     public virtual bool IsPartitioned => Status == ConnectionStatus.Partitioned;
     public virtual bool IsError => Status == ConnectionStatus.Error;
     public virtual bool IsDisconnected => Status >= ConnectionStatus.Disconnecting;
-    public virtual YDoc Document => Options.Document;
 
     public override string ToString() => $"[{GetType().Name} Id=\"{Id}\" Status={Status} Document.ClientId={Document?.ClientId} Connections={Connections}]";
 
-    internal TConnectorOptions ParseOptions(string[] args)
+    public Connector()
     {
-        var memberOptions = typeof(TConnectorOptions).GetMembers()
-          .Where(mi => mi.MemberType == MemberTypes.Field || mi.MemberType == MemberTypes.Property)
-        .Select(mi => (member: mi, option: mi.GetCustomAttribute<OptionAttribute>()))
-        .Where(m => m.option != null)
-        .Cast<(MemberInfo, OptionAttribute)>();
-        var positionalOptions = memberOptions.Where(((MemberInfo mi, OptionAttribute attr) m) => m.attr.IsPositional);
-        var nonPositionalOptions = memberOptions.Where(((MemberInfo mi, OptionAttribute attr) m, int index) => !m.attr.IsPositional);
-
-        foreach (var memberOption in memberOptions)
-        {
-
-        }
-        return this as TConnectorOptions;
+        Options = new TConnectorOptions();
     }
 
     ~Connector()

@@ -4,14 +4,15 @@ using Ycs;
 
 namespace cli.Connectors;
 
-public interface IConnector<TConnector> : IConnector
-  where TConnector : IConnector<TConnector>, new()
+public interface IConnector<TConnectorOptions> : IConnector
+  where TConnectorOptions : ConnectorOptions, new()
 {
-    Options<TConnector> Options { get; init; }
+    new TConnectorOptions Options { get; init; }
 }
 
 public interface IConnector : IDisposable
 {
+    ConnectorOptions Options { get; init; }
     string Id { get; }
     ConnectionDictionary<IConnection> Connections { get; }
     ConnectionStatus Status { get; protected set; }

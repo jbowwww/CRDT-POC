@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace cli.Connectors;
 
@@ -23,6 +22,10 @@ public interface IConnection
 
   ConnectionStatus? ConnectionStatus { get; }
   ConnectionStatus Status { get; }
+
+  int BytesAvailable { get; }
+
+  bool IsDataAvailable { get; }
 
   Exception? Error { get; }
 

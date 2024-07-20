@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using System.Timers;
 using Ycs;
 using cli.Connectors;
 using System.Linq;
+using cli.Options;
 
 namespace cli;
 
@@ -25,7 +25,8 @@ public static class CrdtPoc
     public static async Task Main(string[] args)
     {
         var doc1 = new YDoc(/*, new YDocOptions() {}*/);
-        using (var connector = await doc1.Connect<TcpConnector, TcpConnectorOptions>(options => options.Parse(args)))
+        var options = OptionsParser<TcpConnectorOptions>.Parse(args);
+        using (var connector = await doc1.Connect<TcpConnector>(options))
         {
             var nodeStart = DateTime.Now;
             var nodeName = connector.Id;
