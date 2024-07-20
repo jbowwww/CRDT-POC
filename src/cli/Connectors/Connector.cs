@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Ycs;
 
 namespace cli.Connectors;
@@ -38,15 +39,36 @@ public abstract class Connector<TConnectorOptions> : IConnector<TConnectorOption
         System.GC.SuppressFinalize(this);
     }
 
-    public void HandleClientConnected(IConnection connection) => Connections.Add(connection);
+    public virtual Task Connect()
+    {
+        Task.Run(() =>
+        {
+            while (Status <= ConnectionStatus.Disconnecting)
+            {
+                foreach (var connection in Connections.DataPending)
+                {
+                    if (connection.Status <= ConnectionStatus.Disconnecting)
+                    {
+                        connection.MessageLoop();
+                        if (connection.Status == ConnectionStatus.Disconnecting)
+                        {
+                            connection.Status = ConnectionStatus.Disconnected;
+                        }
+                        else if (Status == ConnectionStatus.Disconnecting)
+                        {
+                            connection.Status = ConnectionStatus.Disconnecting;
+                        }
+                    }
+                }
+            }
+        });
+        return Task.CompletedTask;
+    }
 
-    public void HandleClientDisconnected(IConnection connection) => Connections.Remove(connection);
-
-    public async Task EnqueueAndProcessMessagesAsync(string connectionId, long clock, MessageToProcess messageToEnqueue, CancellationToken cancellationToken = default)
-
-    public abstract Task Connect();
-
-    public abstract void Disconnect();
+    public virtual void Disconnect()
+    {
+        Status = ConnectionStatus.Disconnecting;
+    }
 
     public void Receive(string connectionId, byte[] data)
     {

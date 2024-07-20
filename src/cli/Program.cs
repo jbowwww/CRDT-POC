@@ -1,9 +1,11 @@
 using System;
-using System.Threading.Tasks;
-using Ycs;
-using cli.Connectors;
 using System.Linq;
+using System.Threading.Tasks;
+
+using cli.Connectors;
 using cli.Options;
+
+using Ycs;
 
 namespace cli;
 
