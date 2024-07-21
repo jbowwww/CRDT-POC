@@ -146,11 +146,10 @@ public class VersionClock
         // }
         // while (Status <= cli.Connectors.ConnectionStatus.Partitioned && Connector.Status < cli.Connectors.ConnectionStatus.Disconnecting)
         // {
-        var available = Socket.Available;
-        if (available > 0)
+        while (Socket.Available > 0)
         {
             var messageType = ReadSyncMessage();
-            Console.Write(ToString($"MessageLoop: ReadSyncMessage available={available} ... messageType={messageType}"));
+            Console.WriteLine(ToString($"MessageLoop: ReadSyncMessage available={Socket.Available} ... messageType={messageType}"));
         }
         // }
         // Console.WriteLine(ToString($"MessageLoop: END this={this}"));
@@ -200,7 +199,10 @@ public class VersionClock
 
     public void ReadUpdate()
     {
-        ReadSyncStep2();
+        // if (Synced)
+        // {
+            ReadSyncStep2();
+        // }
     }
 
     public uint ReadSyncMessage()
