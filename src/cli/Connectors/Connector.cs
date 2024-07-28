@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Ycs;
 
@@ -43,6 +44,9 @@ public abstract class Connector<TConnectorOptions> : IConnector<TConnectorOption
     public void HandleClientDisconnected(IConnection connection) => Connections.Remove(connection);
 
     public async Task EnqueueAndProcessMessagesAsync(string connectionId, long clock, MessageToProcess messageToEnqueue, CancellationToken cancellationToken = default)
+    {
+
+    }
 
     public abstract Task Connect();
 
