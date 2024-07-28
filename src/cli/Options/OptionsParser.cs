@@ -43,7 +43,7 @@ public class OptionsParser<TOptions>
             var optionMember =
                 IsLong(arg) ? OptionMembers.FirstOrDefault(om => om.HasLongName && om.LongName == arg.Substring(2)) :
                 IsShort(arg) ? OptionMembers.FirstOrDefault(om => om.HasShortName && om.ShortName == arg[1]) :
-                PositionalOptions.Skip(positionalIndex++).FirstOrDefault();
+                PositionalOptions.Skip(positionalIndex).FirstOrDefault();
 
             if (optionMember == null)
             {
@@ -53,6 +53,10 @@ public class OptionsParser<TOptions>
             {
                 var optionMemberValue = OptionMemberValue.Parse(optionMember, arg);
                 optionMemberValue.Apply(options);
+                if (optionMember.IsPositional && !optionMember.IsList)
+                {
+                    positionalIndex++;
+                }
             }
         }
         return options;

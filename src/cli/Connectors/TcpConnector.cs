@@ -1,9 +1,10 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading.Tasks;
 using System.Text;
-using System.Linq;
+using System.Threading.Tasks;
+
 using cli.Options;
 
 namespace cli.Connectors;
@@ -22,8 +23,7 @@ public class TcpConnector : Connector<TcpConnectorOptions>
     {
         Connections.Change += async (sender, e) =>
         {
-            if (e.Change == ConnectionDictionary<IConnection>.ChangeType.Remove
-             && Status < ConnectionStatus.Disconnecting)
+            if (e.Change == ConnectionDictionary<IConnection>.ChangeType.Remove)
             {
                 var endpoint = e.Connection.RemoteEndpoint.ToString();
                 if (endpoint == null)
@@ -32,7 +32,10 @@ public class TcpConnector : Connector<TcpConnectorOptions>
                 }
                 await Task.Delay(1000).ContinueWith(task =>
             {
-                ClientConnect(Options.RemoteHosts.First(rh => rh.EndPoint.Address.Equals(IPEndPoint.Parse(endpoint).Address)).EndPoint);
+                if (Status < ConnectionStatus.Disconnecting)
+                {
+                    ClientConnect(Options.RemoteHosts.First(rh => rh.EndPoint.Address.Equals(IPEndPoint.Parse(endpoint).Address)).EndPoint);
+                }
             });
             }
         };
@@ -55,10 +58,11 @@ public class TcpConnector : Connector<TcpConnectorOptions>
         // {
         foreach (var remoteHost in Options.RemoteHosts)
         {
-            await ClientConnect(remoteHost.EndPoint);
+            ClientConnect(remoteHost.EndPoint);
         }
         Status = ConnectionStatus.Connected;
         // }
+        await base.Connect();
     }
 
     public override void Disconnect()
@@ -72,6 +76,7 @@ public class TcpConnector : Connector<TcpConnectorOptions>
             }
         }
         Console.WriteLine("OK");//$"Disconnect(): End Disconnect() client with connector.Id={Id} ...");
+        base.Disconnect();
     }
 
     public async void ServerListen()
@@ -133,26 +138,27 @@ public class TcpConnector : Connector<TcpConnectorOptions>
         }
     }
 
-    public async Task<IConnection> ClientConnect(IPEndPoint remoteEndpoint)
+    public void ClientConnect(IPEndPoint remoteEndpoint)
     {
-        if (!Connections.ContainsKey(remoteEndpoint.ToString()))
+        lock (_syncObject)
         {
-            var client = new TcpClient(remoteEndpoint.AddressFamily);
-            Console.Write($"ClientConnect(): Connecting to {remoteEndpoint} ... ");
-            client.Connect(remoteEndpoint);
-            Console.WriteLine($"OK");
-            var connection = new Connection(remoteEndpoint.ToString(), this, client.Client);
-            byte[] thisIdBuffer = Encoding.ASCII.GetBytes(Id).Prepend((byte)Id.Length).ToArray();
-            //(byte[])new byte[1] { (byte)Id.Length }.Concat();
-            var byteCount = client.Client.Send(thisIdBuffer);
-            Console.WriteLine($"(Id={Id} thisIdBuffer={thisIdBuffer} byteCount={byteCount})");//$"ClientConnect(): Established connection={connection}");
-            return connection;
-        }
-        else
-        {
-            var connection = Connections[remoteEndpoint.ToString()];
-            Console.WriteLine($"ClientConnect(): Already have server connection to {remoteEndpoint}: {connection}");
-            return connection;
+            if (!Connections.ContainsKey(remoteEndpoint.ToString()))
+            {
+                var client = new TcpClient(remoteEndpoint.AddressFamily);
+                Console.Write($"ClientConnect(): Connecting to {remoteEndpoint} ... ");
+                client.Connect(remoteEndpoint);
+                Console.WriteLine($"OK");
+                var connection = new Connection(remoteEndpoint.ToString(), this, client.Client);
+                byte[] thisIdBuffer = Encoding.ASCII.GetBytes(Options.Host.EndPoint.ToString()).Prepend((byte)Id.Length).ToArray();
+                //(byte[])new byte[1] { (byte)Id.Length }.Concat();
+                var byteCount = client.Client.Send(thisIdBuffer);
+                Console.WriteLine($"(Id={Id} thisIdBuffer={thisIdBuffer} byteCount={byteCount})");//$"ClientConnect(): Established connection={connection}");
+            }
+            else
+            {
+                var connection = Connections[remoteEndpoint.ToString()];
+                Console.WriteLine($"ClientConnect(): Already have server connection to {remoteEndpoint}: {connection}");
+            }
         }
     }
 }

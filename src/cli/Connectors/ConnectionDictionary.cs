@@ -9,7 +9,8 @@ namespace cli.Connectors
     public class ConnectionDictionary<TConnection>
       : ConcurrentDictionary<string, TConnection>,
         IDictionary<string, TConnection>,
-        ICollection<TConnection>
+        ICollection<TConnection>,
+        IEnumerable<TConnection>
     where TConnection : IConnection
     {
         public bool IsReadOnly => false;
@@ -87,6 +88,8 @@ namespace cli.Connectors
 
         IEnumerator<TConnection> IEnumerable<TConnection>.GetEnumerator() => Values.GetEnumerator();
 
+        public IEnumerable<TConnection> ValidConnections => Values.Where(connection => connection.Status != ConnectionStatus.Disconnected);
+        public bool HasValidConnections => ValidConnections.Count() > 0;
         public IEnumerable<TConnection> DataPending => Values.Where(connection => connection.IsDataAvailable);
     }
 }

@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text.Json.Serialization;
 using System.Threading;
-using System.Threading.Tasks;
+
 using Ycs;
 
 namespace cli.Connectors;
@@ -55,6 +55,10 @@ public class Connection : IConnection, IDisposable
 
     public Stream Stream { get; init; } = null!;
 
+    public SortedList<long, MessageToProcess> Messages { get; } = new SortedList<long, MessageToProcess>();
+
+public class VersionClock
+{
     private long _synced = 0;
     private long _serverClock = -1;
     private long _clientClock = -1;
@@ -68,12 +72,19 @@ public class Connection : IConnection, IDisposable
     public long ServerClock => _serverClock;
     public long ClientClock => _clientClock;
 
-    public SortedList<long, MessageToProcess> Messages { get; } = new SortedList<long, MessageToProcess>();
-
     public long IncrementAndGetServerClock() => Interlocked.Increment(ref _serverClock);
     public long IncrementAndGetClientClock() => Interlocked.Increment(ref _clientClock);
-    public void ReassignClientClock(long clock) => Interlocked.Exchange(ref _clientClock, clock);
+    public void ReassignClientClock(long clock) => Interlocked.Exchange(ref _clientClock, clock);    
+}
     
+    public VersionClock Clock = new ();
+
+    public bool Synced
+    {
+        get => Clock.Synced;
+        set => Clock.Synced = value;
+    }
+
     public ConnectionStatus? ConnectionStatus { get; protected set; }
     public ConnectionStatus Status
     {
@@ -89,7 +100,8 @@ public class Connection : IConnection, IDisposable
 
     protected byte[]? StateVector { get; set; } = null;
 
-    public string ToString(string? suffix = null) => $"[{GetType().Name} Id={this.Id} Status={Status} IsServer={IsServer}]: {suffix}";// ?? $"LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
+    public string ToString(string? suffix = null) => $"[{GetType().Name} Id={this.Id} Status={Status} IsServer={IsServer}]{(suffix != null ? ": " + suffix : "")}";
+    // ?? $"LocalEndpoint={LocalEndpoint} RemoteEndpoint={RemoteEndpoint}");
 
     public override string ToString() => ToString(null);
 
@@ -101,7 +113,11 @@ public class Connection : IConnection, IDisposable
         Socket = socket;
         Stream = new NetworkStream(socket, true);
         Connector.Connections.Add(this);
-        _ = Task.Run(() => MessageLoop());
+        if (IsServer)
+        {
+            WriteSyncStep1();
+        }
+        // _ = Task.Run(() => MessageLoop());
     }
 
     ~Connection()
@@ -121,24 +137,23 @@ public class Connection : IConnection, IDisposable
         Status = Connectors.ConnectionStatus.Disconnecting;
     }
     
-    internal void MessageLoop()
+    public void MessageLoop()
     {
-        Console.WriteLine(ToString($"MessageLoop: START this={this}")); //IsServer={IsServer}"));
-        if (!IsServer)
+        // Console.WriteLine(ToString($"MessageLoop: START this={this}")); //IsServer={IsServer}"));
+        // if (!IsServer)
+        // {
+        //     WriteSyncStep1();
+        // }
+        // while (Status <= cli.Connectors.ConnectionStatus.Partitioned && Connector.Status < cli.Connectors.ConnectionStatus.Disconnecting)
+        // {
+        while (Socket.Available > 0)
         {
-            WriteSyncStep1();
+            var messageType = ReadSyncMessage();
+            Console.WriteLine(ToString($"MessageLoop: ReadSyncMessage available={Socket.Available} ... messageType={messageType}"));
         }
-        while (Status <= cli.Connectors.ConnectionStatus.Partitioned && Connector.Status < cli.Connectors.ConnectionStatus.Disconnecting)
-        {
-            var available = Socket.Available;
-            if (available > 0)
-            {
-                Console.WriteLine(ToString($"MessageLoop: ReadSyncMessage available={available}"));
-                var messageType = ReadSyncMessage();
-            }
-        }
-        Console.WriteLine(ToString($"MessageLoop: END this={this}"));
-        Dispose();
+        // }
+        // Console.WriteLine(ToString($"MessageLoop: END this={this}"));
+        // Dispose();
     }
 
     public void WriteSyncStep1()
@@ -159,20 +174,15 @@ public class Connection : IConnection, IDisposable
     {
         StateVector = Stream.ReadVarUint8Array();
         WriteSyncStep2(StateVector);
-        if (!Synced && IsServer)
-        {
-            Synced = true;
-            Console.WriteLine($"MessageLoop: Synced (half) (server) {this}");
-            WriteSyncStep1();
-        }
     }
 
     public void ReadSyncStep2()
     {
         var update = Stream.ReadVarUint8Array();
         Connector.Document.ApplyUpdateV2(update, this);
-        if (!Synced && !IsServer)
+        if (!Synced)
         {
+            WriteSyncStep1();
             Synced = true;
             Console.WriteLine($"MessageLoop: Synced (full) (client) {this}");
         }
@@ -189,7 +199,10 @@ public class Connection : IConnection, IDisposable
 
     public void ReadUpdate()
     {
-        ReadSyncStep2();
+        // if (Synced)
+        // {
+            ReadSyncStep2();
+        // }
     }
 
     public uint ReadSyncMessage()
