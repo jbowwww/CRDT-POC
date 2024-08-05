@@ -66,14 +66,17 @@ public abstract class Connector<TConnectorOptions> : IConnector<TConnectorOption
         return Task.CompletedTask;
     }
 
+    public virtual void Disconnect()
+    {
+
+    }
+
     public void HandleClientDisconnected(IConnection connection) => Connections.Remove(connection);
 
     public async Task EnqueueAndProcessMessagesAsync(string connectionId, long clock, MessageToProcess messageToEnqueue, CancellationToken cancellationToken = default)
     {
 
     }
-
-    public abstract void Disconnect();
 
     public void Receive(string connectionId, byte[] data)
     {
