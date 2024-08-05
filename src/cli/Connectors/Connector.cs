@@ -68,7 +68,7 @@ public abstract class Connector<TConnectorOptions> : IConnector<TConnectorOption
 
     public virtual void Disconnect()
     {
-
+        Status = ConnectionStatus.Disconnecting;
     }
 
     public void HandleClientDisconnected(IConnection connection) => Connections.Remove(connection);
@@ -97,7 +97,7 @@ public abstract class Connector<TConnectorOptions> : IConnector<TConnectorOption
 
     public void Send(string connectionId, byte[] data)
     {
-        Console.WriteLine($"Receive(): Status={Status} Connections.Count={Connections.Count} Options={this}\n\tconnectionId={connectionId}\n\tdata.Length={data.Length}");
+        Console.WriteLine($"Send(): Status={Status} Connections.Count={Connections.Count} Options={this}\n\tconnectionId={connectionId}\n\tdata.Length={data.Length}");
         if (Connections.TryGetValue(connectionId, out IConnection? connection))
         {
             if (IsConnected)
