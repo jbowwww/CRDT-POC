@@ -13,18 +13,20 @@ Use the provided YDocExtensions.Connect() like this:
 ```c#
 public static async Task Main(string[] args)
 {
-    var doc1 = new YDoc(/*, new YDocOptions() {}*/);    // ConnectedDocument( { Name = "Document #1" };
-    using (var connector = await doc1.Connect<TcpConnector, TcpConnectorOptions>(options => options.Parse(args)))
+    Console.WriteLine($"START");
+    var doc1 = new YDoc(/*, new YDocOptions() {}*/);
+    var options = OptionsParser<TcpConnectorOptions>.Parse(args);
+    using (var connector = await doc1.Connect<TcpConnector>(options))
     {
-        bool isPrimaryNode = connector.Id.EndsWith("1");
-        // TODO: Try doc.Transact()
-        doc1.Set("prop1", isPrimaryNode ? "stringValue1" : "stringValue2");
-        doc1.Set(isPrimaryNode ? "prop2-1" : "prop2-2", isPrimaryNode ? "stringValue1" : "stringValue2");
-        doc1.Set("prop3-1", isPrimaryNode ? "stringValue1" : "stringValue2");
-        doc1.Set("prop3-2", isPrimaryNode ? "stringValue1" : "stringValue2");
-        doc1.Set(isPrimaryNode ? "prop4-1" : "prop4-2", isPrimaryNode ? "stringValue1" : "stringValue2");
-        doc1.Set(isPrimaryNode ? "prop4-2" : "prop4-1", isPrimaryNode ? "stringValue1" : "stringValue2");
+        doc1.Set("prop1", "value1");
+        doc1.Set("prop2", 2);
+        doc1.Set("prop3", 3.0d);
+
+        await Task.Delay(2500);
     }
+    
+    await Task.Delay(2000);
+    Console.WriteLine($"EXIT: doc1={doc1.ToString(doc1.ValuesToString())}");
 }
 ```
 
@@ -40,7 +42,7 @@ Configuration of nodes (currently testing with 4) is done in docker-compose.yaml
 
 ```docker-compse
   cli-1:
-    image: crdt-poc:tagname
+    image: crdt-poc:latest
     build: .
     environment:
       HOST: cli-1

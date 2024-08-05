@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Ycs;
@@ -70,6 +71,13 @@ public abstract class Connector<TConnectorOptions> : IConnector<TConnectorOption
         Status = ConnectionStatus.Disconnecting;
     }
 
+    public void HandleClientDisconnected(IConnection connection) => Connections.Remove(connection);
+
+    public async Task EnqueueAndProcessMessagesAsync(string connectionId, long clock, MessageToProcess messageToEnqueue, CancellationToken cancellationToken = default)
+    {
+
+    }
+
     public void Receive(string connectionId, byte[] data)
     {
         Console.WriteLine($"Receive(): Status={Status} Connections.Count={Connections.Count} Options={this}\n\tconnectionId={connectionId}\n\tdata.Length={data.Length}");
@@ -89,7 +97,7 @@ public abstract class Connector<TConnectorOptions> : IConnector<TConnectorOption
 
     public void Send(string connectionId, byte[] data)
     {
-        Console.WriteLine($"Send(): Status={Status} Connections.Count={Connections.Count} Options={this}\n\tconnectionId={connectionId}\n\tdata={EncodeBytes(data)}");
+        Console.WriteLine($"Send(): Status={Status} Connections.Count={Connections.Count} Options={this}\n\tconnectionId={connectionId}\n\tdata.Length={data.Length}");
         if (Connections.TryGetValue(connectionId, out IConnection? connection))
         {
             if (IsConnected)
