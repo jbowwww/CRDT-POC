@@ -37,5 +37,6 @@
     "editor.formatOnPaste": true,
     "editor.formatOnSave": false,
     "editor.formatOnType": true,
-    "razor.format.codeBlockBraceOnNextLine": true
+    "razor.format.codeBlockBraceOnNextLine": true,
+    "dotnet.enableTelemetry": false
 }
